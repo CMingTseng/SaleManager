@@ -1,6 +1,7 @@
 package tvcompany.salemanager.adapter;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -36,7 +37,7 @@ public class MessagesListAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
-
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         /**
@@ -47,19 +48,30 @@ public class MessagesListAdapter extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         // Identifying the message owner
-        if (messagesItems.get(position).isSelf()) {
+        if (messagesItems.get(position).getTypeAction() == 0) {
             // message belongs to you, so load the right aligned layout
             convertView = mInflater.inflate(R.layout.list_item_message_right,
                     null);
-        } else {
+        } else if (messagesItems.get(position).getTypeAction() == 1){
             // message belongs to other person, load the left aligned layout
             convertView = mInflater.inflate(R.layout.list_item_message_left,
                     null);
         }
-        TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
+        else if (messagesItems.get(position).getTypeAction() == 2){
+            // message belongs to other person, load the left aligned layout
+            convertView = mInflater.inflate(R.layout.list_item_message_action,
+                    null);
+        }
+
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
-        txtMsg.setText(m.getMessage());
-        lblFrom.setText(m.getFromName());
+        if(m.getTypeAction() !=2)
+        {
+            TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
+            lblFrom.setText(m.getUserSend());
+        }
+        txtMsg.setText(m.getData());
+
         return convertView;
     }
+
 }

@@ -1,14 +1,15 @@
 package tvcompany.salemanager.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
-
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.socket.client.IO;
@@ -37,6 +39,11 @@ public class ChatActivity extends AppCompatActivity {
     private Message message;
     private EditText txtMessage;
     private Gson gson;
+    private boolean mTyping = false;
+    private Handler mTypingHandler = new Handler();
+    private static final int TYPING_TIMER_LENGTH = 1000;
+    private Boolean isConnected = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,16 +51,21 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userSend = intent.getExtras().getString("FROM");
         userRecieve = intent.getExtras().getString("TO");
-//viet heheeheheheheheeeeeeee
 
         //Listening...
         try {
             mSocket = IO.socket(ServerApplication.CHAT_SERVER_URL);
             mSocket.connect();
             mSocket.on(userSend, onNewMessage);
+            mSocket.on(userSend + "Viewed", viewed);
+            mSocket.on(userSend + "Sent", MessageSent);
+            mSocket.on(userSend + "Recieved", recieved);
+            mSocket.on(userSend + "Typing", onTyping);
+            mSocket.on(userSend + "StopTyping", onStopTyping);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
+
 
 
         //Text Message
@@ -75,27 +87,112 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    message = new Message(userRecieve,txtMessage.getText().toString(),false);
-                    appendMessage(new Message(userSend,txtMessage.getText().toString(),true));
+                    message = new Message(userRecieve,userSend,txtMessage.getText().toString(),1,1,new Date(),1);
+                    appendMessage(new Message(userSend,userSend,txtMessage.getText().toString(),1,1,new Date(),0));
                     JSONObject obj = new JSONObject(gson.toJson(message));
                     txtMessage.setText("");
+                    removeTyping();
                     mSocket.emit("SendToServer",obj);
                 }
                 catch (Exception e)
                 {}
             }
         });
+
+        //Text change
+        txtMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!mSocket.connected()) return;
+                if (!mTyping && !txtMessage.getText().toString().equals("")) {
+                    try {
+
+                        mTyping = true;
+                        message = new Message(userRecieve,userSend,userSend + " is typing...",1,1,new Date(),2);
+                        JSONObject obj = new JSONObject( gson.toJson(message));
+                        mSocket.emit("Typing",obj);
+
+
+                    }
+                    catch (Exception e)
+                    {}
+                }
+                mTypingHandler.removeCallbacks(onTypingTimeout);
+                mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSocket.off(userSend, onNewMessage);
+        mSocket.off(userSend + "Viewed", viewed);
+        mSocket.off(userSend + "Sent", MessageSent);
+        mSocket.off(userSend + "Recieved", recieved);
+        mSocket.off(userSend + "Typing", onTyping);
+        mSocket.off(userSend + "StopTyping", onStopTyping);
+    }
     private void appendMessage(final Message m) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
                 listMessages.add(m);
                 adapter.notifyDataSetChanged();
             }
         });
     }
+
+    private Emitter.Listener viewed = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    listMessages.add(new Message(userRecieve,userSend,"Đã xem",1,1,new Date(),0));
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener MessageSent = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    listMessages.add(new Message(userRecieve,userSend,"Đã gửi",1,1,new Date(),0));
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener recieved = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    listMessages.add(new Message(userRecieve,userSend,"Đã nhận",1,1,new Date(),0));
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
+    };
 
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
@@ -108,8 +205,14 @@ public class ChatActivity extends AppCompatActivity {
                     try {
                         String s = data.get("Content").toString();
                         message = gson.fromJson(s, Message.class);
-                        message.setFromName(userRecieve);
+                        message.setUserSend(userRecieve);
+                        removeTyping();
                         appendMessage(message);
+                        mSocket.emit("Recieved",userRecieve);
+                        if(txtMessage.hasFocus())
+                        {
+                            mSocket.emit("Viewed",userRecieve);
+                        }
                     } catch (JSONException e) {
                         return;
                     }
@@ -117,6 +220,80 @@ public class ChatActivity extends AppCompatActivity {
 
                 }
             });
+        }
+    };
+
+    private Emitter.Listener onTyping = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    String username;
+                    try {
+                        String s = data.get("Content").toString();
+                        message = gson.fromJson(s, Message.class);
+
+                    } catch (Exception e) {
+                        return;
+                    }
+                    appendMessage(message);
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onStopTyping = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    String username;
+                    try {
+                        String s = data.get("Content").toString();
+                        message = gson.fromJson(s, Message.class);
+                    } catch (JSONException e) {
+                        return;
+                    }
+                    removeTyping();
+                }
+            });
+        }
+    };
+
+    private void addTyping(){
+        try {
+            message = new Message(userRecieve,userSend,userSend + " is typing...",1,1,new Date(),2);
+            listMessages.add(message);
+        }catch (Exception e){}
+
+    }
+
+    private void removeTyping() {
+        try {
+            if (listMessages.get(listMessages.size() - 1).getTypeAction() == 2) {
+                listMessages.remove(listMessages.size() - 1);
+                adapter.notifyDataSetChanged();
+            }
+        }catch (Exception e){}
+
+    }
+
+    private Runnable onTypingTimeout = new Runnable() {
+        @Override
+        public void run() {
+            if (!mTyping) return;
+            try {
+                message = new Message(userRecieve,userSend,"",1,1,new Date(),2);
+                JSONObject obj = new JSONObject(gson.toJson(message));
+                mTyping = false;
+                mSocket.emit("StopTyping",obj);
+            }catch (Exception e)
+            {}
+
         }
     };
 

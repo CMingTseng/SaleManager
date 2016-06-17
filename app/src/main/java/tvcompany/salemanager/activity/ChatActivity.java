@@ -44,8 +44,7 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userSend = intent.getExtras().getString("FROM");
         userRecieve = intent.getExtras().getString("TO");
-
-        // TUNGPM hihi
+//viet heheeheheheheheeeeeeee
 
         //Listening...
         try {

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import tvcompany.salemanager.R;
 import tvcompany.salemanager.adapter.MessagesListAdapter;
+import tvcompany.salemanager.database.DatabaseManager;
 import tvcompany.salemanager.model.Message;
 import tvcompany.salemanager.model.ServerApplication;
 
@@ -43,6 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     private Handler mTypingHandler = new Handler();
     private static final int TYPING_TIMER_LENGTH = 1000;
     private Boolean isConnected = true;
+    private DatabaseManager db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //Listening...
         try {
+            db= new DatabaseManager(ChatActivity.this);
             mSocket = IO.socket(ServerApplication.CHAT_SERVER_URL);
             mSocket.connect();
             mSocket.on(userSend, onNewMessage);
@@ -74,6 +78,14 @@ public class ChatActivity extends AppCompatActivity {
         ///Adapter
         listViewMessages = (ListView) findViewById(R.id.list_view_messages);
         listMessages = new ArrayList<Message>();
+        try {
+            //listMessages = db.GetMessage(userSend);
+        }catch (Exception e)
+        {
+            listMessages = new ArrayList<Message>();
+        }
+
+
         adapter = new MessagesListAdapter(this, listMessages);
         listViewMessages.setAdapter(adapter);
         ///
@@ -88,14 +100,19 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     message = new Message(userRecieve,userSend,txtMessage.getText().toString(),1,1,new Date(),1);
-                    appendMessage(new Message(userSend,userSend,txtMessage.getText().toString(),1,1,new Date(),0));
+                    appendMessage(new Message(userSend,userRecieve,txtMessage.getText().toString(),1,1,new Date(),0));
+                    //db.InserMessage(new Message(userSend,userRecieve,txtMessage.getText().toString(),1,1,new Date(),0));
                     JSONObject obj = new JSONObject(gson.toJson(message));
                     txtMessage.setText("");
                     removeTyping();
+                    removeStatus();
                     mSocket.emit("SendToServer",obj);
+
                 }
                 catch (Exception e)
-                {}
+                {
+                    Log.i("BUGGGGGGGGGGGGG", e.toString());
+                }
             }
         });
 
@@ -161,8 +178,7 @@ public class ChatActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    listMessages.add(new Message(userRecieve,userSend,"Đã xem",1,1,new Date(),0));
-                    adapter.notifyDataSetChanged();
+                    setStatusMessage("Đã xem");
                 }
             });
         }
@@ -174,7 +190,7 @@ public class ChatActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    listMessages.add(new Message(userRecieve,userSend,"Đã gửi",1,1,new Date(),0));
+                    listMessages.add(new Message(userRecieve,userSend,"Đã gửi",1,1,new Date(),3));
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -187,8 +203,7 @@ public class ChatActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    listMessages.add(new Message(userRecieve,userSend,"Đã nhận",1,1,new Date(),0));
-                    adapter.notifyDataSetChanged();
+                    setStatusMessage("Đã nhận");
                 }
             });
         }
@@ -208,6 +223,7 @@ public class ChatActivity extends AppCompatActivity {
                         message.setUserSend(userRecieve);
                         removeTyping();
                         appendMessage(message);
+                        db.InserMessage(message);
                         mSocket.emit("Recieved",userRecieve);
                         if(txtMessage.hasFocus())
                         {
@@ -222,6 +238,7 @@ public class ChatActivity extends AppCompatActivity {
             });
         }
     };
+
 
     private Emitter.Listener onTyping = new Emitter.Listener() {
         @Override
@@ -296,5 +313,38 @@ public class ChatActivity extends AppCompatActivity {
 
         }
     };
+
+    public void setStatusMessage(String status)
+    {
+        try {
+            if(listMessages.get(listMessages.size() - 1).getTypeAction() == 3)
+            {
+                listMessages.get(listMessages.size() - 1).setData(status);
+                adapter.notifyDataSetChanged();
+            }
+        }catch (Exception e)
+        {
+
+        }
+    }
+
+    public void removeStatus()
+    {
+        try {
+            for(int i = listMessages.size() - 1; i>=0;i--)
+            {
+                if (listMessages.get(i).getTypeAction() == 3)
+                {
+                    listMessages.remove(i);
+                    adapter.notifyDataSetChanged();
+                    break;
+                }
+
+            }
+        }catch (Exception e)
+        {
+
+        }
+    }
 
 }

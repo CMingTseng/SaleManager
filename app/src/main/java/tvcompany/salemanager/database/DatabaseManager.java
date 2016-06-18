@@ -26,6 +26,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import tvcompany.salemanager.model.Contact;
+import tvcompany.salemanager.model.Message;
 
 
 public class DatabaseManager {
@@ -98,6 +99,8 @@ public class DatabaseManager {
 		sqlDB.endTransaction();
 		closeDB();
 	}
+
+
 	public Contact GetContact() {
 		openDB();
 		Cursor c = sqlDB.rawQuery("Select * from Profile", null);
@@ -117,6 +120,51 @@ public class DatabaseManager {
 		c.close();
 		closeDB();
 		return item;
+	}
+
+	//Read and write message
+	public void InserMessage(Message message) {
+		openDB();
+		sqlDB.beginTransaction();
+		String sql = "Insert into Message(id_UserSend,id_UserRecevice,data,dataType,idSort,date,typeAction) values(?,?,?,?,?,?,?)";
+		SQLiteStatement insert = sqlDB.compileStatement(sql);
+		insert.bindString(1, message.getUserSend());
+		insert.bindString(2, message.getUserRecieve());
+		insert.bindString(3, message.getData());
+		insert.bindLong(4, message.getDataType());
+		insert.bindLong(5, message.getIdSort());
+		insert.bindString(6, message.getDate() +"");
+		insert.bindLong(7, message.getTypeAction());
+		insert.execute();
+		sqlDB.setTransactionSuccessful();
+		sqlDB.endTransaction();
+		closeDB();
+	}
+
+	public List<Message> GetMessage(String account) {
+		List<Message> list = new ArrayList<>();
+		openDB();
+		//Cursor c = sqlDB.rawQuery("Select * from Message ", null);
+		Cursor c = sqlDB.rawQuery("Select * from Message WHERE id_UserSend = '" + account + "'  ORDER BY idSort desc LIMIT 50", null);
+		Message item ;
+		if (c == null)
+			return null;
+		c.moveToFirst();
+		while (c.isAfterLast() == false) {
+			item = new Message();
+			item.setUserSend(c.getString(c.getColumnIndex("id_UserSend")));
+			item.setUserRecieve(c.getString(c.getColumnIndex("id_UserRecevice")));
+			item.setData(c.getString(c.getColumnIndex("data")));
+			item.setDataType(c.getInt(c.getColumnIndex("dataType")));
+			item.setIdSort(c.getLong(c.getColumnIndex("idSort")));
+			item.setDate(new java.util.Date());
+			item.setTypeAction(c.getInt(c.getColumnIndex("typeAction")));
+			list.add(item);
+			c.moveToNext();
+		}
+		c.close();
+		closeDB();
+		return list;
 	}
 
 	public static byte[] getBitmapAsByteArray(Bitmap bitmap) {

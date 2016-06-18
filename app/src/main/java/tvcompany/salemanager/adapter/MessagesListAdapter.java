@@ -45,26 +45,54 @@ public class MessagesListAdapter extends BaseAdapter {
          * are showing incorrect data Add the solution if you have one
          * */
         Message m = messagesItems.get(position);
+        int lastMessage;
+        try {
+            lastMessage = messagesItems.get(position -1).getTypeAction();
+        }catch (Exception e)
+        {
+            lastMessage = 0;
+        }
+
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         // Identifying the message owner
-        if (messagesItems.get(position).getTypeAction() == 0) {
+        if (m.getTypeAction() == 0 ) {
             // message belongs to you, so load the right aligned layout
-            convertView = mInflater.inflate(R.layout.list_item_message_right,
-                    null);
-        } else if (messagesItems.get(position).getTypeAction() == 1){
+            if(lastMessage == m.getTypeAction())
+            {
+                convertView = mInflater.inflate(R.layout.list_item_message_right_notincludename,
+                        null);
+            }
+            else
+            {
+                convertView = mInflater.inflate(R.layout.list_item_message_right,
+                        null);
+            }
+        } else if (m.getTypeAction() == 1){
             // message belongs to other person, load the left aligned layout
-            convertView = mInflater.inflate(R.layout.list_item_message_left,
-                    null);
+            if(lastMessage == m.getTypeAction())
+            {
+                convertView = mInflater.inflate(R.layout.list_item_message_left_notincludename,
+                        null);
+            }
+            else
+            {
+                convertView = mInflater.inflate(R.layout.list_item_message_left,
+                        null);
+            }
         }
-        else if (messagesItems.get(position).getTypeAction() == 2){
+        else if (m.getTypeAction() == 2){
             // message belongs to other person, load the left aligned layout
             convertView = mInflater.inflate(R.layout.list_item_message_action,
                     null);
         }
-
+        else if (m.getTypeAction() == 3){
+            // message belongs to other person, load the left aligned layout
+            convertView = mInflater.inflate(R.layout.list_item_message_view,
+                    null);
+        }
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
-        if(m.getTypeAction() !=2)
+        if(m.getTypeAction() !=2 && m.getTypeAction() !=3 && m.getTypeAction() != lastMessage)
         {
             TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
             lblFrom.setText(m.getUserSend());

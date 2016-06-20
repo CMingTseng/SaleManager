@@ -50,7 +50,7 @@ public class MessagesListAdapter extends BaseAdapter {
             lastMessage = messagesItems.get(position -1).getTypeAction();
         }catch (Exception e)
         {
-            lastMessage = 0;
+            lastMessage = -1;
         }
 
         LayoutInflater mInflater = (LayoutInflater) context
@@ -58,7 +58,7 @@ public class MessagesListAdapter extends BaseAdapter {
         // Identifying the message owner
         if (m.getTypeAction() == 0 ) {
             // message belongs to you, so load the right aligned layout
-            if(lastMessage == m.getTypeAction())
+            if(lastMessage == m.getTypeAction() && lastMessage != -1)
             {
                 convertView = mInflater.inflate(R.layout.list_item_message_right_notincludename,
                         null);
@@ -70,7 +70,7 @@ public class MessagesListAdapter extends BaseAdapter {
             }
         } else if (m.getTypeAction() == 1){
             // message belongs to other person, load the left aligned layout
-            if(lastMessage == m.getTypeAction())
+            if(lastMessage == m.getTypeAction() && lastMessage != -1)
             {
                 convertView = mInflater.inflate(R.layout.list_item_message_left_notincludename,
                         null);
@@ -91,13 +91,16 @@ public class MessagesListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.list_item_message_view,
                     null);
         }
-        TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
-        if(m.getTypeAction() !=2 && m.getTypeAction() !=3 && m.getTypeAction() != lastMessage)
-        {
-            TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
-            lblFrom.setText(m.getUserSend());
-        }
-        txtMsg.setText(m.getData());
+        try {
+            TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
+            txtMsg.setText(m.getData());
+            if((m.getTypeAction() !=2 && m.getTypeAction() !=3)  && (m.getTypeAction() != lastMessage) || lastMessage == -1)
+            {
+                TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
+                lblFrom.setText(m.getUserSend());
+            }
+        }catch (Exception e){}
+
 
         return convertView;
     }

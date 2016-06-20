@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,9 +44,10 @@ public class ChatActivity extends AppCompatActivity {
     private Gson gson;
     private boolean mTyping = false;
     private Handler mTypingHandler = new Handler();
-    private static final int TYPING_TIMER_LENGTH = 1000;
     private Boolean isConnected = true;
     private DatabaseManager db;
+    private long numberMessage;
+    private static final int TYPING_TIMER_LENGTH = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,39 @@ public class ChatActivity extends AppCompatActivity {
         userSend = intent.getExtras().getString("FROM");
         userRecieve = intent.getExtras().getString("TO");
 
-        //Listening...
+        // init data and get data from client
+        //Text Message
+        txtMessage = (EditText) findViewById(R.id.inputMsg);
+
+        ///Adapter
+        listViewMessages = (ListView) findViewById(R.id.list_view_messages);
+        listMessages = new ArrayList<Message>();
+        adapter = new MessagesListAdapter(this, listMessages);
+        listViewMessages.setAdapter(adapter);
         try {
             db= new DatabaseManager(ChatActivity.this);
+            GetMessage(userSend,userRecieve);
+
+        }catch (Exception e) {
+            Log.i("BUGGGGGGGGGGGGG", e.toString());
+        }
+        finally {
+            SetNumberMessage();
+        }
+        //Gson
+        gson = new Gson();
+
+        //Listening...
+        try {
+
+
             mSocket = IO.socket(ServerApplication.CHAT_SERVER_URL);
             mSocket.connect();
+            mSocket.emit("UserOnline",userSend);
+            mSocket.emit("LoadMessage",userRecieve);
             mSocket.on(userSend, onNewMessage);
+            mSocket.on(userSend + "Viewed", viewed);
+            mSocket.on(userSend + "LoadMessage", loadMessage);
             mSocket.on(userSend + "Viewed", viewed);
             mSocket.on(userSend + "Sent", MessageSent);
             mSocket.on(userSend + "Recieved", recieved);
@@ -70,38 +99,15 @@ public class ChatActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-
-
-        //Text Message
-        txtMessage = (EditText) findViewById(R.id.inputMsg);
-
-        ///Adapter
-        listViewMessages = (ListView) findViewById(R.id.list_view_messages);
-        listMessages = new ArrayList<Message>();
-        try {
-            //listMessages = db.GetMessage(userSend);
-        }catch (Exception e)
-        {
-            listMessages = new ArrayList<Message>();
-        }
-
-
-        adapter = new MessagesListAdapter(this, listMessages);
-        listViewMessages.setAdapter(adapter);
-        ///
-
-        //Gson
-        gson = new Gson();
-
         //Send Data
         btnSend = (Button) findViewById(R.id.btnSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    message = new Message(userRecieve,userSend,txtMessage.getText().toString(),1,1,new Date(),1);
+                    message = new Message(userSend,userRecieve,txtMessage.getText().toString(),1,1,new Date(),1);
                     appendMessage(new Message(userSend,userRecieve,txtMessage.getText().toString(),1,1,new Date(),0));
-                    //db.InserMessage(new Message(userSend,userRecieve,txtMessage.getText().toString(),1,1,new Date(),0));
+                    db.InserMessage(new Message(userSend,userRecieve,txtMessage.getText().toString(),1,numberMessage++,new Date(),0));
                     JSONObject obj = new JSONObject(gson.toJson(message));
                     txtMessage.setText("");
                     removeTyping();
@@ -153,6 +159,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
+        mSocket.emit("TENTEN","HIHIHIHIHI");
         super.onDestroy();
         mSocket.off(userSend, onNewMessage);
         mSocket.off(userSend + "Viewed", viewed);
@@ -220,8 +227,8 @@ public class ChatActivity extends AppCompatActivity {
                     try {
                         String s = data.get("Content").toString();
                         message = gson.fromJson(s, Message.class);
-                        message.setUserSend(userRecieve);
                         removeTyping();
+                        removeStatus();
                         appendMessage(message);
                         db.InserMessage(message);
                         mSocket.emit("Recieved",userRecieve);
@@ -281,13 +288,6 @@ public class ChatActivity extends AppCompatActivity {
         }
     };
 
-    private void addTyping(){
-        try {
-            message = new Message(userRecieve,userSend,userSend + " is typing...",1,1,new Date(),2);
-            listMessages.add(message);
-        }catch (Exception e){}
-
-    }
 
     private void removeTyping() {
         try {
@@ -331,7 +331,7 @@ public class ChatActivity extends AppCompatActivity {
     public void removeStatus()
     {
         try {
-            for(int i = listMessages.size() - 1; i>=0;i--)
+            for(int i = listMessages.size() - 1; i>=listMessages.size() - 5;i--)
             {
                 if (listMessages.get(i).getTypeAction() == 3)
                 {
@@ -344,6 +344,73 @@ public class ChatActivity extends AppCompatActivity {
         }catch (Exception e)
         {
 
+        }
+    }
+
+    private Emitter.Listener loadMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    byte[] amthanh;
+                    try {
+                        String s = data.get("Content").toString();
+                        TypeToken<List<Message>> token = new TypeToken<List<Message>>(){};
+                        List<Message> list = gson.fromJson(s, token.getType());
+                        for(int i = 0;i<list.size();i++)
+                        {
+                            listMessages.add(list.get(i));
+                            message = list.get(i);
+                            message.setIdSort(numberMessage++);
+                            db.InserMessage(message);
+                        }
+                        adapter.notifyDataSetChanged();
+                        if(list.size() > 0)
+                        {
+                            mSocket.emit("Recieved",userRecieve);
+                        }
+                    } catch (JSONException e) {
+                        return;
+                    }
+
+
+                }
+            });
+        }
+    };
+
+    public void GetMessage(String userSend,String userRecieve)
+    {
+        try {
+            List<Message> list= db.GetMessage(userSend,userRecieve);
+            for (int i = 0;i<list.size();i++)
+            {
+                listMessages.add(list.get(i));
+            }
+            adapter.notifyDataSetChanged();
+        }catch (Exception e)
+        {
+            Log.i("BUGGGGGGGGGGGGG", e.toString());
+        }
+    }
+
+    public void SetNumberMessage()
+    {
+        try {
+            for(int i = listMessages.size() - 1 ;i>=0;i--)
+            {
+                if(listMessages.get(i).getTypeAction() == 0 || listMessages.get(i).getTypeAction() == 1)
+                {
+                    numberMessage = listMessages.get(i).getIdSort();
+                    break;
+                }
+            }
+
+        }catch (Exception e)
+        {
+            numberMessage = 0;
         }
     }
 

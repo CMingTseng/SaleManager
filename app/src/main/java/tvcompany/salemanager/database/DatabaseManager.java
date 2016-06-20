@@ -145,9 +145,9 @@ public class DatabaseManager {
 		List<Message> list = new ArrayList<>();
 		openDB();
 		//Cursor c = sqlDB.rawQuery("Select * from Message ", null);
-		//Cursor c = sqlDB.rawQuery("Select * from Message WHERE (id_UserSend = '" + userSend + "' AND id_UserRecevice = '" + userRecevice +  "')" +
-		//		"OR (id_UserSend = '" + userRecevice + "' AND id_UserRecevice = '" + userSend +  "')  ORDER BY idSort LIMIT 50", null);
-		Cursor c = sqlDB.rawQuery("Select * from Message  ORDER BY idSort LIMIT 50", null);
+		Cursor c = sqlDB.rawQuery("Select * from Message WHERE (id_UserSend = '" + userSend + "' AND id_UserRecevice = '" + userRecevice +  "')" +
+				"OR (id_UserSend = '" + userRecevice + "' AND id_UserRecevice = '" + userSend +  "')  ORDER BY idSort LIMIT 50", null);
+		//Cursor c = sqlDB.rawQuery("Select * from Message  ORDER BY idSort LIMIT 50", null);
 		Message item ;
 		if (c == null)
 			return null;

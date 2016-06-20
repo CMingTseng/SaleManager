@@ -230,6 +230,7 @@ public class ChatActivity extends AppCompatActivity {
                         removeTyping();
                         removeStatus();
                         appendMessage(message);
+                        message.setIdSort(numberMessage++);
                         db.InserMessage(message);
                         mSocket.emit("Recieved",userRecieve);
                         if(txtMessage.hasFocus())
@@ -367,10 +368,6 @@ public class ChatActivity extends AppCompatActivity {
                             db.InserMessage(message);
                         }
                         adapter.notifyDataSetChanged();
-                        if(list.size() > 0)
-                        {
-                            mSocket.emit("Recieved",userRecieve);
-                        }
                     } catch (JSONException e) {
                         return;
                     }

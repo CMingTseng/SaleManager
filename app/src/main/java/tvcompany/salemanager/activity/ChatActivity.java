@@ -38,7 +38,7 @@ public class ChatActivity extends AppCompatActivity {
     private ListView listViewMessages;
     private Socket mSocket;
     private Button btnSend;
-    private String userSend,userRecieve;
+    private String userSend, userRecieve;
     private Message message;
     private EditText txtMessage;
     private Gson gson;
@@ -67,13 +67,12 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new MessagesListAdapter(this, listMessages);
         listViewMessages.setAdapter(adapter);
         try {
-            db= new DatabaseManager(ChatActivity.this);
-            GetMessage(userSend,userRecieve);
+            db = new DatabaseManager(ChatActivity.this);
+            GetMessage(userSend, userRecieve);
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.i("BUGGGGGGGGGGGGG", e.toString());
-        }
-        finally {
+        } finally {
             SetNumberMessage();
         }
         //Gson
@@ -82,15 +81,14 @@ public class ChatActivity extends AppCompatActivity {
         //Listening...
         try {
 
-
             mSocket = IO.socket(ServerApplication.CHAT_SERVER_URL);
             mSocket.connect();
-            mSocket.emit("UserOnline",userSend);
-            mSocket.emit("LoadMessage",userRecieve);
+            mSocket.on(Socket.EVENT_CONNECT,onConnect);
+            mSocket.on(Socket.EVENT_DISCONNECT,onDisconnect);
+            //EmittingOnline();
             mSocket.on(userSend, onNewMessage);
             mSocket.on(userSend + "Viewed", viewed);
             mSocket.on(userSend + "LoadMessage", loadMessage);
-            mSocket.on(userSend + "Viewed", viewed);
             mSocket.on(userSend + "Sent", MessageSent);
             mSocket.on(userSend + "Recieved", recieved);
             mSocket.on(userSend + "Typing", onTyping);
@@ -105,18 +103,16 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    message = new Message(userSend,userRecieve,txtMessage.getText().toString(),1,1,new Date(),1);
-                    appendMessage(new Message(userSend,userRecieve,txtMessage.getText().toString(),1,1,new Date(),0));
-                    db.InserMessage(new Message(userSend,userRecieve,txtMessage.getText().toString(),1,numberMessage++,new Date(),0));
+                    message = new Message(userSend, userRecieve, txtMessage.getText().toString(), 1, 1, new Date(), 1);
+                    appendMessage(new Message(userSend, userRecieve, txtMessage.getText().toString(), 1, 1, new Date(), 0));
+                    db.InserMessage(new Message(userSend, userRecieve, txtMessage.getText().toString(), 1, numberMessage++, new Date(), 0));
                     JSONObject obj = new JSONObject(gson.toJson(message));
                     txtMessage.setText("");
                     removeTyping();
                     removeStatus();
-                    mSocket.emit("SendToServer",obj);
+                    mSocket.emit("SendToServer", obj);
 
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     Log.i("BUGGGGGGGGGGGGG", e.toString());
                 }
             }
@@ -136,14 +132,13 @@ public class ChatActivity extends AppCompatActivity {
                     try {
 
                         mTyping = true;
-                        message = new Message(userRecieve,userSend,userSend + " is typing...",1,1,new Date(),2);
-                        JSONObject obj = new JSONObject( gson.toJson(message));
-                        mSocket.emit("Typing",obj);
+                        message = new Message(userRecieve, userSend, userSend + " is typing...", 1, 1, new Date(), 2);
+                        JSONObject obj = new JSONObject(gson.toJson(message));
+                        mSocket.emit("Typing", obj);
 
 
+                    } catch (Exception e) {
                     }
-                    catch (Exception e)
-                    {}
                 }
                 mTypingHandler.removeCallbacks(onTypingTimeout);
                 mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
@@ -159,15 +154,18 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        mSocket.emit("TENTEN","HIHIHIHIHI");
         super.onDestroy();
+        mSocket.off(Socket.EVENT_CONNECT,onConnect);
+        mSocket.off(Socket.EVENT_DISCONNECT,onDisconnect);
         mSocket.off(userSend, onNewMessage);
         mSocket.off(userSend + "Viewed", viewed);
+        mSocket.off(userSend + "LoadMessage", loadMessage);
         mSocket.off(userSend + "Sent", MessageSent);
         mSocket.off(userSend + "Recieved", recieved);
         mSocket.off(userSend + "Typing", onTyping);
         mSocket.off(userSend + "StopTyping", onStopTyping);
     }
+
     private void appendMessage(final Message m) {
         runOnUiThread(new Runnable() {
             @Override
@@ -197,7 +195,7 @@ public class ChatActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    listMessages.add(new Message(userRecieve,userSend,"Đã gửi",1,1,new Date(),3));
+                    listMessages.add(new Message(userRecieve, userSend, "Đã gửi", 1, 1, new Date(), 3));
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -232,10 +230,9 @@ public class ChatActivity extends AppCompatActivity {
                         appendMessage(message);
                         message.setIdSort(numberMessage++);
                         db.InserMessage(message);
-                        mSocket.emit("Recieved",userRecieve);
-                        if(txtMessage.hasFocus())
-                        {
-                            mSocket.emit("Viewed",userRecieve);
+                        mSocket.emit("Recieved", userRecieve);
+                        if (txtMessage.isShown()) {
+                            mSocket.emit("Viewed", userRecieve);
                         }
                     } catch (JSONException e) {
                         return;
@@ -296,7 +293,8 @@ public class ChatActivity extends AppCompatActivity {
                 listMessages.remove(listMessages.size() - 1);
                 adapter.notifyDataSetChanged();
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
     }
 
@@ -305,45 +303,38 @@ public class ChatActivity extends AppCompatActivity {
         public void run() {
             if (!mTyping) return;
             try {
-                message = new Message(userRecieve,userSend,"",1,1,new Date(),2);
+                message = new Message(userRecieve, userSend, "", 1, 1, new Date(), 2);
                 JSONObject obj = new JSONObject(gson.toJson(message));
                 mTyping = false;
-                mSocket.emit("StopTyping",obj);
-            }catch (Exception e)
-            {}
+                mSocket.emit("StopTyping", obj);
+            } catch (Exception e) {
+            }
 
         }
     };
 
-    public void setStatusMessage(String status)
-    {
+    public void setStatusMessage(String status) {
         try {
-            if(listMessages.get(listMessages.size() - 1).getTypeAction() == 3)
-            {
+            if (listMessages.get(listMessages.size() - 1).getTypeAction() == 3) {
                 listMessages.get(listMessages.size() - 1).setData(status);
                 adapter.notifyDataSetChanged();
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
     }
 
-    public void removeStatus()
-    {
+    public void removeStatus() {
         try {
-            for(int i = listMessages.size() - 1; i>=listMessages.size() - 5;i--)
-            {
-                if (listMessages.get(i).getTypeAction() == 3)
-                {
+            for (int i = listMessages.size() - 1; i >= listMessages.size() - 5; i--) {
+                if (listMessages.get(i).getTypeAction() == 3) {
                     listMessages.remove(i);
                     adapter.notifyDataSetChanged();
                     break;
                 }
 
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
     }
@@ -358,10 +349,10 @@ public class ChatActivity extends AppCompatActivity {
                     byte[] amthanh;
                     try {
                         String s = data.get("Content").toString();
-                        TypeToken<List<Message>> token = new TypeToken<List<Message>>(){};
+                        TypeToken<List<Message>> token = new TypeToken<List<Message>>() {
+                        };
                         List<Message> list = gson.fromJson(s, token.getType());
-                        for(int i = 0;i<list.size();i++)
-                        {
+                        for (int i = 0; i < list.size(); i++) {
                             listMessages.add(list.get(i));
                             message = list.get(i);
                             message.setIdSort(numberMessage++);
@@ -378,37 +369,65 @@ public class ChatActivity extends AppCompatActivity {
         }
     };
 
-    public void GetMessage(String userSend,String userRecieve)
-    {
+    public void GetMessage(String userSend, String userRecieve) {
         try {
-            List<Message> list= db.GetMessage(userSend,userRecieve);
-            for (int i = 0;i<list.size();i++)
-            {
+            List<Message> list = db.GetMessage(userSend, userRecieve);
+            for (int i =list.size() -1;i>=0; i--) {
                 listMessages.add(list.get(i));
             }
             adapter.notifyDataSetChanged();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.i("BUGGGGGGGGGGGGG", e.toString());
         }
     }
 
-    public void SetNumberMessage()
-    {
+    public void SetNumberMessage() {
         try {
-            for(int i = listMessages.size() - 1 ;i>=0;i--)
-            {
-                if(listMessages.get(i).getTypeAction() == 0 || listMessages.get(i).getTypeAction() == 1)
-                {
+            for (int i = listMessages.size() - 1; i >= 0; i--) {
+                if (listMessages.get(i).getTypeAction() == 0 || listMessages.get(i).getTypeAction() == 1) {
                     numberMessage = listMessages.get(i).getIdSort();
                     break;
                 }
             }
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             numberMessage = 0;
         }
     }
 
+    public void EmittingOnline()
+    {
+        mSocket.emit("UserOnline",userSend);
+        mSocket.emit("LoadMessage",userRecieve);
+    }
+
+    private Emitter.Listener onConnect = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    EmittingOnline();
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onDisconnect = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            });
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSocket.emit("Viewed", userRecieve);
+    }
 }

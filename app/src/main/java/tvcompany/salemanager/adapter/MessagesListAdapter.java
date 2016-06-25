@@ -60,7 +60,7 @@ public class MessagesListAdapter extends BaseAdapter {
             // message belongs to you, so load the right aligned layout
             if(lastMessage == m.getTypeAction() && lastMessage != -1)
             {
-                convertView = mInflater.inflate(R.layout.list_item_message_right_notincludename,
+                convertView = mInflater.inflate(R.layout.list_item_message_right_not_include_name,
                         null);
             }
             else
@@ -72,7 +72,7 @@ public class MessagesListAdapter extends BaseAdapter {
             // message belongs to other person, load the left aligned layout
             if(lastMessage == m.getTypeAction() && lastMessage != -1)
             {
-                convertView = mInflater.inflate(R.layout.list_item_message_left_notincludename,
+                convertView = mInflater.inflate(R.layout.list_item_message_left_not_include_name,
                         null);
             }
             else

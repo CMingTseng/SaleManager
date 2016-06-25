@@ -7,7 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+//import tvcompany.salemanager.API.ServiceAPI;
+import java.util.List;
+
+import API.ServiceAPI;
 import tvcompany.salemanager.R;
+import tvcompany.salemanager.model.User;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -19,6 +24,10 @@ public class LoginActivity extends AppCompatActivity {
         final EditText txtFrom=(EditText) findViewById(R.id.txtFrom);
         final EditText txtTo= (EditText) findViewById(R.id.txtTo);
         Button btnLogin= (Button) findViewById(R.id.sign_in_button);
+
+        ServiceAPI api= new ServiceAPI();
+        String s= api.getUser();
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

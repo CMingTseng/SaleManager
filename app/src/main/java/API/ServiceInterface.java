@@ -17,6 +17,6 @@ public interface ServiceInterface {
     Call<List<User>> getUser();
 
     @Multipart
-    @POST("/upload")
+    @POST("/")
     Call<ResponseBody> postImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
 }

@@ -72,7 +72,7 @@ public class RegisterActivity extends Activity {
             File file = new File(filePath);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("/upload", file.getName(), reqFile);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
 
 //            Log.d("THIS", data.getData().getPath());

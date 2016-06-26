@@ -13,10 +13,11 @@ public class User {
     private String parent;
     private String image;
     private boolean valid;
+    private String test;
     public User() {
     }
 
-    public User(String userName, String passWord, String createDate, String email, String phoneNumber, String fullName, String note, String parent, String image,boolean valid) {
+    public User(String userName, String passWord, String createDate, String email, String phoneNumber, String fullName, String note, String parent, String image,boolean valid,String test) {
         this.userName = userName;
         this.password = passWord;
         this.createDate = createDate;
@@ -27,6 +28,15 @@ public class User {
         this.parent = parent;
         this.image = image;
         this.valid = valid;
+        this.test = test;
+    }
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
     }
 
     public boolean isValid() {

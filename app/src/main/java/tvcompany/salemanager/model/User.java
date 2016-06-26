@@ -1,14 +1,11 @@
 package tvcompany.salemanager.model;
-
-import com.google.gson.annotations.Expose;
-
 import java.util.Date;
 
 
 public class User {
 
     private String userName;
-    private String passWord;
+    private String password;
     private Date createDate;
     private String email;
     private String phoneNumber;
@@ -22,7 +19,7 @@ public class User {
 
     public User(String userName, String passWord, Date createDate, String email, String phoneNumber, String fullName, String note, String parent, String image) {
         this.userName = userName;
-        this.passWord = passWord;
+        this.password = passWord;
         this.createDate = createDate;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -41,11 +38,11 @@ public class User {
     }
 
     public String getPassWord() {
-        return passWord;
+        return password;
     }
 
     public void setPassWord(String passWord) {
-        this.passWord = passWord;
+        this.password = passWord;
     }
 
     public Date getCreateDate() {

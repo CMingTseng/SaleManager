@@ -2,94 +2,90 @@ package tvcompany.salemanager.model;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Date;
+
 
 public class User {
 
-    @Expose
-    private String _id;
+    private String userName;
+    private String passWord;
+    private Date createDate;
+    private String email;
+    private String phoneNumber;
+    private String fullName;
+    private String note;
+    private String parent;
+    private String image;
 
-    @Expose
-    private String data;
-
-    @Expose
-    private String date;
-
-    @Expose
-    private String userRecieve;
-
-    @Expose
-    private String userSend;
-
-    @Expose
-    private String idSort;
-
-    @Expose
-    private String dataType;
-
-    @Expose
-    private String typeAction;
-
-    public String get_id() {
-        return _id;
+    public String getUserName() {
+        return userName;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getData() {
-        return data;
+    public String getPassWord() {
+        return passWord;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 
-    public String getDate() {
-        return date;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
-    public String getUserRecieve() {
-        return userRecieve;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserRecieve(String userRecieve) {
-        this.userRecieve = userRecieve;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUserSend() {
-        return userSend;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setUserSend(String userSend) {
-        this.userSend = userSend;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getIdSort() {
-        return idSort;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setIdSort(String idSort) {
-        this.idSort = idSort;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getDataType() {
-        return dataType;
+    public String getNote() {
+        return note;
     }
 
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
+    public void setNote(String note) {
+        this.note = note;
     }
 
-    public String getTypeAction() {
-        return typeAction;
+    public String getParent() {
+        return parent;
     }
 
-    public void setTypeAction(String typeAction) {
-        this.typeAction = typeAction;
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

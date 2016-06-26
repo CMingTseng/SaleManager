@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,6 +23,23 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        >
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="@dimen/icon_register"
+            android:layout_height="@dimen/icon_register"
+            android:src="@drawable/ic_profile2"
+            android:id="@+id/iconRegister"
+            app:siBorderWidth="1dp"
+            app:siBorderColor="@color/white"
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         >
 
     </TableRow>
@@ -37,9 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:textColor="@color/white"
             android:textColorHint="@color/textHintRegister"
-            android:textCursorDrawable="@color/white"
             android:hint="@string/register_account"
             android:ems="10"
             android:id="@+id/editAccount"
@@ -58,9 +74,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:textColor="@color/white"
+
             android:textColorHint="@color/textHintRegister"
-            android:textCursorDrawable="@color/white"
+
             android:hint="@string/register_pass"
             android:ems="10"
             android:id="@+id/editPass" />
@@ -77,9 +93,9 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="@string/register_passAccess"
-            android:textColor="@color/white"
+
             android:textColorHint="@color/textHintRegister"
-            android:textCursorDrawable="@color/white"
+
             android:ems="10"
             android:id="@+id/editPassAccess" />
     </TableRow>
@@ -95,9 +111,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:textColor="@color/white"
+
             android:textColorHint="@color/textHintRegister"
-            android:textCursorDrawable="@color/white"
+
             android:hint="@string/register_fullName"
             android:ems="10"
             android:id="@+id/editFullName" />
@@ -115,9 +131,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:textColor="@color/white"
+
             android:textColorHint="@color/textHintRegister"
-            android:textCursorDrawable="@color/white"
+
             android:hint="@string/register_email"
             android:ems="10"
             android:id="@+id/editEmail"
@@ -136,9 +152,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:textColor="@color/white"
+
             android:textColorHint="@color/textHintRegister"
-            android:textCursorDrawable="@color/white"
+
             android:hint="@string/register_phone"
             android:ems="10"
             android:id="@+id/editPhone"

@@ -18,33 +18,21 @@ import java.io.FileNotFoundException;
 import API.ServiceAPI;
 import API.ServiceGenerator;
 import API.ServiceInterface;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 import tvcompany.salemanager.R;
-import tvcompany.salemanager.database.DatabaseManager;
 
-/**
- * Created by Administrator on 26/06/2016.
- */
 public class RegisterActivity extends Activity {
     public static final int PICK_IMAGE = 100;
     ServiceInterface service;
+    private ImageView imageView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.upload_file);
-         service=  ServiceGenerator.createService(ServiceInterface.class);
-        Button btn = (Button) findViewById(R.id.btn_upload);
-        if (btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.register_layout);
+
+        imageView=(ImageView) findViewById(R.id.iconRegister);
+
+        if (imageView != null) {
+            imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
@@ -61,6 +49,9 @@ public class RegisterActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
 
+//            ServiceAPI api= new ServiceAPI();
+//            api.uploadFile(data,this);
+
             android.net.Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             android.database.Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -74,11 +65,10 @@ public class RegisterActivity extends Activity {
             cursor.close();
 
             File file = new File(filePath);
-
             BitmapFactory.Options bfOptions=new BitmapFactory.Options();
-            bfOptions.inDither=false;                     //Disable Dithering mode
-            bfOptions.inPurgeable=true;                   //Tell to gc that whether it needs free memory, the Bitmap can be cleared
-            bfOptions.inInputShareable=true;              //Which kind of reference will be used to recover the Bitmap data after being clear, when it will be used in the future
+            bfOptions.inDither=false;
+            bfOptions.inPurgeable=true;
+            bfOptions.inInputShareable=true;
             bfOptions.inTempStorage=new byte[32 * 1024];
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             FileInputStream fs=null;
@@ -88,31 +78,10 @@ public class RegisterActivity extends Activity {
                 //TODO do something intelligent
                 e.printStackTrace();
             }
-            byte[] data2= null;
             try {
-                Bitmap bm = BitmapFactory.decodeFileDescriptor(fs.getFD(), null, bfOptions);
-                bm.compress(Bitmap.CompressFormat.JPEG, 20, bos);
-                data2 = bos.toByteArray();
+                imageView.setImageBitmap(BitmapFactory.decodeFileDescriptor(fs.getFD(), null, bfOptions));
             }
-            catch (Exception ex){
-
-            }
-            RequestBody reqFile = RequestBody.create(MediaType.parse("application/octet-stream"), data2);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
-            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
-
-//            Log.d("THIS", data.getData().getPath());
-
-            retrofit2.Call<okhttp3.ResponseBody> req = service.postImage(body, name);
-            req.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) { }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    t.printStackTrace();
-                }
-            });
+            catch (Exception ex){}
         }
     }
 }

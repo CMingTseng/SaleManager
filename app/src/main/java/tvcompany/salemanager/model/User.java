@@ -17,6 +17,21 @@ public class User {
     private String parent;
     private String image;
 
+    public User() {
+    }
+
+    public User(String userName, String passWord, Date createDate, String email, String phoneNumber, String fullName, String note, String parent, String image) {
+        this.userName = userName;
+        this.passWord = passWord;
+        this.createDate = createDate;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.fullName = fullName;
+        this.note = note;
+        this.parent = parent;
+        this.image = image;
+    }
+
     public String getUserName() {
         return userName;
     }

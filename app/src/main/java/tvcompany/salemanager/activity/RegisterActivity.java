@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -19,18 +20,34 @@ import API.ServiceAPI;
 import API.ServiceGenerator;
 import API.ServiceInterface;
 import tvcompany.salemanager.R;
+import tvcompany.salemanager.model.User;
 
 public class RegisterActivity extends Activity {
     public static final int PICK_IMAGE = 100;
     ServiceInterface service;
     private ImageView imageView;
+    private Button btn_Save;
+    private EditText account, pass, passAccess,fullName,email, phone;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_layout);
 
         imageView=(ImageView) findViewById(R.id.iconRegister);
+        account=(EditText)findViewById(R.id.editAccount);
+        pass=(EditText)findViewById(R.id.editPass);
+        passAccess=(EditText)findViewById(R.id.editPassAccess);
+        fullName=(EditText)findViewById(R.id.editFullName);
+        email=(EditText)findViewById(R.id.editEmail);
+        phone=(EditText)findViewById(R.id.editPhone);
+        btn_Save=(Button) findViewById(R.id.btnRegister);
+        btn_Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user= new User();
 
+            }
+        });
         if (imageView != null) {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

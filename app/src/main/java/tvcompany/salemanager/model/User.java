@@ -1,28 +1,24 @@
 package tvcompany.salemanager.model;
-
-import com.google.gson.annotations.Expose;
-
 import java.util.Date;
 
 
 public class User {
-
     private String userName;
-    private String passWord;
-    private Date createDate;
+    private String password;
+    private String createDate;
     private String email;
     private String phoneNumber;
     private String fullName;
     private String note;
     private String parent;
     private String image;
-
+    private boolean valid;
     public User() {
     }
 
-    public User(String userName, String passWord, Date createDate, String email, String phoneNumber, String fullName, String note, String parent, String image) {
+    public User(String userName, String passWord, String createDate, String email, String phoneNumber, String fullName, String note, String parent, String image,boolean valid) {
         this.userName = userName;
-        this.passWord = passWord;
+        this.password = passWord;
         this.createDate = createDate;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -30,6 +26,15 @@ public class User {
         this.note = note;
         this.parent = parent;
         this.image = image;
+        this.valid = valid;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     public String getUserName() {
@@ -41,18 +46,18 @@ public class User {
     }
 
     public String getPassWord() {
-        return passWord;
+        return password;
     }
 
     public void setPassWord(String passWord) {
-        this.passWord = passWord;
+        this.password = passWord;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 

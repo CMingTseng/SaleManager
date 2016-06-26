@@ -16,11 +16,9 @@ import tvcompany.salemanager.model.User;
  */
 public class ServiceAPI {
     private ServiceInterface git;
-    //private MainViewModel viewModel;
     private String result="";
 
     public ServiceAPI() {
-        //this.viewModel = viewModel;
         this.git =  ServiceGenerator.createService(ServiceInterface.class);
 
     }
@@ -35,45 +33,14 @@ public class ServiceAPI {
                 StrictMode.setThreadPolicy(policy);
             }
             List<User> user = call.execute().body();
-            result="Nhận :"+ user.get(0).get_id()+" Size: "+ user.size();
+            result="Nhận :Size: "+ user.size();
         }
         catch (Exception ex){
             result= ex.toString();
         }
-
-
-//        Call call = git.getUser();
-//        call.enqueue(new Callback<List<User>>() {
-//            @Override
-//            public void onResponse(Response<List<User>> response) {
-//                List<User> model = response.body();
-//
-//                if (model == null) {
-//                    //404 or the response cannot be converted to User.
-//                    ResponseBody responseBody = response.errorBody();
-//                    if (responseBody != null) {
-//                        try {
-//                           result="responseBody = " + responseBody.string();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    } else {
-//                        result= "responseBody  = null";
-//                    }
-//                } else {
-//                    //200
-//                    result="Nhận :"+ model.get(0).get_id()+" Size: "+ model.size();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                result= "t = " + t.getMessage();
-//                //viewModel.setPb(false);
-//            }
-//        });
         return result;
     }
+
+    public void uploadFile(){}
 
 }

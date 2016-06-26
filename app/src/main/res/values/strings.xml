@@ -47,4 +47,15 @@
     <string name="title_activity_profile">ProfileActivity</string>
 
 
+    <!--Register and Login-->
+    <string name="register_Title">Đăng ký tài khoản</string>
+    <string name="register_account">Tên tài khoản</string>
+    <string name="register_pass">Mật khẩu</string>
+    <string name="register_passAccess">Xác nhận mật khẩu</string>
+    <string name="register_fullName">Tên đầy đủ</string>
+    <string name="register_email">Email</string>
+    <string name="register_phone">Số điện thoại</string>
+    <string name="login_account">Tên đăng nhập</string>
+    <string name="login_pass">Mật khẩu đăng nhập</string>
+
 </resources>

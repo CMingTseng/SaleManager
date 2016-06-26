@@ -39,8 +39,9 @@ dependencies {
     }
     //compile files('libs/gson-2.2.2.jar')
     compile 'com.google.code.gson:gson:2.2'
-    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
 
 
 

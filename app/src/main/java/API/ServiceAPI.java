@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -24,6 +25,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import tvcompany.salemanager.activity.RegisterActivity;
 import tvcompany.salemanager.model.Imagessss;
 import tvcompany.salemanager.model.User;
 
@@ -87,21 +90,63 @@ public class ServiceAPI {
         });
     }
 
-    public void SetImage(ImageView image)
-    {
-        Call<ResponseBody> call = git.getImage();
+    public Bitmap getRetrofitImage(Context ct) {
+        Call<ResponseBody> call = git.getImageDetails();
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy =
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
             }
-            ResponseBody user = call.execute().body();
+            return  DownloadImage(call.execute().body(),ct);
 
-            result="Nhận";
         }
         catch (Exception ex){
             result= ex.toString();
+        }
+        return  null;
+    }
+    private Bitmap DownloadImage(ResponseBody body,Context ct) {
+
+        try {
+            Log.d("DownloadImage", "Reading and writing file");
+            InputStream in = null;
+            FileOutputStream out = null;
+
+            try {
+                in = body.byteStream();
+                out = new FileOutputStream(ct.getExternalFilesDir(null) + File.separator + "AndroidTutorialPoint.jpg");
+                int c;
+
+                while ((c = in.read()) != -1) {
+                    out.write(c);
+                }
+            }
+            catch (IOException e) {
+                Log.d("DownloadImage",e.toString());
+
+            }
+            finally {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            }
+
+            int width, height;
+
+            Bitmap bMap = BitmapFactory.decodeFile(ct.getExternalFilesDir(null) + File.separator + "AndroidTutorialPoint.jpg");
+            width = 2*bMap.getWidth();
+            height = 6*bMap.getHeight();
+            Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
+
+            return bMap2;
+
+        } catch (IOException e) {
+            Log.d("DownloadImage",e.toString());
+            return null;
         }
     }
 

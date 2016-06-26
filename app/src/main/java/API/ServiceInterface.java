@@ -35,4 +35,7 @@ public interface ServiceInterface {
 
     @PUT("/DeleteUser")
     Call<Status> DeleteUser(@Query("account") String user);
+
+    @GET("/uploads/Screenshot_2016-05-28-07-39-50.png")
+    Call<ResponseBody> getImageDetails();
 }

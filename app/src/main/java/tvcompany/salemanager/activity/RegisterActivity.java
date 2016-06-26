@@ -3,13 +3,17 @@ package tvcompany.salemanager.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import API.ServiceAPI;
 import API.ServiceGenerator;
@@ -71,7 +75,29 @@ public class RegisterActivity extends Activity {
 
             File file = new File(filePath);
 
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+            BitmapFactory.Options bfOptions=new BitmapFactory.Options();
+            bfOptions.inDither=false;                     //Disable Dithering mode
+            bfOptions.inPurgeable=true;                   //Tell to gc that whether it needs free memory, the Bitmap can be cleared
+            bfOptions.inInputShareable=true;              //Which kind of reference will be used to recover the Bitmap data after being clear, when it will be used in the future
+            bfOptions.inTempStorage=new byte[32 * 1024];
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            FileInputStream fs=null;
+            try {
+                fs = new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                //TODO do something intelligent
+                e.printStackTrace();
+            }
+            byte[] data2= null;
+            try {
+                Bitmap bm = BitmapFactory.decodeFileDescriptor(fs.getFD(), null, bfOptions);
+                bm.compress(Bitmap.CompressFormat.JPEG, 20, bos);
+                data2 = bos.toByteArray();
+            }
+            catch (Exception ex){
+
+            }
+            RequestBody reqFile = RequestBody.create(MediaType.parse("application/octet-stream"), data2);
             MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
 

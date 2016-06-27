@@ -36,7 +36,7 @@ import tvcompany.salemanager.model.User;
 public class ServiceAPI {
     private ServiceInterface git;
     private String result="";
-
+    private  Bitmap bmGet=null;
     public ServiceAPI() {
         this.git =  ServiceGenerator.createService(ServiceInterface.class);
 
@@ -59,7 +59,7 @@ public class ServiceAPI {
         }
         return result;
     }
-
+    // up ảnh lên server
     public void uploadFile(Bitmap bm,String fileName){
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -75,9 +75,6 @@ public class ServiceAPI {
         RequestBody reqFile = RequestBody.create(MediaType.parse("application/octet-stream"), data2);
         MultipartBody.Part body = MultipartBody.Part.createFormData("upload", fileName, reqFile);
         RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
-
-//            Log.d("THIS", data.getData().getPath());
-
         retrofit2.Call<okhttp3.ResponseBody> req = git.postImage(body, name);
         req.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -90,8 +87,9 @@ public class ServiceAPI {
         });
     }
 
+    // get ảnh từ server về
     public Bitmap getRetrofitImage(Context ct) {
-        Call<ResponseBody> call = git.getImageDetails();
+        retrofit2.Call<okhttp3.ResponseBody> call = git.getImageDetails();
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy =
@@ -101,7 +99,7 @@ public class ServiceAPI {
             return BitmapFactory.decodeStream(call.execute().body().byteStream());
         }
         catch (Exception ex){
-            result= ex.toString();
+
         }
         return  null;
     }

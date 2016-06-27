@@ -36,7 +36,7 @@ import tvcompany.salemanager.model.User;
 public class ServiceAPI {
     private ServiceInterface git;
     private String result="";
-
+    private  Bitmap bmGet=null;
     public ServiceAPI() {
         this.git =  ServiceGenerator.createService(ServiceInterface.class);
 
@@ -59,7 +59,7 @@ public class ServiceAPI {
         }
         return result;
     }
-
+    // up ảnh lên server
     public void uploadFile(Bitmap bm,String fileName){
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -75,9 +75,6 @@ public class ServiceAPI {
         RequestBody reqFile = RequestBody.create(MediaType.parse("application/octet-stream"), data2);
         MultipartBody.Part body = MultipartBody.Part.createFormData("upload", fileName, reqFile);
         RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
-
-//            Log.d("THIS", data.getData().getPath());
-
         retrofit2.Call<okhttp3.ResponseBody> req = git.postImage(body, name);
         req.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -90,64 +87,21 @@ public class ServiceAPI {
         });
     }
 
+    // get ảnh từ server về
     public Bitmap getRetrofitImage(Context ct) {
-        Call<ResponseBody> call = git.getImageDetails();
+        retrofit2.Call<okhttp3.ResponseBody> call = git.getImageDetails();
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy =
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
             }
-            return  DownloadImage(call.execute().body(),ct);
-
+            return BitmapFactory.decodeStream(call.execute().body().byteStream());
         }
         catch (Exception ex){
-            result= ex.toString();
+
         }
         return  null;
-    }
-    private Bitmap DownloadImage(ResponseBody body,Context ct) {
-
-        try {
-            Log.d("DownloadImage", "Reading and writing file");
-            InputStream in = null;
-            FileOutputStream out = null;
-
-            try {
-                in = body.byteStream();
-                out = new FileOutputStream(ct.getExternalFilesDir(null) + File.separator + "AndroidTutorialPoint.jpg");
-                int c;
-
-                while ((c = in.read()) != -1) {
-                    out.write(c);
-                }
-            }
-            catch (IOException e) {
-                Log.d("DownloadImage",e.toString());
-
-            }
-            finally {
-                if (in != null) {
-                    in.close();
-                }
-                if (out != null) {
-                    out.close();
-                }
-            }
-
-            int width, height;
-
-            Bitmap bMap = BitmapFactory.decodeFile(ct.getExternalFilesDir(null) + File.separator + "AndroidTutorialPoint.jpg");
-            width = 2*bMap.getWidth();
-            height = 6*bMap.getHeight();
-            Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
-
-            return bMap2;
-
-        } catch (IOException e) {
-            Log.d("DownloadImage",e.toString());
-            return null;
-        }
     }
 
 }

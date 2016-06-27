@@ -28,6 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import tvcompany.salemanager.activity.RegisterActivity;
 import tvcompany.salemanager.model.Imagessss;
+import tvcompany.salemanager.model.Status;
 import tvcompany.salemanager.model.User;
 
 /**
@@ -53,6 +54,23 @@ public class ServiceAPI {
             }
             List<User> user = call.execute().body();
             result="Nhận :Size: "+ user.size();
+        }
+        catch (Exception ex){
+            result= ex.toString();
+        }
+        return result;
+    }
+    // thêm mới user
+    public String AddUser(User user) {
+        Call<Status> call =  git.addUser(user);
+        try{
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy =
+                        new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+           Status status = call.execute().body();
+            result="Nhận :Size: "+ status.getStatus();
         }
         catch (Exception ex){
             result= ex.toString();

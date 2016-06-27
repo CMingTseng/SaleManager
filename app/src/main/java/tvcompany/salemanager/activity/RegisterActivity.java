@@ -15,11 +15,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import API.ServiceAPI;
 import API.ServiceGenerator;
 import API.ServiceInterface;
 import tvcompany.salemanager.R;
+import tvcompany.salemanager.library.MD5;
 import tvcompany.salemanager.model.User;
 
 public class RegisterActivity extends Activity {
@@ -27,6 +31,7 @@ public class RegisterActivity extends Activity {
     ServiceInterface service;
     private ImageView imageView;
     private Button btn_Save;
+    private User user=null;
     private EditText account, pass, passAccess,fullName,email, phone;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,35 @@ public class RegisterActivity extends Activity {
         btn_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user= new User();
+
+
+                if(pass.getText().toString().equals(passAccess.getText().toString())){
+                    user = new User();
+                    user.setUserName(account.getText().toString());
+                    user.setPassWord(account.getText().toString());
+                    user.setFullName(fullName.getText().toString());
+                    user.setNote("");
+                    user.setEmail(email.getText().toString());
+                    user.setPhoneNumber(phone.getText().toString());
+                    MD5 md5= new MD5();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date();
+
+                    String datestr = dateFormat.format(date);
+                    user.setCreateDate(datestr);
+                    try{
+                        String image= account.getText().toString()+ "::" +md5.getMD5(account.getText().toString()+datestr)+".jpg";
+                        user.setImage(image);
+                    }catch (Exception ex){
+
+                    }
+                    user.setParent(account.getText().toString());
+
+                    ServiceAPI serviceAPI= new ServiceAPI();
+                    serviceAPI.AddUser(user);
+
+                }
+
 
             }
         });

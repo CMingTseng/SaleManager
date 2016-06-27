@@ -11,6 +11,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
+import retrofit2.ScalarsConverterFactory;
 
 public class ServiceGenerator {
 
@@ -21,7 +22,9 @@ public class ServiceGenerator {
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create());
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    ;
 
     public static <S> S createService(Class<S> serviceClass) {
         return createService(serviceClass, null, null);

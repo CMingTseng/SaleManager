@@ -30,7 +30,9 @@ public interface ServiceInterface {
     @GET("/GetAccount")
     Call<User> getFuck(@Query("account") String account);
 
-    @Headers("Content-Type: application/json")
+    @GET("/CheckLogin")
+    Call<Status> CheckLogin(@Query("userName") String userName,@Query("password") String password);
+
     @POST("/AddUser")
     Call<Status> addUser(@Body User user);
 

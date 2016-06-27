@@ -16,15 +16,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     public static final String API_BASE_URL = "http://192.168.0.10:3000/";
-
+    static ServiceInterface git;
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-
-                    ;
+                    .addConverterFactory(GsonConverterFactory.create());
 
     public static <S> S createService(Class<S> serviceClass) {
         return createService(serviceClass, null, null);
@@ -43,8 +41,8 @@ public class ServiceGenerator {
 
                     Request.Builder requestBuilder = original.newBuilder()
                             .header("Authorization", basic)
-                    .header("Accept", "application/json")
-                    .method(original.method(), original.body());
+                            .header("Accept", "application/json")
+                            .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
@@ -56,4 +54,10 @@ public class ServiceGenerator {
         Retrofit retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);
     }
+
+    public static ServiceInterface GetInstance() {
+        if (git == null) git = createService(ServiceInterface.class);
+        return git;
+    }
+
 }

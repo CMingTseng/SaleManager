@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,51 +33,59 @@ public class RegisterActivity extends Activity {
     ServiceInterface service;
     private ImageView imageView;
     private Button btn_Save;
-    private User user=null;
-    private EditText account, pass, passAccess,fullName,email, phone;
+    private User user = null;
+    private Bitmap bm = null;
+    private EditText account, pass, passAccess, fullName, email, phone;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_layout);
 
-        imageView=(ImageView) findViewById(R.id.iconRegister);
-        account=(EditText)findViewById(R.id.editAccount);
-        pass=(EditText)findViewById(R.id.editPass);
-        passAccess=(EditText)findViewById(R.id.editPassAccess);
-        fullName=(EditText)findViewById(R.id.editFullName);
-        email=(EditText)findViewById(R.id.editEmail);
-        phone=(EditText)findViewById(R.id.editPhone);
-        btn_Save=(Button) findViewById(R.id.btnRegister);
+        imageView = (ImageView) findViewById(R.id.iconRegister);
+        account = (EditText) findViewById(R.id.editAccount);
+        pass = (EditText) findViewById(R.id.editPass);
+        passAccess = (EditText) findViewById(R.id.editPassAccess);
+        fullName = (EditText) findViewById(R.id.editFullName);
+        email = (EditText) findViewById(R.id.editEmail);
+        phone = (EditText) findViewById(R.id.editPhone);
+        btn_Save = (Button) findViewById(R.id.btnRegister);
         btn_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                if(pass.getText().toString().equals(passAccess.getText().toString())){
+                if (pass.getText().toString().equals(passAccess.getText().toString())) {
                     user = new User();
                     user.setUserName(account.getText().toString());
-                    user.setPassWord(account.getText().toString());
+                    user.setPassWord(pass.getText().toString());
                     user.setFullName(fullName.getText().toString());
                     user.setNote("");
                     user.setEmail(email.getText().toString());
                     user.setPhoneNumber(phone.getText().toString());
-                    MD5 md5= new MD5();
+                    MD5 md5 = new MD5();
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date();
-
                     String datestr = dateFormat.format(date);
                     user.setCreateDate(datestr);
-                    try{
-                        String image= account.getText().toString()+ "::" +md5.getMD5(account.getText().toString()+datestr)+".jpg";
+                    try {
+                        String image = account.getText().toString() + "::" + md5.getMD5(account.getText().toString() + datestr) + ".jpg";
                         user.setImage(image);
-                    }catch (Exception ex){
+                    } catch (Exception ex) {
 
                     }
                     user.setParent(account.getText().toString());
                     user.setValid(true);
-                    ServiceAPI serviceAPI= new ServiceAPI();
-                    serviceAPI.AddUser(user);
 
+                    ServiceAPI serviceAPI = new ServiceAPI();
+                    String status = serviceAPI.AddUser(user);
+                    if (status.equals("Success")) {
+                        if (bm != null) {
+                            serviceAPI.uploadFile(bm, user.getImage());
+                        }
+                    }
+                } else {
+                    // xác thực password
+                    Toast.makeText(RegisterActivity.this, "Xác nhận mật khẩu sai!", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -99,10 +108,6 @@ public class RegisterActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-
-//            ServiceAPI api= new ServiceAPI();
-//            api.uploadFile(data,this);
-
             android.net.Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             android.database.Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -116,13 +121,13 @@ public class RegisterActivity extends Activity {
             cursor.close();
 
             File file = new File(filePath);
-            BitmapFactory.Options bfOptions=new BitmapFactory.Options();
-            bfOptions.inDither=false;
-            bfOptions.inPurgeable=true;
-            bfOptions.inInputShareable=true;
-            bfOptions.inTempStorage=new byte[32 * 1024];
+            BitmapFactory.Options bfOptions = new BitmapFactory.Options();
+            bfOptions.inDither = false;
+            bfOptions.inPurgeable = true;
+            bfOptions.inInputShareable = true;
+            bfOptions.inTempStorage = new byte[32 * 1024];
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            FileInputStream fs=null;
+            FileInputStream fs = null;
             try {
                 fs = new FileInputStream(file);
             } catch (FileNotFoundException e) {
@@ -130,9 +135,10 @@ public class RegisterActivity extends Activity {
                 e.printStackTrace();
             }
             try {
-                imageView.setImageBitmap(BitmapFactory.decodeFileDescriptor(fs.getFD(), null, bfOptions));
+                bm = BitmapFactory.decodeFileDescriptor(fs.getFD(), null, bfOptions);
+                imageView.setImageBitmap(bm);
+            } catch (Exception ex) {
             }
-            catch (Exception ex){}
         }
     }
 }

@@ -73,7 +73,9 @@ public class ServiceAPI {
                 StrictMode.setThreadPolicy(policy);
             }
            Status status = call.execute().body();
-            result="Nhận :Size: "+ status.getStatus();
+            result=status.getStatus();
+
+
         }
         catch (Exception ex){
             result= ex.toString();
@@ -95,8 +97,7 @@ public class ServiceAPI {
         }
         RequestBody reqFile = RequestBody.create(MediaType.parse("application/octet-stream"), data2);
         MultipartBody.Part body = MultipartBody.Part.createFormData("upload", fileName, reqFile);
-        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
-        retrofit2.Call<okhttp3.ResponseBody> req = git.postImage(body, name);
+        retrofit2.Call<okhttp3.ResponseBody> req = git.postImage(body);
         req.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) { }

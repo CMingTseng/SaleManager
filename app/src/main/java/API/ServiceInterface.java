@@ -25,7 +25,7 @@ public interface ServiceInterface {
 
     @Multipart
     @POST("/")
-    Call<ResponseBody> postImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
+    Call<ResponseBody> postImage(@Part MultipartBody.Part image);
 
     @GET("/GetAccount")
     Call<User> getFuck(@Query("account") String account);

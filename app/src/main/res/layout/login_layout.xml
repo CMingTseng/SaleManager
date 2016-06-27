@@ -55,9 +55,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:textColor="@color/white"
+
             android:textColorHint="@color/textHintRegister"
-            android:textCursorDrawable="@color/white"
+
             android:hint="@string/login_account"
             android:ems="10"
             android:id="@+id/editAccountLogin" />
@@ -74,9 +74,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:textColor="@color/white"
+
             android:textColorHint="@color/textHintRegister"
-            android:textCursorDrawable="@color/white"
+
             android:hint="@string/login_pass"
             android:ems="10"
             android:id="@+id/editPassLogin" />
@@ -93,6 +93,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/bg_msg_you"
             android:text="Đăng nhập"
             android:id="@+id/btnLogin" />
     </TableRow>

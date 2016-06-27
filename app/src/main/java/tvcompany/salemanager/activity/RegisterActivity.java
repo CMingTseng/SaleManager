@@ -24,6 +24,7 @@ import API.ServiceGenerator;
 import API.ServiceInterface;
 import tvcompany.salemanager.R;
 import tvcompany.salemanager.library.MD5;
+import tvcompany.salemanager.model.Order;
 import tvcompany.salemanager.model.User;
 
 public class RegisterActivity extends Activity {
@@ -72,7 +73,7 @@ public class RegisterActivity extends Activity {
 
                     }
                     user.setParent(account.getText().toString());
-
+                    user.setValid(true);
                     ServiceAPI serviceAPI= new ServiceAPI();
                     serviceAPI.AddUser(user);
 

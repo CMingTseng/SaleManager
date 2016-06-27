@@ -28,6 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import tvcompany.salemanager.activity.RegisterActivity;
 import tvcompany.salemanager.model.Imagessss;
+import tvcompany.salemanager.model.Order;
 import tvcompany.salemanager.model.Status;
 import tvcompany.salemanager.model.User;
 
@@ -60,8 +61,10 @@ public class ServiceAPI {
         }
         return result;
     }
+
     // thêm mới user
     public String AddUser(User user) {
+
         Call<Status> call =  git.addUser(user);
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {

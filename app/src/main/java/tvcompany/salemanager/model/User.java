@@ -1,33 +1,41 @@
 package tvcompany.salemanager.model;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.Date;
 
 
-public class User {
+public class User{
+    @Expose
     private String userName;
+    @Expose
     private String password;
+    @Expose
     private String createDate;
+    @Expose
     private String email;
+    @Expose
     private String phoneNumber;
+    @Expose
     private String fullName;
+    @Expose
     private String note;
+    @Expose
     private String parent;
+    @Expose
     private String image;
+    @Expose
+    private boolean valid;
 
-    public User() {
+    public boolean isValid() {
+        return valid;
     }
 
-    public User(String userName, String passWord, String createDate, String email, String phoneNumber, String fullName, String note, String parent, String image) {
-        this.userName = userName;
-        this.password = passWord;
-        this.createDate = createDate;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.fullName = fullName;
-        this.note = note;
-        this.parent = parent;
-        this.image = image;
-
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
+
     public String getUserName() {
         return userName;
     }

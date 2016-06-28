@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@mipmap/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_Title"
+            android:textColor="@color/bg_msg_you"
+            android:id="@+id/textView"
+            android:textSize="28sp"
+            android:textStyle="italic"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_weight="0.06" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        >
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="@dimen/icon_register"
+            android:layout_height="@dimen/icon_register"
+            android:src="@drawable/ic_profile2"
+            android:id="@+id/iconRegister"
+            app:siBorderWidth="1dp"
+            app:siBorderColor="@color/white"
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+
+            android:textColorHint="@color/textHintRegister"
+
+            android:hint="@string/login_account"
+            android:ems="10"
+            android:id="@+id/editAccountLogin" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+
+            android:textColorHint="@color/textHintRegister"
+
+            android:hint="@string/login_pass"
+            android:ems="10"
+            android:id="@+id/editPassLogin" />
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+        <CheckBox android:id="@+id/remember_me"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:singleLine="true"
+            android:text="Ghi nhớ đăng nhập"
+            android:checked="true"
+            />
+        </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_msg_you"
+            android:text="Đăng nhập"
+            android:id="@+id/btnLogin" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="right"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/txtRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/login_register"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="right"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/txtForget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/login_forget"/>
+    </TableRow>
+
+</LinearLayout>

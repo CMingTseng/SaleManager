@@ -21,7 +21,7 @@ import tvcompany.salemanager.model.Contact;
 
 public class ProductAdapter extends BaseAdapter {
     private Context context;
-    boolean flag=true;
+    boolean flag=false;
     private List<Contact> contactItems;
     public ProductAdapter(Context context, List<Contact> navDrawerItems) {
         this.context = context;
@@ -51,6 +51,14 @@ public class ProductAdapter extends BaseAdapter {
         ImageView imgView = (ImageView) convertView.findViewById(R.id.iconProductList);
         FrameLayout fr= (FrameLayout) convertView.findViewById(R.id.cart);
         final TableRow tableRow=(TableRow) convertView.findViewById(R.id.orderDetail);
+        tableRow.setVisibility(View.GONE);
+        if(position%2==0){
+            // set ảnh nếu có
+            imgView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon));
+        }
+        else{
+            imgView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.vietfuck));
+        }
         fr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,14 +72,6 @@ public class ProductAdapter extends BaseAdapter {
                 }
             }
         });
-
-        if(position%2==0){
-            // set ảnh nếu có
-            imgView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon));
-        }
-        else{
-            imgView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.vietfuck));
-        }
         return convertView;
     }
 }

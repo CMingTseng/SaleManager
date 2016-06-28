@@ -101,7 +101,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/orderDetail"
-        android:visibility="gone"
+
         android:weightSum="1"
         android:layout_below="@+id/thumbnail">
 

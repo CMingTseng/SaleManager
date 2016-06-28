@@ -44,6 +44,8 @@ public class ProductSearch extends Activity {
         listContact.add(contact2);
         ///Adapter
         listViewContact = (ListView) findViewById(R.id.listProduct);
+        listViewContact.setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
+
         adapter = new ProductAdapter(ProductSearch.this, listContact);
         listViewContact.setAdapter(adapter);
 
@@ -53,5 +55,6 @@ public class ProductSearch extends Activity {
 
             }
         });
+
     }
 }

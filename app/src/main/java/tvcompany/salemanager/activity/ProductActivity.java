@@ -61,7 +61,7 @@ public class ProductActivity extends AppCompatActivity {
 
         // Spinner
         ArrayList<String> list= new ArrayList<String>();
-        list.add("VietFuck");
+        list.add("VietFuck");//
         list.add("Gandalf");
         productShop = (Spinner) findViewById(R.id.product_shop);
         ArrayAdapter adapter=new ArrayAdapter<String>(ProductActivity.this, android.R.layout.simple_spinner_item, list);

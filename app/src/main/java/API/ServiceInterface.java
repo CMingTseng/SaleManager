@@ -52,6 +52,16 @@ public interface ServiceInterface {
     @POST("/AddOrder")
     Call<Status> newOrder(@Body Order order);
 
+    //Shop service
+    @GET("/GetShop")
+    Call<Shop> getShop(@Query("_id") String _id);
+
     @POST("/AddShop")
     Call<Status> addShop(@Body Shop shop);
+
+    @PUT("/UpdateShop")
+    Call<Status> UpdateShop(@Body User user);
+
+    @PUT("/DeleteShop")
+    Call<Status> DeleteShop(@Query("_id") String _id);
 }

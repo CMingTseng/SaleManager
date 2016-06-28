@@ -15,9 +15,6 @@ import java.util.List;
 import tvcompany.salemanager.R;
 import tvcompany.salemanager.model.Contact;
 
-/**
- * Created by Administrator on 27/06/2016.
- */
 public class ProductAdapter extends BaseAdapter {
     private Context context;
     private List<Contact> contactItems;

@@ -67,4 +67,14 @@
     <string name="shop_Address">Địa chỉ</string>
     <string name="shop_Note">Ghi chú</string>
     <string name="shop_BtnAdd">Đăng ký</string>
+    <!--Product-->
+    <string name="product_Title">Tạo mới hàng hóa</string>
+    <string name="product_ID">Mã hàng hóa</string>
+    <string name="product_Name">Tên hàng hóa</string>
+    <string name="product_purchase">Giá mua</string>
+    <string name="product_order">Giá bán</string>
+    <string name="product_shop">Cửa hàng</string>
+    <string name="product_groupproduct">Nhóm hàng</string>
+    <string name="product_note">Ghi chú</string>
+    <string name="product_btnAdd">Thêm mới</string>
 </resources>

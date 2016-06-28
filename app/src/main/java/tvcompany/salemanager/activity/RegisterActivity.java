@@ -79,12 +79,12 @@ public class RegisterActivity extends Activity {
                     Toast.makeText(RegisterActivity.this, "Xác nhận mật khẩu sai!", Toast.LENGTH_LONG).show();
                 } else {
                     user = new User();
-                    user.setUserName(account.getText().toString());
-                    user.setPassWord(pass.getText().toString());
-                    user.setFullName(fullName.getText().toString());
+                    user.setUserName(valid.ReplaceToValidString(account.getText().toString().trim()));
+                    user.setPassWord(pass.getText().toString().trim());
+                    user.setFullName(fullName.getText().toString().trim());
                     user.setNote("");
-                    user.setEmail(email.getText().toString());
-                    user.setPhoneNumber(phone.getText().toString());
+                    user.setEmail(email.getText().toString().trim());
+                    user.setPhoneNumber(phone.getText().toString().trim());
                     user.setActive(false);
                     MD5 md5 = new MD5();
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

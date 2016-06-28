@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -22,93 +23,96 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import tvcompany.salemanager.R;
-import tvcompany.salemanager.controller.login.ShopController;
+import tvcompany.salemanager.controller.login.ProductController;
 import tvcompany.salemanager.controller.login.UploadFileController;
 import tvcompany.salemanager.controller.login.UserController;
 import tvcompany.salemanager.library.GlobalValue;
 import tvcompany.salemanager.library.MD5;
 import tvcompany.salemanager.library.ValidString;
+import tvcompany.salemanager.model.Product;
 import tvcompany.salemanager.model.Shop;
 
-public class ShopActivity extends AppCompatActivity {
+public class ProductActivity extends AppCompatActivity {
 
     public static final int PICK_IMAGE = 100;
     private ImageView imageView;
-    private Button btn_Save;
-    private Shop shop = null;
+    private Button product_btnAdd;
+    private Product product = null;
     private Bitmap bm = null;
-    private EditText shopID, shopName, shopAddress, shopNote;
+    private EditText productID, productName, productPurchase, productOrder,product_shop,product_groupproduct;
     private ValidString valid;
-    ShopController shopController;
+    private ProductController productController;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.newshop_layout);
+        setContentView(R.layout.newproduct_layout);
 
-        imageView = (ImageView) findViewById(R.id.iconNewShop);
-        shopID = (EditText) findViewById(R.id.shopId);
-        shopName = (EditText) findViewById(R.id.shopName);
-        shopAddress = (EditText) findViewById(R.id.shopAddress);
-        shopNote = (EditText) findViewById(R.id.shopNote);
-        btn_Save = (Button) findViewById(R.id.btnSaveShop);
+        imageView = (ImageView) findViewById(R.id.iconProduct);
+        productID = (EditText) findViewById(R.id.productID);
+        productName = (EditText) findViewById(R.id.productName);
+        productPurchase = (EditText) findViewById(R.id.productPurchase);
+        productOrder = (EditText) findViewById(R.id.productOrder);
+        product_shop = (EditText) findViewById(R.id.productShop);
+        product_groupproduct = (EditText) findViewById(R.id.productGroup);
+        product_btnAdd = (Button) findViewById(R.id.btnSaveShop);
         valid = new ValidString();
-        shopController = new ShopController();
-        btn_Save.setOnClickListener(new View.OnClickListener() {
+        productController = new ProductController();
+        Spinner spinner = (Spinner) findViewById(R.id.product_spinner);
+
+        product_btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!valid.CheckValidLengthRegex(shopID.getText().toString()))
+                if(!valid.CheckValidLengthRegex(productID.getText().toString()))
                 {
-                    Toast.makeText(ShopActivity.this,  "Mã cửa hàng phải chứa ít nhất 6 ký tự và không có dấu", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProductActivity.this,  "Mã hàng hóa phải chứa ít nhất 6 ký tự và không có dấu", Toast.LENGTH_LONG).show();
                 }
                 else
-                if(!valid.CheckSpecialCharacter(shopID.getText().toString()))
+                if(!valid.CheckSpecialCharacter(productID.getText().toString()))
                 {
-                    Toast.makeText(ShopActivity.this,  "Mã cửa hàng không được chưa ký tự đặc biệt", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProductActivity.this,  "Mã hàng hóa không được chưa ký tự đặc biệt", Toast.LENGTH_LONG).show();
                 }
-                if(!valid.CheckValidLength(shopName.getText().toString()))
+                if(!valid.CheckValidLength(productName.getText().toString()))
                 {
-                    Toast.makeText(ShopActivity.this,  "Tên cửa hàng phải chứa ít nhất 6 ký tự", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProductActivity.this,  "Tên hàng hóa phải chứa ít nhất 6 ký tự", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    shop = new Shop();
-                    shop.setId(valid.ReplaceToValidString(shopID.getText().toString().trim()));
-                    shop.setShopName(shopName.getText().toString().trim());
-                    shop.setAddress(shopAddress.getText().toString().trim());
-                    shop.setNote(shopNote.getText().toString().trim());
-                    shop.setValid(true);
-                    shop.setManager("");
-                    shop.setLongitude(200);
-                    shop.setLatitude(200);
-                    shop.setManager(new UserController().GetUserID(GlobalValue.USERNAME));
+                    product = new Product();
+                    product.setID(valid.ReplaceToValidString(productID.getText().toString().trim()));
+                    product.setProductName(productName.getText().toString().trim());
+                    product.setMoneyPurchase(Double.parseDouble(productPurchase.getText().toString().trim()));
+                    product.setMoneyOrder(Double.parseDouble(productOrder.getText().toString().trim()));
+                    product.setShopId("");
+                    product.setGroupProduct("");
+                    product.setNote("");
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date();
                     String datestr = dateFormat.format(date);
-                    shop.setCreateDate(datestr);
+                    product.setCreateDate(datestr);
                     try {
                         if(bm == null)
                         {
-                            shop.setImage("");
+                            product.setImage("");
                         }
                         else
                         {
                             MD5 md5 = new MD5();
-                            String image = GlobalValue.USERNAME + "::" + md5.getMD5(shop.getId()  + datestr) + ".jpg";
-                            shop.setImage(image);
+                            String image = GlobalValue.USERNAME + "::" + md5.getMD5(product.getID() + datestr) + ".jpg";
+                            product.setImage(image);
                         }
 
                     } catch (Exception ex) {
 
                     }
-                    if (shopController.AddShop(shop)) {
+                    if (productController.addProduct(product)) {
                         if (bm != null) {
-                            new UploadFileController().uploadFile(bm,shop.getImage());
+                            new UploadFileController().uploadFile(bm,product.getImage());
                         }
-                        Toast.makeText(ShopActivity.this, "Đăng ký cửa hàng thành công!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProductActivity.this, "Thêm mới hàng hóa thành công!", Toast.LENGTH_LONG).show();
                     }
                     else
                     {
-                        Toast.makeText(ShopActivity.this, "Cửa hàng đã tồn tại. Vui lòng nhập lại mã cửa hàng!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProductActivity.this, "Hàng hóa đã tồn tại. Vui lòng nhập lại mã hàng hóa!", Toast.LENGTH_LONG).show();
                     }
                 }
             }

@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
         <activity
-            android:name=".activity.ProductSearch"
+            android:name=".activity.ProductActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +29,7 @@
         <activity android:name=".activity.ReloadImage" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ShopActivity" />
-        <activity android:name=".activity.ProductActivity"></activity>
+        <activity android:name=".activity.ProductSearch"></activity>
     </application>
 
 </manifest>

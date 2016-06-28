@@ -41,7 +41,8 @@ public class ProductActivity extends AppCompatActivity {
     private Button product_btnAdd;
     private Product product = null;
     private Bitmap bm = null;
-    private EditText productID, productName, productPurchase, productOrder,product_shop,product_groupproduct;
+    private EditText productID, productName, productPurchase, productOrder;
+    private Spinner productShop,productGroup;
     private ValidString valid;
     private ProductController productController;
     @Override
@@ -54,9 +55,7 @@ public class ProductActivity extends AppCompatActivity {
         productName = (EditText) findViewById(R.id.productName);
         productPurchase = (EditText) findViewById(R.id.productPurchase);
         productOrder = (EditText) findViewById(R.id.productOrder);
-        product_shop = (EditText) findViewById(R.id.productShop);
-        product_groupproduct = (EditText) findViewById(R.id.productGroup);
-        product_btnAdd = (Button) findViewById(R.id.btnSaveShop);
+        product_btnAdd = (Button) findViewById(R.id.btnProductAdd);
         valid = new ValidString();
         productController = new ProductController();
 
@@ -64,10 +63,13 @@ public class ProductActivity extends AppCompatActivity {
         ArrayList<String> list= new ArrayList<String>();
         list.add("VietFuck");
         list.add("Gandalf");
-        Spinner spinner = (Spinner) findViewById(R.id.product_spinner);
+        productShop = (Spinner) findViewById(R.id.product_shop);
         ArrayAdapter adapter=new ArrayAdapter<String>(ProductActivity.this, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        productShop.setAdapter(adapter);
+
+        productGroup = (Spinner) findViewById(R.id.product_group);
+        productGroup.setAdapter(adapter);
         //--------------------------------------------------
         product_btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

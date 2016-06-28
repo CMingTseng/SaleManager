@@ -90,7 +90,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:hint="@string/product_purchase"
             android:textColorHint="@color/textHintRegister"
             android:ems="10"
@@ -107,7 +107,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/textHintRegister"
             android:hint="@string/product_order"
             android:ems="10"
@@ -121,15 +121,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         >
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textColorHint="@color/textHintRegister"
-            android:hint="@string/product_shop"
-            android:ems="10"
-            android:id="@+id/productShop"
-            android:layout_weight="1" />
+        <Spinner
+            android:id="@+id/product_shop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </TableRow>
     <TableRow
         android:layout_width="match_parent"
@@ -138,15 +133,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         >
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textColorHint="@color/textHintRegister"
-            android:hint="@string/product_groupproduct"
-            android:ems="10"
-            android:id="@+id/productGroup"
-            android:layout_weight="1" />
+        <Spinner
+            android:id="@+id/product_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </TableRow>
 
     <TableRow
@@ -167,18 +157,7 @@
             android:layout_weight="1" />
     </TableRow>
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-    <Spinner
-        android:id="@+id/product_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    </TableRow>
+
 
     <TableRow
         android:layout_width="match_parent"

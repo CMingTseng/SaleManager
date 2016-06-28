@@ -27,6 +27,16 @@ public class User{
     private String image;
     @Expose
     private boolean valid;
+    @Expose
+    private boolean active;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public boolean isValid() {
         return valid;

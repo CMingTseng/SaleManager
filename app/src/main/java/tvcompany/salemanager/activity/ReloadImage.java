@@ -37,7 +37,7 @@ public class ReloadImage extends Activity {
             @Override
             public void onClick(View v) {
                 ServiceAPI api= new ServiceAPI();
-                //Bitmap bm= api.getRetrofitImage(ReloadImage.this);
+                Bitmap bm= api.getRetrofitImage(ReloadImage.this);
                 //ImageView imageView=(ImageView) findViewById(R.id.imageViewId);
                 //imageView.setImageBitmap(bm);
 

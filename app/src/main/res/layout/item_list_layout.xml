@@ -66,11 +66,30 @@
     <!-- Rightend Duration -->
 
     <!-- Rightend Arrow -->
-    <ImageView android:layout_width="@dimen/icon_cart_product"
+
+    <FrameLayout
+        android:layout_width="@dimen/icon_cart_product"
         android:layout_height="@dimen/icon_cart_product"
-        android:src="@mipmap/cart"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/shop"
-        android:layout_alignBottom="@+id/price" />
+        android:layout_alignBottom="@+id/price"
+        android:id="@+id/cart"
+        >
+        <ImageView
+            android:id="@+id/counter"
+            android:layout_width="39dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:src="@mipmap/cart"
+            android:layout_gravity="center" />
+        <TextView
+            android:id="@+id/counter_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textColor="@color/server_status_bar"
+            android:layout_gravity="center_horizontal" />
+
+    </FrameLayout>
 
 </RelativeLayout>

@@ -15,8 +15,7 @@
         android:id="@+id/listProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:divider="#b5b5b5"
-        android:dividerHeight="1dp"
+
         />
 
 

@@ -64,6 +64,7 @@ public class ProductAdapter extends BaseAdapter {
                 }
             }
         });
+
         if(position%2==0){
             // set ảnh nếu có
             imgView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon));

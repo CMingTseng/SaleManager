@@ -3,17 +3,22 @@ package tvcompany.salemanager.controller.login;
 import android.os.StrictMode;
 
 import API.ServiceGenerator;
+import API.ServiceInterface;
 import retrofit2.Call;
 import tvcompany.salemanager.model.Shop;
 import tvcompany.salemanager.model.Status;
 
-/**
- * Created by MtViet on 28/06/2016.
- */
 public class ShopController {
+
+    private ServiceInterface service;
+    public ShopController()
+    {
+        service =ServiceGenerator.GetInstance();
+    }
+
     public boolean AddShop(Shop shop)
     {
-        Call<Status> status = ServiceGenerator.GetInstance().addShop(shop);
+        Call<Status> status = service.addShop(shop);
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy =

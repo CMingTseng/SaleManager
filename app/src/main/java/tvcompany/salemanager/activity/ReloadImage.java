@@ -2,23 +2,14 @@ package tvcompany.salemanager.activity;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import API.ServiceAPI;
-import API.ServiceInterface;
-import okhttp3.ResponseBody;
 import tvcompany.salemanager.R;
+import tvcompany.salemanager.controller.login.UploadFileController;
 
 
 /**
@@ -37,9 +28,10 @@ public class ReloadImage extends Activity {
             @Override
             public void onClick(View v) {
                 ServiceAPI api= new ServiceAPI();
-                //Bitmap bm= api.getRetrofitImage(ReloadImage.this);
-                //ImageView imageView=(ImageView) findViewById(R.id.imageViewId);
-                //imageView.setImageBitmap(bm);
+                String s = "viet::c4261e05e1151b36f9e89aa0068f5e07.jpg";
+                Bitmap bm= new UploadFileController().getImage(s.replace("::","/"));
+                ImageView imageView=(ImageView) findViewById(R.id.imageViewId);
+                imageView.setImageBitmap(bm);
 
             }
         });

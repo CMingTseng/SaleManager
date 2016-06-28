@@ -110,20 +110,20 @@ public class ServiceAPI {
     }
 
     // get ảnh từ server về
-    public Bitmap getRetrofitImage(Context ct) {
-        retrofit2.Call<okhttp3.ResponseBody> call = git.getImageDetails();
-        try{
-            if (android.os.Build.VERSION.SDK_INT > 9) {
-                StrictMode.ThreadPolicy policy =
-                        new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-            }
-            return BitmapFactory.decodeStream(call.execute().body().byteStream());
-        }
-        catch (Exception ex){
-
-        }
-        return  null;
-    }
+//    public Bitmap getRetrofitImage(Context ct) {
+//        retrofit2.Call<okhttp3.ResponseBody> call = git.getImageDetails();
+//        try{
+//            if (android.os.Build.VERSION.SDK_INT > 9) {
+//                StrictMode.ThreadPolicy policy =
+//                        new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//                StrictMode.setThreadPolicy(policy);
+//            }
+//            return BitmapFactory.decodeStream(call.execute().body().byteStream());
+//        }
+//        catch (Exception ex){
+//
+//        }
+//        return  null;
+//    }
 
 }

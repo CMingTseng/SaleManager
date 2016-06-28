@@ -26,7 +26,7 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ReloadImage" />
         <activity android:name=".activity.ProductSearch" />
-
+        <activity android:name=".activity.ShopActivity" />
 
     </application>
 

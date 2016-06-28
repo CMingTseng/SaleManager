@@ -86,7 +86,7 @@ public class ServiceAPI {
     public void uploadFile(Bitmap bm,String fileName){
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
+        bm.createScaledBitmap(bm, 100,100, true);
         byte[] data2= null;
         try {
             bm.compress(Bitmap.CompressFormat.JPEG, 50, bos);

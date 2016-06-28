@@ -9,6 +9,7 @@ public class SharedConstant {
     public static String LOGIN_PASSWORD = "login_passsword";
 
     public static String LOGIN_STAFF = "store_staff_info";
+    public static String KEEP_LOGIN = "keep_login";
     //------
 
 

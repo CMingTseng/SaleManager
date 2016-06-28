@@ -25,6 +25,7 @@ import API.ServiceGenerator;
 import API.ServiceInterface;
 import tvcompany.salemanager.R;
 import tvcompany.salemanager.controller.login.ShopController;
+import tvcompany.salemanager.controller.login.UploadFileController;
 import tvcompany.salemanager.controller.login.UserController;
 import tvcompany.salemanager.library.MD5;
 import tvcompany.salemanager.library.ValidString;
@@ -34,7 +35,6 @@ import tvcompany.salemanager.model.User;
 
 public class RegisterActivity extends Activity {
     public static final int PICK_IMAGE = 100;
-    ServiceInterface service;
     private ImageView imageView;
     private Button btn_Save;
     private User user = null;
@@ -109,13 +109,11 @@ public class RegisterActivity extends Activity {
                     user.setParent(account.getText().toString());
                     user.setValid(true);
 
-                    ServiceAPI serviceAPI = new ServiceAPI();
-                    String status = serviceAPI.AddUser(user);
-                    if (status.equals("Success")) {
+                    if (userController.AddUser(user)) {
                         new ShopController().AddShop(new Shop(user.getUserName(),user.getUserName(),
                                 new Date().toString(),200,200,"",userController.GetUserID(user.getUserName()),"","",true));
                         if (bm != null) {
-                            serviceAPI.uploadFile(bm, user.getImage());
+                            new UploadFileController().uploadFile(bm, user.getImage());
                         }
                         Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_LONG).show();
                     }

@@ -21,15 +21,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import API.ServiceAPI;
-import API.ServiceInterface;
 import tvcompany.salemanager.R;
 import tvcompany.salemanager.controller.login.ShopController;
+import tvcompany.salemanager.controller.login.UploadFileController;
 import tvcompany.salemanager.controller.login.UserController;
+import tvcompany.salemanager.library.GlobalValue;
 import tvcompany.salemanager.library.MD5;
 import tvcompany.salemanager.library.ValidString;
 import tvcompany.salemanager.model.Shop;
-import tvcompany.salemanager.model.User;
 
 public class ShopActivity extends AppCompatActivity {
 
@@ -40,11 +39,11 @@ public class ShopActivity extends AppCompatActivity {
     private Bitmap bm = null;
     private EditText shopID, shopName, shopAddress, shopNote;
     private ValidString valid;
-    private UserController userController;
+    ShopController shopController;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_layout);
+        setContentView(R.layout.newshop_layout);
 
         imageView = (ImageView) findViewById(R.id.iconNewShop);
         shopID = (EditText) findViewById(R.id.shopId);
@@ -53,7 +52,7 @@ public class ShopActivity extends AppCompatActivity {
         shopNote = (EditText) findViewById(R.id.shopNote);
         btn_Save = (Button) findViewById(R.id.btnSaveShop);
         valid = new ValidString();
-        userController = new UserController();
+        shopController = new ShopController();
         btn_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +80,7 @@ public class ShopActivity extends AppCompatActivity {
                     shop.setManager("");
                     shop.setLongitude(200);
                     shop.setLatitude(200);
-
-                    MD5 md5 = new MD5();
+                    shop.setManager(new UserController().GetUserID(GlobalValue.USERNAME));
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date();
                     String datestr = dateFormat.format(date);
@@ -94,21 +92,19 @@ public class ShopActivity extends AppCompatActivity {
                         }
                         else
                         {
-                            //String image = account.getText().toString() + "::" + md5.getMD5(shop.getShopName() + shopName.getText().toString() + datestr) + ".jpg";
-                            //shop.setImage(image);
+                            MD5 md5 = new MD5();
+                            String image = GlobalValue.USERNAME + "::" + md5.getMD5(shop.getShopName() + shopName.getText().toString() + datestr) + ".jpg";
+                            shop.setImage(image);
                         }
 
                     } catch (Exception ex) {
 
                     }
-
-                    ServiceAPI serviceAPI = new ServiceAPI();
-                    String status = "";//serviceAPI.AddUser(user);
-                    if (status.equals("Success")) {
+                    if (shopController.AddShop(shop)) {
                         if (bm != null) {
-                            //serviceAPI.uploadFile(bm, user.getImage());
+                            new UploadFileController().uploadFile(bm,shop.getImage());
                         }
-                        Toast.makeText(ShopActivity.this, "Đăng kýc cửa hàng thành công!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ShopActivity.this, "Đăng ký cửa hàng thành công!", Toast.LENGTH_LONG).show();
                     }
                     else
                     {

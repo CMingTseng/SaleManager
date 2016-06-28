@@ -58,4 +58,11 @@
     <string name="login_account">Tên đăng nhập</string>
     <string name="login_pass">Mật khẩu đăng nhập</string>
 
+    <!--Shop-->
+    <string name="shop_Title">Đăng ký cửa hàng</string>
+    <string name="shop_ID">Mã cửa hàng</string>
+    <string name="shop_Name">Tên cửa hàng</string>
+    <string name="shop_Address">Địa chỉ</string>
+    <string name="shop_Note">Ghi chú</string>
+    <string name="shop_BtnAdd">Đăng ký</string>
 </resources>

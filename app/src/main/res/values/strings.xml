@@ -58,4 +58,7 @@
     <string name="login_account">Tên đăng nhập</string>
     <string name="login_pass">Mật khẩu đăng nhập</string>
 
+    <!--Listview Product-->
+    <string name="number_order">Số lượng đặt</string>
+
 </resources>

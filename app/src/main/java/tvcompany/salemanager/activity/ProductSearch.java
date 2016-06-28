@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,5 +42,12 @@ public class ProductSearch extends Activity {
         listViewContact = (ListView) findViewById(R.id.listProduct);
         adapter = new ProductAdapter(ProductSearch.this, listContact);
         listViewContact.setAdapter(adapter);
+
+        listViewContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 }

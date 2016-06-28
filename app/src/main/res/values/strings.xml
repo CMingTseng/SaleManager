@@ -49,6 +49,7 @@
 
     <!--Register and Login-->
     <string name="register_Title">Đăng ký tài khoản</string>
+    <string name="login_Title">Đăng nhập</string>
     <string name="register_account">Tên tài khoản</string>
     <string name="register_pass">Mật khẩu</string>
     <string name="register_passAccess">Xác nhận mật khẩu</string>

@@ -100,8 +100,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-
-        android:visibility="gone"
+        android:id="@+id/orderDetail"
+        android:visibility="visible"
         android:weightSum="1"
         android:layout_below="@+id/thumbnail">
 
@@ -115,14 +115,14 @@
         <EditText
             android:layout_width="156dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
+            android:inputType="text"
+
             android:id="@+id/editText"
             android:layout_weight="0.81" />
 
         <Button
             android:layout_width="74dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Order"
             android:id="@+id/button" />
     </TableRow>

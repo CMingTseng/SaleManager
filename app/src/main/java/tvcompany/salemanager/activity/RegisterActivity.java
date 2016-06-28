@@ -24,8 +24,12 @@ import API.ServiceAPI;
 import API.ServiceGenerator;
 import API.ServiceInterface;
 import tvcompany.salemanager.R;
+import tvcompany.salemanager.controller.login.ShopController;
+import tvcompany.salemanager.controller.login.UserController;
 import tvcompany.salemanager.library.MD5;
+import tvcompany.salemanager.library.ValidString;
 import tvcompany.salemanager.model.Order;
+import tvcompany.salemanager.model.Shop;
 import tvcompany.salemanager.model.User;
 
 public class RegisterActivity extends Activity {
@@ -36,7 +40,8 @@ public class RegisterActivity extends Activity {
     private User user = null;
     private Bitmap bm = null;
     private EditText account, pass, passAccess, fullName, email, phone;
-
+    private ValidString valid;
+    private UserController userController;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +55,29 @@ public class RegisterActivity extends Activity {
         email = (EditText) findViewById(R.id.editEmail);
         phone = (EditText) findViewById(R.id.editPhone);
         btn_Save = (Button) findViewById(R.id.btnRegister);
+        valid = new ValidString();
+        userController = new UserController();
         btn_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (pass.getText().toString().equals(passAccess.getText().toString())) {
+                if(!valid.CheckValidLengthRegex(account.getText().toString()))
+                {
+                    Toast.makeText(RegisterActivity.this,  "Tên tài khoản phải chứa ít nhất 6 ký tự và không có dấu", Toast.LENGTH_LONG).show();
+                }
+                else
+                if(!valid.CheckSpecialCharacter(account.getText().toString()))
+                {
+                    Toast.makeText(RegisterActivity.this,  "Tên tài khoản không được chưa ký tự đặc biệt", Toast.LENGTH_LONG).show();
+                }
+                else
+                if(!valid.CheckValidLength(pass.getText().toString()))
+                {
+                    Toast.makeText(RegisterActivity.this,  "Mật khẩu phải chứa ít nhất 6 ký tự", Toast.LENGTH_LONG).show();
+                }
+                else
+                if (!pass.getText().toString().equals(passAccess.getText().toString())) {
+                    Toast.makeText(RegisterActivity.this, "Xác nhận mật khẩu sai!", Toast.LENGTH_LONG).show();
+                } else {
                     user = new User();
                     user.setUserName(account.getText().toString());
                     user.setPassWord(pass.getText().toString());
@@ -62,14 +85,24 @@ public class RegisterActivity extends Activity {
                     user.setNote("");
                     user.setEmail(email.getText().toString());
                     user.setPhoneNumber(phone.getText().toString());
+                    user.setActive(false);
                     MD5 md5 = new MD5();
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date();
                     String datestr = dateFormat.format(date);
+
                     user.setCreateDate(datestr);
                     try {
-                        String image = account.getText().toString() + "::" + md5.getMD5(account.getText().toString() + datestr) + ".jpg";
-                        user.setImage(image);
+                        if(bm == null)
+                        {
+                            user.setImage("");
+                        }
+                        else
+                        {
+                            String image = account.getText().toString() + "::" + md5.getMD5(account.getText().toString() + datestr) + ".jpg";
+                            user.setImage(image);
+                        }
+
                     } catch (Exception ex) {
 
                     }
@@ -79,16 +112,19 @@ public class RegisterActivity extends Activity {
                     ServiceAPI serviceAPI = new ServiceAPI();
                     String status = serviceAPI.AddUser(user);
                     if (status.equals("Success")) {
+                        new ShopController().AddShop(new Shop(user.getUserName(),user.getUserName(),
+                                new Date().toString(),200,200,"",userController.GetUserID(user.getUserName()),"","",true));
                         if (bm != null) {
                             serviceAPI.uploadFile(bm, user.getImage());
                         }
+                        Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    // xác thực password
-                    Toast.makeText(RegisterActivity.this, "Xác nhận mật khẩu sai!", Toast.LENGTH_LONG).show();
+                    else
+                    {
+                        Toast.makeText(RegisterActivity.this, "Tài khoản đã tồn tại. Vui lòng chọn tài khoản khác!", Toast.LENGTH_LONG).show();
+                        account.setSelection(account.getText().length() -1 );
+                    }
                 }
-
-
             }
         });
         if (imageView != null) {

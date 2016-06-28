@@ -44,7 +44,7 @@ public class ProductAdapter extends BaseAdapter {
         Contact m = contactItems.get(position);
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        convertView = mInflater.inflate(R.layout.listitem_product,
+        convertView = mInflater.inflate(R.layout.item_list_layout,
                 null);
         ImageView imgView = (ImageView) convertView.findViewById(R.id.iconProductList);
         if(position%2==0){

@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:weightSum="1"
     android:background="@mipmap/background"
+
     >
 
     <TextView
@@ -73,7 +74,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textWebPassword"
 
             android:textColorHint="@color/textHintRegister"
 
@@ -91,9 +92,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textWebPassword"
             android:hint="@string/register_passAccess"
-
             android:textColorHint="@color/textHintRegister"
 
             android:ems="10"

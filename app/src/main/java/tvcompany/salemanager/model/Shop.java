@@ -6,22 +6,46 @@ import java.util.Date;
  * Created by Administrator on 26/06/2016.
  */
 public class Shop {
-    private String id;
+    private String ID;
     private String shopName;
-    private Date createDate;
+    private String createDate;
     private double longitude;
     private double latitude;
     private String address;
     private String manager;
     private String note;
     private String image;
+    private boolean valid;
+    public Shop() {
+    }
+
+    public Shop(String ID, String shopName, String createDate, double longitude, double latitude, String address, String manager, String note, String image,boolean valid) {
+        this.ID = ID;
+        this.shopName = shopName;
+        this.createDate = createDate;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.address = address;
+        this.manager = manager;
+        this.note = note;
+        this.image = image;
+        this.valid = valid;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
 
     public String getId() {
-        return id;
+        return ID;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.ID = id;
     }
 
     public String getShopName() {
@@ -32,11 +56,11 @@ public class Shop {
         this.shopName = shopName;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 

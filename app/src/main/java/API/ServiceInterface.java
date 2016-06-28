@@ -16,6 +16,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 import tvcompany.salemanager.model.Order;
+import tvcompany.salemanager.model.Shop;
 import tvcompany.salemanager.model.Status;
 import tvcompany.salemanager.model.User;
 
@@ -29,6 +30,9 @@ public interface ServiceInterface {
 
     @GET("/GetAccount")
     Call<User> getFuck(@Query("account") String account);
+
+    @GET("/GetUserId")
+    Call<Status> getUserID(@Query("account") String account);
 
     @GET("/CheckLogin")
     Call<Status> CheckLogin(@Query("userName") String userName,@Query("password") String password);
@@ -47,4 +51,7 @@ public interface ServiceInterface {
 
     @POST("/AddOrder")
     Call<Status> newOrder(@Body Order order);
+
+    @POST("/AddShop")
+    Call<Status> addShop(@Body Shop shop);
 }

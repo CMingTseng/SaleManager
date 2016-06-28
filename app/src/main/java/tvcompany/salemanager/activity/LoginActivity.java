@@ -9,7 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 //import tvcompany.salemanager.API.ServiceAPI;
+import java.text.Normalizer;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import API.ServiceAPI;
 import API.ServiceGenerator;
@@ -35,12 +38,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String userName = txtName.getText().toString();
+                    String userName = txtName.getText().toString().trim();
                     String password = txtPassword.getText().toString();
-                    if(loginController.CheckLogin(userName,password))
-                    {
-                        Toast.makeText(LoginActivity.this,"OK",Toast.LENGTH_LONG).show();
+                    if (loginController.CheckLogin(userName, password)) {
+                        Toast.makeText(LoginActivity.this, "OK", Toast.LENGTH_LONG).show();
                     }
+
                 } catch (Exception e) {
                 }
 

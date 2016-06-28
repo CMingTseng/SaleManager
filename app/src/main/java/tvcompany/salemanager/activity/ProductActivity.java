@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import tvcompany.salemanager.R;
@@ -57,8 +59,16 @@ public class ProductActivity extends AppCompatActivity {
         product_btnAdd = (Button) findViewById(R.id.btnSaveShop);
         valid = new ValidString();
         productController = new ProductController();
-        Spinner spinner = (Spinner) findViewById(R.id.product_spinner);
 
+        // Spinner
+        ArrayList<String> list= new ArrayList<String>();
+        list.add("VietFuck");
+        list.add("Gandalf");
+        Spinner spinner = (Spinner) findViewById(R.id.product_spinner);
+        ArrayAdapter adapter=new ArrayAdapter<String>(ProductActivity.this, android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        //--------------------------------------------------
         product_btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

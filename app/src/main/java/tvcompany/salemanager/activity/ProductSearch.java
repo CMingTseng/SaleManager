@@ -38,7 +38,7 @@ public class ProductSearch extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listview_product);
+        setContentView(R.layout.list_view_product_search_layout);
 
         listContact = new ArrayList<Contact>();
         Contact contact= new Contact("Gandalf","Phạm Mạnh Tùng","0163.567.2888", BitmapFactory.decodeResource(getResources(), R.mipmap.icon));

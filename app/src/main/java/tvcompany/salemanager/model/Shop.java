@@ -1,25 +1,30 @@
 package tvcompany.salemanager.model;
 
+import com.google.gson.annotations.Expose;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Administrator on 26/06/2016.
  */
-public class Shop {
+public class Shop implements Serializable {
+    private String _id;
     private String ID;
     private String shopName;
     private String createDate;
     private double longitude;
     private double latitude;
     private String address;
-    private String manager;
+    private String[] manager;
     private String note;
     private String image;
     private boolean valid;
     public Shop() {
     }
 
-    public Shop(String ID, String shopName, String createDate, double longitude, double latitude, String address, String manager, String note, String image,boolean valid) {
+    public Shop(String _id,String ID, String shopName, String createDate, double longitude, double latitude, String address, String manager[], String note, String image,boolean valid) {
+        this._id = _id;
         this.ID = ID;
         this.shopName = shopName;
         this.createDate = createDate;
@@ -30,6 +35,14 @@ public class Shop {
         this.note = note;
         this.image = image;
         this.valid = valid;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public boolean isValid() {
@@ -88,11 +101,11 @@ public class Shop {
         this.address = address;
     }
 
-    public String getManager() {
+    public String[] getManager() {
         return manager;
     }
 
-    public void setManager(String manager) {
+    public void setManager(String[] manager) {
         this.manager = manager;
     }
 

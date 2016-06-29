@@ -8,4 +8,5 @@ import android.content.SharedPreferences;
 public class GlobalValue {
     public static String USERNAME = "";
     public static String PASSWORD = "";
+    public static String ID;
 }

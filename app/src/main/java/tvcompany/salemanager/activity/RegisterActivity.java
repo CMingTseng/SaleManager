@@ -110,8 +110,9 @@ public class RegisterActivity extends Activity {
                     user.setValid(true);
 
                     if (userController.AddUser(user)) {
-                        new ShopController().AddShop(new Shop(user.getUserName(),user.getUserName(),
-                                new Date().toString(),200,200,"",userController.GetUserID(user.getUserName()),"","",true));
+                       // new ShopController().AddShop(//new Shop("",user.getUserName(),user.getUserName(),
+                       //         new Date().toString(),200,200,"",userController.GetUserID(user.getUserName()),"","",true));
+                        new ShopController().AddShop(new Shop());
                         if (bm != null) {
                             new UploadFileController().uploadFile(bm, user.getImage());
                         }

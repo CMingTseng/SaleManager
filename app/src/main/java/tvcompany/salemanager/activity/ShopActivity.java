@@ -53,6 +53,33 @@ public class ShopActivity extends AppCompatActivity {
         btn_Save = (Button) findViewById(R.id.btnSaveShop);
         valid = new ValidString();
         shopController = new ShopController();
+        Intent intent = getIntent();
+        shop = (Shop)intent.getExtras().get("Shop");
+        if(shop == null)
+        {
+            shop = new Shop();
+        }
+        else
+        {
+            try {
+                shopID.setText(shop.getId());
+                shopName.setText(shop.getShopName());
+                shopAddress.setText(shop.getAddress());
+                shopNote.setText(shop.getNote());
+                shopID.setText(shop.getId());
+                shopID.setText(shop.getId());
+                if(!shop.getImage().equals(""))
+                {
+                    bm= new UploadFileController().getImage(shop.getImage().replace("::","/"));
+                    imageView.setImageBitmap(bm);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+        }
         btn_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,45 +98,58 @@ public class ShopActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    shop = new Shop();
                     shop.setId(valid.ReplaceToValidString(shopID.getText().toString().trim()));
                     shop.setShopName(shopName.getText().toString().trim());
                     shop.setAddress(shopAddress.getText().toString().trim());
                     shop.setNote(shopNote.getText().toString().trim());
                     shop.setValid(true);
-                    shop.setManager("");
+                    shop.setManager(new String[]{GlobalValue.ID});
                     shop.setLongitude(200);
                     shop.setLatitude(200);
-                    shop.setManager(new UserController().GetUserID(GlobalValue.USERNAME));
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date date = new Date();
-                    String datestr = dateFormat.format(date);
-                    shop.setCreateDate(datestr);
-                    try {
-                        if(bm == null)
-                        {
-                            shop.setImage("");
+                    //shop.setManager(new UserController().GetUserID(GlobalValue.USERNAME));
+                    if(shop.get_id() != null )
+                    {
+                        if (shopController.updateShop(shop)) {
+                            Toast.makeText(ShopActivity.this, "Cập nhật cửa hàng thành công!", Toast.LENGTH_LONG).show();
                         }
                         else
                         {
-                            MD5 md5 = new MD5();
-                            String image = GlobalValue.USERNAME + "::" + md5.getMD5(shop.getId()  + datestr) + ".jpg";
-                            shop.setImage(image);
+                            Toast.makeText(ShopActivity.this, "Cửa hàng đã tồn tại. Vui lòng nhập lại mã cửa hàng!", Toast.LENGTH_LONG).show();
                         }
-
-                    } catch (Exception ex) {
-
-                    }
-                    if (shopController.AddShop(shop)) {
-                        if (bm != null) {
-                            new UploadFileController().uploadFile(bm,shop.getImage());
-                        }
-                        Toast.makeText(ShopActivity.this, "Đăng ký cửa hàng thành công!", Toast.LENGTH_LONG).show();
                     }
                     else
                     {
-                        Toast.makeText(ShopActivity.this, "Cửa hàng đã tồn tại. Vui lòng nhập lại mã cửa hàng!", Toast.LENGTH_LONG).show();
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date date = new Date();
+                        String datestr = dateFormat.format(date);
+                        shop.setCreateDate(datestr);
+                        try {
+                            if(bm == null)
+                            {
+                                shop.setImage("");
+                            }
+                            else
+                            {
+                                MD5 md5 = new MD5();
+                                String image = GlobalValue.USERNAME + "::" + md5.getMD5(shop.getId()  + datestr) + ".jpg";
+                                shop.setImage(image);
+                            }
+
+                        } catch (Exception ex) {
+
+                        }
+                        if (shopController.AddShop(shop)) {
+                            if (bm != null) {
+                                new UploadFileController().uploadFile(bm,shop.getImage());
+                            }
+                            Toast.makeText(ShopActivity.this, "Đăng ký cửa hàng thành công!", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(ShopActivity.this, "Cửa hàng đã tồn tại. Vui lòng nhập lại mã cửa hàng!", Toast.LENGTH_LONG).show();
+                        }
                     }
+
                 }
             }
         });

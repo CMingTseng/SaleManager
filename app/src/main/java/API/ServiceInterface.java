@@ -62,11 +62,14 @@ public interface ServiceInterface {
     @GET("/GetShop")
     Call<Shop> getShop(@Query("_id") String _id);
 
+    @GET("/GetListShop")
+    Call<List<Shop>> getListShop(@Query("manager") String manager);
+
     @POST("/AddShop")
     Call<Status> addShop(@Body Shop shop);
 
     @PUT("/UpdateShop")
-    Call<Status> UpdateShop(@Body User user);
+    Call<Status> updateShop(@Body Shop shop);
 
     @PUT("/DeleteShop")
     Call<Status> DeleteShop(@Query("_id") String _id);

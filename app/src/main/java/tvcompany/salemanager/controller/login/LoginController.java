@@ -13,7 +13,7 @@ import tvcompany.salemanager.model.User;
  * Created by MtViet on 27/06/2016.
  */
 public class LoginController {
-    public boolean CheckLogin(String userName,String password)
+    public String CheckLogin(String userName,String password)
     {
         Call<Status> status = ServiceGenerator.GetInstance().CheckLogin(userName,password);
         try{
@@ -23,14 +23,14 @@ public class LoginController {
                 StrictMode.setThreadPolicy(policy);
             }
             Status str = status.execute().body();
-            if(str.getStatus().equals("Success"))
+            if(!str.getStatus().equals(""))
             {
-                return true;
+                return str.getStatus();
             }
-            return false;
+            return "";
         }
         catch (Exception ex){
-            return false;
+            return "";
         }
     }
 }

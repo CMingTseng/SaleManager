@@ -46,15 +46,15 @@ public class ServiceAPI {
 
     public String getUser() {
         //binding.username.getText().toString()
-        Call<List<User>> call = git.getUser();
+        Call<User> call = git.getFuck("mtviet17");
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy =
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
             }
-            List<User> user = call.execute().body();
-            result="Nhận :Size: "+ user.size();
+            User user = call.execute().body();
+            result="Nhận :Size: ";
         }
         catch (Exception ex){
             result= ex.toString();

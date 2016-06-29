@@ -41,7 +41,7 @@ public class ProductActivity extends AppCompatActivity {
     private Button product_btnAdd;
     private Product product = null;
     private Bitmap bm = null;
-    private EditText productID, productName, productPurchase, productOrder;
+    private EditText productID, productName, productPurchase, productOrder,productNote;
     private Spinner productShop,productGroup;
     private ValidString valid;
     private ProductController productController;
@@ -55,13 +55,14 @@ public class ProductActivity extends AppCompatActivity {
         productName = (EditText) findViewById(R.id.productName);
         productPurchase = (EditText) findViewById(R.id.productPurchase);
         productOrder = (EditText) findViewById(R.id.productOrder);
+        productNote = (EditText) findViewById(R.id.productNote);
         product_btnAdd = (Button) findViewById(R.id.btnProductAdd);
         valid = new ValidString();
         productController = new ProductController();
 
         // Spinner
         ArrayList<String> list= new ArrayList<String>();
-        list.add("VietFuck");//
+        list.add("VietFuck");//ObjectId("57722707cbd7d1ec020e90ce")
         list.add("Gandalf");
         productShop = (Spinner) findViewById(R.id.product_shop);
         ArrayAdapter adapter=new ArrayAdapter<String>(ProductActivity.this, android.R.layout.simple_spinner_item, list);
@@ -94,9 +95,9 @@ public class ProductActivity extends AppCompatActivity {
                     product.setProductName(productName.getText().toString().trim());
                     product.setMoneyPurchase(Double.parseDouble(productPurchase.getText().toString().trim()));
                     product.setMoneyOrder(Double.parseDouble(productOrder.getText().toString().trim()));
-                    product.setShopId("");
-                    product.setGroupProduct("");
-                    product.setNote("");
+                    product.setShopId("57722707cbd7d1ec020e90ce");//ObjectId("")
+                    product.setGroupProduct("577127cc16d8341ed074a3b1");
+                    product.setNote(productNote.getText().toString().trim());
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date();
                     String datestr = dateFormat.format(date);
@@ -109,7 +110,8 @@ public class ProductActivity extends AppCompatActivity {
                         else
                         {
                             MD5 md5 = new MD5();
-                            String image = GlobalValue.USERNAME + "::" + md5.getMD5(product.getID() + datestr) + ".jpg";
+                            //String image = GlobalValue.USERNAME + "::" + md5.getMD5(product.getID() + datestr) + ".jpg";
+                            String image = "viet" + "::" + md5.getMD5(product.getID() + datestr) + ".jpg";
                             product.setImage(image);
                         }
 

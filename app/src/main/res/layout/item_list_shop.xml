@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_layout"
+    android:orientation="horizontal"
+    android:padding="5dip">
+
+    <!-- ListRow Left sied image -->
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:padding="3dip">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/iconshop"
+            android:layout_width="@dimen/icon_list_product"
+            android:layout_height="@dimen/icon_list_product"
+            android:src="@drawable/ic_profile2"
+            app:siBorderColor="@color/white"
+            app:siBorderWidth="1dp"
+
+            />
+
+    </LinearLayout>
+
+    <!-- Tên cửa hàng-->
+
+    <TextView
+        android:id="@+id/shopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Cửa hàng: Gandalf"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <!-- Artist Name -->
+    <TextView
+        android:id="@+id/product1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shopName"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Tên sản phẩm: Cơm ngon bắc ninh"
+        android:textColor="#343434"
+        android:textSize="10dip" />
+
+    <TextView
+        android:id="@+id/price1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product1"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Đơn giá: 25,000 VNĐ"
+        android:textColor="#343434"
+        android:textSize="10dip" />
+
+    <!-- Rightend Duration -->
+
+    <!-- Rightend Arrow -->
+
+    <FrameLayout
+        android:id="@+id/editShop"
+        android:layout_width="@dimen/icon_cart_product"
+        android:layout_height="@dimen/icon_cart_product"
+        android:layout_alignBottom="@+id/price1"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/shop">
+
+        <ImageView
+            android:id="@+id/counter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical"
+            android:gravity="center"
+            android:src="@mipmap/pencil" />
+
+    </FrameLayout>
+
+</RelativeLayout>

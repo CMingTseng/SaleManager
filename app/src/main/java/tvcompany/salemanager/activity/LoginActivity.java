@@ -76,7 +76,8 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     String userName = txtName.getText().toString().trim();
                     String password = txtPassword.getText().toString();
-                    if (loginController.CheckLogin(userName, password)) {
+                    String result =  loginController.CheckLogin(userName, password);
+                    if (!result.equals("")) {
                         SharedPreferences sp = LoginActivity.this.getSharedPreferences(
                                 SharedConstant.LOGIN_STORE, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
@@ -90,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                                 password);
                         GlobalValue.USERNAME = username;
                         GlobalValue.PASSWORD = password;
+                        GlobalValue.ID = result;
                         // Save passwork
                         if (remember_me.isChecked()) {
                             editor.putBoolean(SharedConstant.KEEP_LOGIN, true);
@@ -98,7 +100,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         editor.commit();
                         try {
-                            Intent k = new Intent(LoginActivity.this, ShopActivity.class);
+                            //Intent k = new Intent(LoginActivity.this, ShopActivity.class);
+                            Intent k = new Intent(LoginActivity.this, ListShopActivity.class);
                             startActivity(k);
                         } catch (Exception e) {
                             Toast.makeText(LoginActivity.this, "Không thể kết nối tới máy chủ", Toast.LENGTH_LONG).show();

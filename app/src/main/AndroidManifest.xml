@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="tvcompany.salemanager">
+
+    <uses-sdk tools:overrideLibrary="com.packagename.of.libary.with.conflict" />
+
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,6 +19,7 @@
         android:theme="@style/MyMaterialTheme">
         <activity
             android:name=".activity.ProductSearch"
+            android:name=".activity.ListOder"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +31,17 @@
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.OderActivity" />
+        <activity android:name=".activity.ProductSearch" />
+        <activity android:name=".activity.OderActivity" />
         <activity android:name=".activity.ReloadImage" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ShopActivity" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity android:name=".activity.SpinnerActivity" />
         <activity android:name=".activity.ListShopActivity" />
     </application>
 

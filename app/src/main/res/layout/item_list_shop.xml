@@ -31,7 +31,7 @@
     <!-- Tên cửa hàng-->
 
     <TextView
-        android:id="@+id/shopName"
+        android:id="@+id/shopDetailID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
@@ -45,10 +45,10 @@
 
     <!-- Artist Name -->
     <TextView
-        android:id="@+id/product1"
+        android:id="@+id/shopDetailName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shopName"
+        android:layout_below="@id/shopDetailID"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Tên sản phẩm: Cơm ngon bắc ninh"
@@ -56,10 +56,10 @@
         android:textSize="10dip" />
 
     <TextView
-        android:id="@+id/price1"
+        android:id="@+id/shopManager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/product1"
+        android:layout_below="@id/shopDetailName"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Đơn giá: 25,000 VNĐ"
@@ -74,7 +74,7 @@
         android:id="@+id/editShop"
         android:layout_width="@dimen/icon_cart_product"
         android:layout_height="@dimen/icon_cart_product"
-        android:layout_alignBottom="@+id/price1"
+        android:layout_alignBottom="@+id/shopManager"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/shop">
 

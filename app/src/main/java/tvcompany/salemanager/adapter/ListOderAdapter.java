@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -50,10 +51,14 @@ public class ListOderAdapter extends BaseAdapter {
         Group group = (Group) list.get(position);
         ViewHolder holder = new ViewHolder();
         holder.imageView = (ImageView) view.findViewById(R.id.image_oder);
+        holder.tv_number = (TextView) view.findViewById(R.id.tv_number_image);
         Picasso.with(context).load(group.getText1()).into(holder.imageView);
+        holder.tv_number.setText(group.getText2());
         return view;
     }
     public class ViewHolder{
         ImageView imageView;
+        TextView tv_number;
+        String str;
     }
 }

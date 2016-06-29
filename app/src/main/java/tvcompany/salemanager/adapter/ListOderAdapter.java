@@ -1,6 +1,7 @@
 package tvcompany.salemanager.adapter;
 
 import android.app.Activity;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,31 @@ import tvcompany.salemanager.model.Group;
 public class ListOderAdapter extends BaseAdapter {
     ArrayList<Group> list;
     Activity context;
+    private int count;
+    private int stepNumber;
+    private int startCount;
 
-    public ListOderAdapter(ArrayList<Group> list, Activity context) {
+    public ListOderAdapter(ArrayList<Group> list, Activity context, int stepNumber, int startCount) {
         this.list = list;
         this.context = context;
+        this.stepNumber = stepNumber;
+        this.count = this.startCount;
+        this.stepNumber = stepNumber;
+        this.startCount = Math.min(startCount, list.size());
+    }
+
+    public boolean showMore(){
+        if(count == list.size()) {
+            return true;
+        }else{
+            count = Math.min(count + stepNumber, list.size()); //don't go past the end
+            notifyDataSetChanged(); //the count size has changed, so notify the super of the change
+            return endReached();
+        }
+    }
+
+    public boolean endReached(){
+        return count == list.size();
     }
 
     @Override
@@ -50,15 +72,17 @@ public class ListOderAdapter extends BaseAdapter {
         View view = inflater.inflate(R.layout.listodercustom, parent, false);
         Group group = (Group) list.get(position);
         ViewHolder holder = new ViewHolder();
+        Display display = context.getWindowManager().getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
+        holder.tv = (TextView) view.findViewById(R.id.tv_number_image);
         holder.imageView = (ImageView) view.findViewById(R.id.image_oder);
-        holder.tv_number = (TextView) view.findViewById(R.id.tv_number_image);
-        Picasso.with(context).load(group.getText1()).into(holder.imageView);
-        holder.tv_number.setText(group.getText2());
+        Picasso.with(context).load(group.getText1()).resize(width,holder.imageView.getHeight()).into(holder.imageView);
+        holder.tv.setText(group.getText2());
         return view;
     }
     public class ViewHolder{
         ImageView imageView;
-        TextView tv_number;
-        String str;
+        TextView tv;
     }
 }

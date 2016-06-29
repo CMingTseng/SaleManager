@@ -81,7 +81,7 @@
             android:id="@+id/counter_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2"
+            android:text=""
             android:textColor="@color/server_status_bar"
             android:layout_gravity="center_horizontal" />
 
@@ -101,7 +101,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/orderDetail"
-
+        android:visibility="gone"
         android:weightSum="1"
         android:layout_below="@+id/thumbnail">
 
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
 
-            android:id="@+id/editText"
+            android:id="@+id/editNumberOrder"
             android:layout_weight="0.81" />
 
         <Button

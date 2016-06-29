@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,6 +21,7 @@ import API.ServiceInterface;
 import tvcompany.salemanager.R;
 import tvcompany.salemanager.adapter.ContactAdapter;
 import tvcompany.salemanager.adapter.ProductAdapter;
+import tvcompany.salemanager.adapter.ProductRecyclerViewAdapter;
 import tvcompany.salemanager.model.Contact;
 import tvcompany.salemanager.model.User;
 
@@ -28,6 +32,9 @@ public class ProductSearch extends Activity {
     private ProductAdapter adapter;
     private List<Contact> listContact;
     private ListView listViewContact;
+    private boolean flag = true;
+    private RecyclerView recyclerView;
+    ProductRecyclerViewAdapter recyclerViewAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +46,23 @@ public class ProductSearch extends Activity {
         listContact.add(contact);
         listContact.add(contact2);
         ///Adapter
-        listViewContact = (ListView) findViewById(R.id.listProduct);
-        adapter = new ProductAdapter(ProductSearch.this, listContact);
-        listViewContact.setAdapter(adapter);
-
-        listViewContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
+//        listViewContact = (ListView) findViewById(R.id.listProduct);
+//        listViewContact.setTranscriptMode(ListView.TRANSCRIPT_MODE_DISABLED);
+//
+//        adapter = new ProductAdapter(ProductSearch.this, listContact);
+//        listViewContact.setAdapter(adapter);
+//
+//        listViewContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerViewAdapter= new ProductRecyclerViewAdapter(ProductSearch.this,listContact);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(recyclerViewAdapter);
     }
 }

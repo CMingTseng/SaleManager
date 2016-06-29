@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textColor="@color/server_status_bar"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="center_horizontal" />
 
         <ImageView
@@ -116,7 +116,6 @@
             android:layout_width="156dp"
             android:layout_height="wrap_content"
             android:inputType="number"
-
             android:id="@+id/editNumberOrder"
             android:layout_weight="0.81" />
 

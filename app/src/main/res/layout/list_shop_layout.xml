@@ -4,12 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
 
-    <ListView
-        android:id="@+id/listShop"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/textHintRegister"
+            android:hint="@string/register_account"
+            android:ems="10"
+            android:id="@+id/editAccount"
 
-        />
+            />
+    </TableRow>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_listshop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
 
 </LinearLayout>

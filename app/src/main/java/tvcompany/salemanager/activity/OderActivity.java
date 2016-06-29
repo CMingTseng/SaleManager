@@ -30,7 +30,7 @@ public class OderActivity extends AppCompatActivity {
         ChildList.add(child);
         String text = "DEMO_TV";
         for (int i =0;i<300;i++){
-            Group group = new Group(R.drawable.images,text+i,text+i,text+i,ChildList);
+            Group group = new Group(0,text+i,text+i,text+i,ChildList);
             ExpListItems.add(group);
 
         }

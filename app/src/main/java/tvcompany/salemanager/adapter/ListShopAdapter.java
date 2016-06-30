@@ -17,6 +17,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import tvcompany.salemanager.R;
@@ -29,11 +31,9 @@ import tvcompany.salemanager.model.Shop;
 public class ListShopAdapter extends RecyclerView.Adapter<ListShopAdapter.MyViewHolder> {
 
     private Context context;
-    boolean flag = false;
     private List<Shop> listShop;
     private ImageView imgView;
     private FrameLayout frameLayout;
-    private TableRow tableRow;
     private Shop shop;
     private TextView shopName,shopID,manager;
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -76,16 +76,19 @@ public class ListShopAdapter extends RecyclerView.Adapter<ListShopAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         shop = listShop.get(position);
-        shopName.setText(shop.getShopName());
-        shopID.setText(shop.getId());
-        manager.setText(GlobalValue.USERNAME);
-//        if (position % 2 == 0) {
-//            // set ảnh nếu có
-//            imgView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon));
-//        } else {
-//            imgView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.vietfuck));
-//        }
+        shopName.setText("Tên CH: " + shop.getShopName());
+        shopID.setText("Mã CH: " + shop.getId());
+        manager.setText("Quản lý: " + GlobalValue.USERNAME);
+        try
+        {
+            if(!shop.getImage().equals(""))
+            {
+                Picasso.with(context).load(GlobalValue.CONFIG + shop.getImage().replace("::","/")).into(imgView);
+            }
 
+        }
+        catch (Exception e)
+        {}
     }
 
     @Override

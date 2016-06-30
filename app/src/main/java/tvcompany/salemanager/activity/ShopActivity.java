@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -70,8 +72,12 @@ public class ShopActivity extends AppCompatActivity {
                 shopID.setText(shop.getId());
                 if(!shop.getImage().equals(""))
                 {
-                    bm= new UploadFileController().getImage(shop.getImage().replace("::","/"));
-                    imageView.setImageBitmap(bm);
+                    try {
+                        Picasso.with(this).load(GlobalValue.CONFIG + shop.getImage().replace("::","/")).into(imageView);
+                    }
+                    catch (Exception e){
+                        String s = "e";
+                    }
                 }
             }
             catch (Exception e)

@@ -9,4 +9,5 @@ public class GlobalValue {
     public static String USERNAME = "";
     public static String PASSWORD = "";
     public static String ID;
+    public static String CONFIG = "http://192.168.0.10:3000/uploads/";
 }

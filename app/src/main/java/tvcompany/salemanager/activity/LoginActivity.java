@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                 userName);
                         editor.putString(SharedConstant.LOGIN_PASSWORD,
                                 password);
-                        GlobalValue.USERNAME = username;
+                        GlobalValue.USERNAME = userName;
                         GlobalValue.PASSWORD = password;
                         GlobalValue.ID = result;
                         // Save passwork

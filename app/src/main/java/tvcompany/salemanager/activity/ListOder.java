@@ -9,10 +9,14 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tvcompany.salemanager.R;
 import tvcompany.salemanager.adapter.ListOderAdapter;
+import tvcompany.salemanager.controller.login.ShopController;
+import tvcompany.salemanager.library.GlobalValue;
 import tvcompany.salemanager.model.Group;
+import tvcompany.salemanager.model.Shop;
 
 public class ListOder extends AppCompatActivity implements AbsListView.OnScrollListener{
     ArrayList<Group> list;
@@ -31,11 +35,13 @@ public class ListOder extends AppCompatActivity implements AbsListView.OnScrollL
         lv.addFooterView(footer);
         progressBar = (ProgressBar) footer.findViewById(R.id.progressBar);
         list =new ArrayList<Group>();
-        for (int i = 0;i<10000;i++){
-            Group group = new Group(R.drawable.image,"http://cdn.comedia.coccoc.com/2016-06-12/f8/d3/403f718a172533c52d85ee21d2da.jpg",String.valueOf(i),null,null);
-            list.add(group);
+        List<Shop> listShop;
+        listShop = new ShopController().getListShop("57713f3a3893b0f02813f08b");
+        for(int i = 0;i<100;i++)
+        {
+            listShop.add(listShop.get(2));
         }
-        adapter = new ListOderAdapter(list,ListOder.this,20,10);
+        adapter = new ListOderAdapter(listShop,ListOder.this,20,10);
         lv.setAdapter(adapter);
         lv.setOnScrollListener(this); //listen for a scroll movement to the bottom
         progressBar.setVisibility((20 < list.size())? View.VISIBLE : View.GONE);

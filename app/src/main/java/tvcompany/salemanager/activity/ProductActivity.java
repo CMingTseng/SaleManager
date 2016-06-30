@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,14 +26,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import tvcompany.salemanager.R;
+import tvcompany.salemanager.adapter.MultiSelectionSpinner;
 import tvcompany.salemanager.controller.login.ProductController;
 import tvcompany.salemanager.controller.login.UploadFileController;
-import tvcompany.salemanager.controller.login.UserController;
-import tvcompany.salemanager.library.GlobalValue;
 import tvcompany.salemanager.library.MD5;
 import tvcompany.salemanager.library.ValidString;
 import tvcompany.salemanager.model.Product;
-import tvcompany.salemanager.model.Shop;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -45,6 +44,11 @@ public class ProductActivity extends AppCompatActivity {
     private Spinner productShop,productGroup;
     private ValidString valid;
     private ProductController productController;
+
+    private PopupWindow pw;
+    private boolean expanded;
+    public static boolean[] checkSelected;
+    MultiSelectionSpinner spinner;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,7 @@ public class ProductActivity extends AppCompatActivity {
 
         // Spinner
         ArrayList<String> list= new ArrayList<String>();
+        list.add("Nhóm hàng");
         list.add("VietFuck");//ObjectId("57722707cbd7d1ec020e90ce")
         list.add("Gandalf");
         productShop = (Spinner) findViewById(R.id.product_shop);
@@ -69,8 +74,9 @@ public class ProductActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         productShop.setAdapter(adapter);
 
-        productGroup = (Spinner) findViewById(R.id.product_group);
-        productGroup.setAdapter(adapter);
+        spinner = (MultiSelectionSpinner) findViewById(R.id.mySpinner1);
+        spinner.setItems(list);
+
         //--------------------------------------------------
         product_btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +119,7 @@ public class ProductActivity extends AppCompatActivity {
                             //String image = GlobalValue.USERNAME + "::" + md5.getMD5(product.getID() + datestr) + ".jpg";
                             String image = "viet" + "::" + md5.getMD5(product.getID() + datestr) + ".jpg";
                             product.setImage(image);
+
                         }
 
                     } catch (Exception ex) {
@@ -181,4 +188,6 @@ public class ProductActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

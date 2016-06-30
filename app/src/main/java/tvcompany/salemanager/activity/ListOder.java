@@ -32,7 +32,7 @@ public class ListOder extends AppCompatActivity implements AbsListView.OnScrollL
         progressBar = (ProgressBar) footer.findViewById(R.id.progressBar);
         list =new ArrayList<Group>();
         for (int i = 0;i<10000;i++){
-            Group group = new Group(R.drawable.image,"http://cdn.comedia.coccoc.com/2016-06-12/f8/d3/403f718a172533c52d85ee21d2da.jpg",String.valueOf(i),null,null);
+            Group group = new Group(0,"http://cdn.comedia.coccoc.com/2016-06-12/f8/d3/403f718a172533c52d85ee21d2da.jpg",String.valueOf(i),null,null);
             list.add(group);
         }
         adapter = new ListOderAdapter(list,ListOder.this,20,10);

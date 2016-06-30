@@ -7,4 +7,5 @@
     <dimen name="icon_register">100dp</dimen>
     <dimen name="icon_list_product">60dp</dimen>
     <dimen name="icon_cart_product">30dp</dimen>
+    <dimen name="icon_shop_spinner">40dp</dimen>
 </resources>

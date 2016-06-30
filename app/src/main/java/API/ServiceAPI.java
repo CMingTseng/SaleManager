@@ -89,7 +89,7 @@ public class ServiceAPI {
         bm.createScaledBitmap(bm, 100,100, true);
         byte[] data2= null;
         try {
-            bm.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+            bm.compress(Bitmap.CompressFormat.PNG, 100, bos);
             data2 = bos.toByteArray();
         }
         catch (Exception ex){

@@ -52,7 +52,7 @@ public class ListShopActivity extends AppCompatActivity {
         recyclerViewAdapter= new ListShopAdapter(ListShopActivity.this,listShop);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recyclerViewAdapter);
 
     }

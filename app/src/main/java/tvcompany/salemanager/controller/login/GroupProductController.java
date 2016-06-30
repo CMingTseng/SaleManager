@@ -2,38 +2,40 @@ package tvcompany.salemanager.controller.login;
 
 import android.os.StrictMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import API.ServiceGenerator;
 import API.ServiceInterface;
 import retrofit2.Call;
-import tvcompany.salemanager.model.Product;
+import tvcompany.salemanager.model.GroupProduct;
 import tvcompany.salemanager.model.Status;
 
-
-public class ProductController {
+/**
+ * Created by MtViet on 30/06/2016.
+ */
+public class GroupProductController {
     private ServiceInterface service;
-    public ProductController()
+    public GroupProductController()
     {
         service = ServiceGenerator.GetInstance();
     }
 
-    public boolean addProduct(Product product)
+    public ArrayList<GroupProduct> getProductGroup()
     {
-        Call<Status> status = service.addProduct(product);
+        Call<ArrayList<GroupProduct>> groupProduct = service.getGroupProduct();
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy =
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
             }
-            Status str = status.execute().body();
-            if(str.getStatus().equals("Success"))
-            {
-                return true;
-            }
-            return false;
+            ArrayList<GroupProduct> list = groupProduct.execute().body();
+            return list;
         }
         catch (Exception ex){
-            return false;
+
         }
+        return new ArrayList<GroupProduct>();
     }
 }

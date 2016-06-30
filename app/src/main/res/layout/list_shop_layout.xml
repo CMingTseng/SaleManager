@@ -5,6 +5,24 @@
     android:orientation="vertical"
     >
 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+
+            android:textColorHint="@color/textHintRegister"
+
+            android:hint="@string/shop_Name"
+            android:ems="10"
+            android:id="@+id/shopName" />
+    </TableRow>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_listshop"
         android:layout_width="match_parent"

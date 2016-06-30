@@ -9,9 +9,7 @@ import retrofit2.Call;
 import tvcompany.salemanager.model.Status;
 import tvcompany.salemanager.model.User;
 
-/**
- * Created by MtViet on 27/06/2016.
- */
+
 public class LoginController {
     public String CheckLogin(String userName,String password)
     {

@@ -138,7 +138,7 @@
         android:background="@drawable/custom_layout"
         >
         <tvcompany.salemanager.adapter.MultiSelectionSpinner
-            android:id="@+id/mySpinner1"
+            android:id="@+id/listShop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </TableRow>

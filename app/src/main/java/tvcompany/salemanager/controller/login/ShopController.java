@@ -2,6 +2,7 @@ package tvcompany.salemanager.controller.login;
 
 import android.os.StrictMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import API.ServiceGenerator;
@@ -39,25 +40,25 @@ public class ShopController {
         }
     }
 
-    public List<Shop> getListShop(String manager)
+    public ArrayList<Shop> getListShop(String manager)
     {
-        Call<List<Shop>> status = service.getListShop(manager);
+        Call<ArrayList<Shop>> status = service.getListShop(manager);
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy =
                         new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
             }
-            List<Shop> list = status.execute().body();
+            ArrayList<Shop> list = status.execute().body();
             if(list != null )
             {
                 return list;
             }
-            return null;
+
         }
         catch (Exception ex){
-            return null;
         }
+        return new ArrayList<Shop>();
     }
 
     public boolean updateShop(Shop shop)

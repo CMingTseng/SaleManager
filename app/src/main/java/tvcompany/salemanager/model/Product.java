@@ -7,15 +7,15 @@ public class Product {
     private String createDate;
     private double moneyPurchase;
     private double moneyOrder;
-    private String groupProduct;
+    private String[] groupProduct;
     private String note;
-    private String shopId;
+    private String[] shopId;
     private String image;
 
     public Product() {
     }
 
-    public Product(String ID, String productName, String createDate, double moneyPurchase, double moneyOrder, String groupProduct, String note, String shopId, String image) {
+    public Product(String ID, String productName, String createDate, double moneyPurchase, double moneyOrder, String[] groupProduct, String note, String[] shopId, String image) {
         this.ID = ID;
         this.productName = productName;
         this.createDate = createDate;
@@ -67,11 +67,11 @@ public class Product {
         this.moneyOrder = moneyOrder;
     }
 
-    public String getGroupProduct() {
+    public String[] getGroupProduct() {
         return groupProduct;
     }
 
-    public void setGroupProduct(String groupProduct) {
+    public void setGroupProduct(String[] groupProduct) {
         this.groupProduct = groupProduct;
     }
 
@@ -83,11 +83,11 @@ public class Product {
         this.note = note;
     }
 
-    public String getShopId() {
+    public String[] getShopId() {
         return shopId;
     }
 
-    public void setShopId(String shopId) {
+    public void setShopId(String[] shopId) {
         this.shopId = shopId;
     }
 

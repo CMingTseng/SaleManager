@@ -1,5 +1,6 @@
 package API;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -15,6 +16,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import tvcompany.salemanager.model.GroupProduct;
 import tvcompany.salemanager.model.Order;
 import tvcompany.salemanager.model.Product;
 import tvcompany.salemanager.model.Shop;
@@ -63,7 +65,7 @@ public interface ServiceInterface {
     Call<Shop> getShop(@Query("_id") String _id);
 
     @GET("/GetListShop")
-    Call<List<Shop>> getListShop(@Query("manager") String manager);
+    Call<ArrayList<Shop>> getListShop(@Query("manager") String manager);
 
     @POST("/AddShop")
     Call<Status> addShop(@Body Shop shop);
@@ -88,4 +90,9 @@ public interface ServiceInterface {
     @PUT("/DeleteProduct")
     Call<Status> DeleteProduct(@Query("_id") String _id);
     //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //GroupProduct service
+    @GET("/GetGroupProduct")
+    Call<ArrayList<GroupProduct>> getGroupProduct();
+
 }

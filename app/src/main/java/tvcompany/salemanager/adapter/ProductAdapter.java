@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import tvcompany.salemanager.R;
@@ -65,11 +67,11 @@ public class ProductAdapter extends BaseAdapter {
             }
         });
         if(position%2==0){
-            // set ảnh nếu có
-            imgView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon));
+            // set ảnh nếu
+            Picasso.with(context).load(R.mipmap.icon).into(imgView);
         }
         else{
-            imgView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.vietfuck));
+            Picasso.with(context).load(R.mipmap.vietfuck).into(imgView);
         }
         return convertView;
     }

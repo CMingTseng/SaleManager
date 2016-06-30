@@ -16,6 +16,8 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -140,7 +142,7 @@ public class ProductActivity extends AppCompatActivity {
                         {
                             MD5 md5 = new MD5();
                             //String image = GlobalValue.USERNAME + "::" + md5.getMD5(product.getID() + datestr) + ".jpg";
-                            String image = "viet" + "::" + md5.getMD5(product.getID() + datestr) + ".png";
+                            String image = "viet" + "::" + md5.getMD5(product.getID() + datestr) + ".jpg";
                             product.setImage(image);
 
                         }
@@ -199,14 +201,15 @@ public class ProductActivity extends AppCompatActivity {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             FileInputStream fs = null;
             try {
-                fs = new FileInputStream(file);
+                fs = new FileInputStream(new UploadFileController().saveBitmapToFile(file));
             } catch (FileNotFoundException e) {
                 //TODO do something intelligent
                 e.printStackTrace();
             }
             try {
                 bm = BitmapFactory.decodeFileDescriptor(fs.getFD(), null, bfOptions);
-                imageView.setImageBitmap(bm);
+                //imageView.setImageBitmap(bm);
+                Picasso.with(ProductActivity.this).load(file).into(imageView);
             } catch (Exception ex) {
             }
         }

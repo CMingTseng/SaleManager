@@ -56,4 +56,26 @@ public class ProductController {
         }
         return new ArrayList<Product>();
     }
+
+    public boolean updateProduct(Product product)
+    {
+        Call<Status> call = service.updateProduct(product);
+        try{
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy =
+                        new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            Status status = call.execute().body();
+            if(status.getStatus().equals("Success"))
+            {
+                return  true;
+            }
+        }
+        catch (Exception ex){
+
+        }
+        return false;
+    }
+
 }

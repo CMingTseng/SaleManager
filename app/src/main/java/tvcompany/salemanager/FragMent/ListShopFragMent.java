@@ -1,4 +1,4 @@
-package tvcompany.salemanager.FragMent;
+package tvcompany.salemanager.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,12 +16,9 @@ import java.util.List;
 import tvcompany.salemanager.R;
 import tvcompany.salemanager.adapter.ListShopAdapter;
 import tvcompany.salemanager.controller.login.ShopController;
-import tvcompany.salemanager.library.GlobalValue;
 import tvcompany.salemanager.model.Shop;
 
-/**
- * Created by Administrator on 7/1/2016.
- */
+
 public class ListShopFragMent extends Fragment {
     private List<Shop> listShop;
     private RecyclerView recyclerView;
@@ -32,18 +29,18 @@ public class ListShopFragMent extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_shop_layout, container, false);
         shopController = new ShopController();
-//        try {
-//            listShop = shopController.getListShop(GlobalValue.ID);
-//        }catch (Exception e)
-//        {
-//            listShop = new ArrayList<Shop>();
-//        }
-        listShop = new ArrayList<Shop>();
-        for (int i = 0;i<2;i++){
-            Shop sh = new Shop();
-            sh.setShopName("Duong");
-            listShop.add(sh);
+        try {
+            listShop = shopController.getListShop("57713f3a3893b0f02813f08b");
+        }catch (Exception e)
+        {
+            listShop = new ArrayList<Shop>();
         }
+//        listShop = new ArrayList<Shop>();
+//        for (int i = 0;i<2;i++){
+//            Shop sh = new Shop();
+//            sh.setShopName("Duong");
+//            listShop.add(sh);
+//        }
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_listshop);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);

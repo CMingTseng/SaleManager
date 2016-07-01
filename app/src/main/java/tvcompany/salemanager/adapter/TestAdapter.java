@@ -2,6 +2,7 @@ package tvcompany.salemanager.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,21 +23,23 @@ import tvcompany.salemanager.library.GlobalValue;
 import tvcompany.salemanager.model.Product;
 
 
-public class ListProductAdapter extends BaseAdapter {
+public class TestAdapter extends BaseAdapter {
     private List<Product> list;
-    private Activity context;
+    private Fragment context;
+    private LayoutInflater inflater;
     private int count;
     private int stepNumber;
     private int startCount;
     private Product product;
     private ViewHolder holder;
-    public ListProductAdapter(List<Product> list, Activity context, int stepNumber, int startCount) {
+    public TestAdapter(List<Product> list, Fragment context, int stepNumber, int startCount,LayoutInflater inflater) {
         this.list = list;
         this.context = context;
         this.stepNumber = stepNumber;
         this.count = this.startCount;
         this.stepNumber = stepNumber;
         this.startCount = Math.min(startCount, list.size());
+        this.inflater = inflater;
     }
 
     public boolean showMore(){
@@ -70,7 +73,6 @@ public class ListProductAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = context.getLayoutInflater();
         View view = inflater.inflate(R.layout.item_list_shop, parent, false);
         product = list.get(position);
         holder = new ViewHolder();
@@ -82,7 +84,7 @@ public class ListProductAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 product = list.get(position);
-                Intent i= new Intent(context, ProductActivity.class);
+                Intent i= new Intent(context.getActivity(), ProductActivity.class);
                 i.putExtra("Product",  product);
                 context.startActivity(i);
             }
@@ -90,7 +92,7 @@ public class ListProductAdapter extends BaseAdapter {
 
         holder.imgView = (ImageView) view.findViewById(R.id.iconshop);
         try {
-            Picasso.with(context).load(GlobalValue.CONFIG + product.getImage().replace("::","/")).into(holder.imgView);
+            Picasso.with(context.getActivity()).load(GlobalValue.CONFIG + product.getImage().replace("::","/")).into(holder.imgView);
         }
         catch (Exception e){}
         holder.shopName.setText(product.getProductName());

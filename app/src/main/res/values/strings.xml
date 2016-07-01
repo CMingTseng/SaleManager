@@ -79,4 +79,5 @@
     <string name="product_note">Ghi chú</string>
     <string name="product_btnAdd">Thêm mới</string>
     <string name="navi_item_Shop">Shop</string>
+    <string name="product_search">Tìm kiếm hàng hóa</string>
 </resources>

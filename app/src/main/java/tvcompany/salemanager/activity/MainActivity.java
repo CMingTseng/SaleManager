@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import tvcompany.salemanager.FragMent.ListShopFragMent;
 import tvcompany.salemanager.R;
 
 
@@ -102,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new MessagesFragment();
                 title = getString(R.string.title_messages);
                 break;
+            case 3:
+                fragment = new ListShopFragMent();
+                title = "Shop";
             default:
                 break;
         }

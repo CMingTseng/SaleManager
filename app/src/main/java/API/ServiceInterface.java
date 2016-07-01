@@ -81,6 +81,9 @@ public interface ServiceInterface {
     @GET("/GetProduct")
     Call<Product> getProduct(@Query("_id") String _id);
 
+    @GET("/GetListProduct")
+    Call<ArrayList<Product>> getListProduct();
+
     @POST("/AddProduct")
     Call<Status> addProduct(@Body Product product);
 

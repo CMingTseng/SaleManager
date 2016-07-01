@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
         <activity
-            android:name=".activity.ProductActivity"
+            android:name=".activity.ListProductActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
         <activity android:name=".activity.ProductSearch"/>
         <activity android:name=".activity.ListOder" />
         <activity android:name=".activity.ListShopActivity" />
-
+        <activity android:name=".activity.ProductActivity" />
     </application>
 
 </manifest>

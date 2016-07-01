@@ -1,7 +1,9 @@
 package tvcompany.salemanager.model;
 
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable{
     private String ID;
     private String productName;
     private String createDate;

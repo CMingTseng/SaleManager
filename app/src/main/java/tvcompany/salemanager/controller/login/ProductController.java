@@ -2,6 +2,8 @@ package tvcompany.salemanager.controller.login;
 
 import android.os.StrictMode;
 
+import java.util.ArrayList;
+
 import API.ServiceGenerator;
 import API.ServiceInterface;
 import retrofit2.Call;
@@ -35,5 +37,23 @@ public class ProductController {
         catch (Exception ex){
             return false;
         }
+    }
+
+    public ArrayList<Product> getListProduct()
+    {
+        Call<ArrayList<Product>> listProduct = service.getListProduct();
+        try{
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy =
+                        new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            ArrayList<Product> lst = listProduct.execute().body();
+            return lst;
+        }
+        catch (Exception ex){
+
+        }
+        return new ArrayList<Product>();
     }
 }

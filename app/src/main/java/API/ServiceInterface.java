@@ -98,4 +98,7 @@ public interface ServiceInterface {
     @GET("/GetGroupProduct")
     Call<ArrayList<GroupProduct>> getGroupProduct();
 
+    @PUT("/UpdateProduct")
+    Call<Status> updateProduct(@Body Product product);
+
 }

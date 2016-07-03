@@ -4,6 +4,7 @@ package tvcompany.salemanager.model;
 import java.io.Serializable;
 
 public class Product implements Serializable{
+    private String _id;
     private String ID;
     private String productName;
     private String createDate;
@@ -17,7 +18,8 @@ public class Product implements Serializable{
     public Product() {
     }
 
-    public Product(String ID, String productName, String createDate, double moneyPurchase, double moneyOrder, String[] groupProduct, String note, String[] shopId, String image) {
+    public Product(String _id,String ID, String productName, String createDate, double moneyPurchase, double moneyOrder, String[] groupProduct, String note, String[] shopId, String image) {
+        this._id = _id;
         this.ID = ID;
         this.productName = productName;
         this.createDate = createDate;
@@ -27,6 +29,14 @@ public class Product implements Serializable{
         this.note = note;
         this.shopId = shopId;
         this.image = image;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getID() {

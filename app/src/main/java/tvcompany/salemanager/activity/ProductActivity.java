@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -49,12 +50,10 @@ public class ProductActivity extends AppCompatActivity {
     private Button product_btnAdd;
     private Bitmap bm = null;
     private EditText productID, productName, productPurchase, productOrder, productNote;
-    private Spinner productShop, productGroup;
+    private TextView productTitle;
+    private Spinner productShop;
     private ValidString valid;
     private ProductController productController;
-    private PopupWindow pw;
-    private boolean expanded;
-    public static boolean[] checkSelected;
     private Product product;
     private MultiSelectionSpinner spListShop;
     private ImageHandle imageHandle;
@@ -70,6 +69,7 @@ public class ProductActivity extends AppCompatActivity {
         productOrder = (EditText) findViewById(R.id.productOrder);
         productNote = (EditText) findViewById(R.id.productNote);
         product_btnAdd = (Button) findViewById(R.id.btnProductAdd);
+        productTitle = (TextView) findViewById(R.id.txtTitle);
         valid = new ValidString();
         productController = new ProductController();
         imageHandle = new ImageHandle();
@@ -103,10 +103,14 @@ public class ProductActivity extends AppCompatActivity {
             try {
                 ArrayList<Integer> listIndicate = new ArrayList<>();
                 productID.setText(product.getID());
+                productID.selectAll();
                 productName.setText(product.getProductName());
                 productPurchase.setText(product.getMoneyPurchase() + "");
                 productOrder.setText(product.getMoneyOrder() + "");
                 productNote.setText(product.getNote());
+                productTitle.setText("Cập nhật hàng hóa");
+
+                product_btnAdd.setText("Cập nhật");
                 for (int i = 0; i < listGroup.size(); i++) {
                     if (listGroup.get(i).get_id().equals(product.getGroupProduct()[0])) {
                         productShop.setSelection(i);
@@ -222,7 +226,6 @@ public class ProductActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         bm = imageHandle.handleImage(requestCode,resultCode,data,this,imageView);
-        int x = 0;
 //        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
 //            android.net.Uri selectedImage = data.getData();
 //            String[] filePathColumn = {MediaStore.Images.Media.DATA};

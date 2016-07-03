@@ -31,50 +31,50 @@
     <!-- Tên cửa hàng-->
 
     <TextView
-        android:id="@+id/shopDetailID"
+        android:id="@+id/productDetailID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Cửa hàng: Gandalf"
+        android:text=""
         android:textColor="#040404"
-        android:textSize="15dip"
+        android:textSize="14dip"
         android:textStyle="bold"
         android:typeface="sans" />
 
     <!-- Artist Name -->
     <TextView
-        android:id="@+id/shopDetailName"
+        android:id="@+id/productDetailName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shopDetailID"
+        android:layout_below="@id/productDetailID"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Tên sản phẩm: Cơm ngon bắc ninh"
+        android:text=""
         android:textColor="#343434"
         android:textSize="12dip" />
 
     <TextView
-        android:id="@+id/shopManager"
+        android:id="@+id/productPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shopDetailName"
+        android:layout_below="@id/productDetailName"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Đơn giá: 25,000 VNĐ"
+        android:text=""
         android:textColor="@color/colorPrimary"
-        android:textSize="15dip" />
+        android:textSize="14dip" />
 
     <!-- Rightend Duration -->
 
     <!-- Rightend Arrow -->
 
     <FrameLayout
-        android:id="@+id/editShop"
+        android:id="@+id/editProduct"
         android:layout_width="@dimen/icon_cart_product"
         android:layout_height="@dimen/icon_cart_product"
-        android:layout_alignBottom="@+id/shopManager"
+        android:layout_alignBottom="@+id/productPrice"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/shop">
 

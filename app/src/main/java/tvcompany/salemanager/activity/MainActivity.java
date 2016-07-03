@@ -13,9 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import tvcompany.salemanager.fragment.ListOrderFlagment;
 import tvcompany.salemanager.fragment.ListProductFlagment;
 import tvcompany.salemanager.R;
-import tvcompany.salemanager.fragment.ListShopFragMent;
+import tvcompany.salemanager.fragment.ListShopFragment;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
@@ -92,20 +94,20 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         String title = getString(R.string.app_name);
         switch (position) {
             case 0:
-                fragment = new ContactActivity();
-                title = "Danh Bạ";
+                fragment = new ListShopFragment();
+                title = "Cửa hàng";
                 break;
             case 1:
-                fragment = new FriendsFragment();
-                title = getString(R.string.title_friends);
+                fragment = new ListProductFlagment();
+                title = "Hàng hóa";
                 break;
             case 2:
-                fragment = new MessagesFragment();
-                title = getString(R.string.title_messages);
+                fragment = new ListOrderFlagment();
+                title = "Đơn hàng";
                 break;
             case 3:
                 fragment = new ListProductFlagment();
-                title = "Shop";
+                title = "Báo cáo";
             default:
                 break;
         }

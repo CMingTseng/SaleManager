@@ -9,44 +9,41 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tvcompany.salemanager.R;
+import tvcompany.salemanager.adapter.ListProductAdapterFlg;
 import tvcompany.salemanager.adapter.ListShopAdapter;
+import tvcompany.salemanager.adapter.ListShopAdapterFlg;
+import tvcompany.salemanager.controller.login.ProductController;
 import tvcompany.salemanager.controller.login.ShopController;
+import tvcompany.salemanager.model.Product;
 import tvcompany.salemanager.model.Shop;
 
 
-public class ListShopFragMent extends Fragment {
+public class ListShopFragment extends Fragment {
     private List<Shop> listShop;
-    private RecyclerView recyclerView;
-    private ShopController shopController;
-    private ListShopAdapter recyclerViewAdapter;
+    private ListView lv;
+
+    private ListShopAdapterFlg adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_shop_layout, container, false);
-        shopController = new ShopController();
+        lv = (ListView) rootView.findViewById(R.id.listShop);
         try {
-            listShop = shopController.getListShop("57713f3a3893b0f02813f08b");
+            listShop =new ShopController().getListShop("57713f3a3893b0f02813f08b");
         }catch (Exception e)
         {
-            listShop = new ArrayList<Shop>();
+            listShop = new ArrayList<>();
         }
-//        listShop = new ArrayList<Shop>();
-//        for (int i = 0;i<2;i++){
-//            Shop sh = new Shop();
-//            sh.setShopName("Duong");
-//            listShop.add(sh);
-//        }
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_listshop);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewAdapter= new ListShopAdapter(getActivity(),listShop);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        adapter = new ListShopAdapterFlg(listShop,this,20,10,inflater);
+        lv.setAdapter(adapter);
+
         return rootView;
     }
 }
+

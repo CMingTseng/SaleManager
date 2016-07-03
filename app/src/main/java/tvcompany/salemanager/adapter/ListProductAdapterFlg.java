@@ -1,9 +1,7 @@
 package tvcompany.salemanager.adapter;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,7 @@ import tvcompany.salemanager.library.GlobalValue;
 import tvcompany.salemanager.model.Product;
 
 
-public class TestAdapter extends BaseAdapter {
+public class ListProductAdapterFlg extends BaseAdapter {
     private List<Product> list;
     private Fragment context;
     private LayoutInflater inflater;
@@ -32,7 +30,7 @@ public class TestAdapter extends BaseAdapter {
     private int startCount;
     private Product product;
     private ViewHolder holder;
-    public TestAdapter(List<Product> list, Fragment context, int stepNumber, int startCount,LayoutInflater inflater) {
+    public ListProductAdapterFlg(List<Product> list, Fragment context, int stepNumber, int startCount, LayoutInflater inflater) {
         this.list = list;
         this.context = context;
         this.stepNumber = stepNumber;
@@ -73,13 +71,13 @@ public class TestAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.item_list_shop, parent, false);
+        View view = inflater.inflate(R.layout.item_list_product, parent, false);
         product = list.get(position);
         holder = new ViewHolder();
-        holder.shopName = (TextView) view.findViewById(R.id.shopDetailName);
-        holder.shopID = (TextView) view.findViewById(R.id.shopDetailID);
-        holder.manager = (TextView) view.findViewById(R.id.shopManager);
-        holder.frameLayout = (FrameLayout) view.findViewById(R.id.editShop);
+        holder.productName = (TextView) view.findViewById(R.id.productDetailName);
+        holder.productID = (TextView) view.findViewById(R.id.productDetailID);
+        holder.productPrice = (TextView) view.findViewById(R.id.productPrice);
+        holder.frameLayout = (FrameLayout) view.findViewById(R.id.editProduct);
         holder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,14 +93,14 @@ public class TestAdapter extends BaseAdapter {
             Picasso.with(context.getActivity()).load(GlobalValue.CONFIG + product.getImage().replace("::","/")).into(holder.imgView);
         }
         catch (Exception e){}
-        holder.shopName.setText(product.getProductName());
-        holder.shopID.setText(product.getID());
-        holder.manager.setText(GlobalValue.USERNAME);
+        holder.productName.setText(product.getProductName());
+        holder.productID.setText("ID: "+product.getID());
+        holder.productPrice.setText("100,000 VNĐ");
         return view;
     }
     public class ViewHolder{
         ImageView imgView;
         FrameLayout frameLayout;
-        TextView shopName,shopID,manager;
+        TextView productName,productID,productPrice;
     }
 }

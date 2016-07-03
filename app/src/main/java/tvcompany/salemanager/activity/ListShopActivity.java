@@ -21,9 +21,7 @@ import tvcompany.salemanager.library.GlobalValue;
 import tvcompany.salemanager.model.Contact;
 import tvcompany.salemanager.model.Shop;
 
-/**
- * Created by MtViet on 29/06/2016.
- */
+
 public class ListShopActivity extends AppCompatActivity {
     private ListShopAdapter adapter;
     private List<Shop> listShop;
@@ -48,12 +46,12 @@ public class ListShopActivity extends AppCompatActivity {
 //        listContact.add(contact2);
         ///Adapter
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_listshop);
-        recyclerViewAdapter= new ListShopAdapter(ListShopActivity.this,listShop);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(recyclerViewAdapter);
+//        recyclerView = (RecyclerView) findViewById(R.id.recycler_listshop);
+//        recyclerViewAdapter= new ListShopAdapter(ListShopActivity.this,listShop);
+//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(mLayoutManager);
+//        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setAdapter(recyclerViewAdapter);
 
     }
 }

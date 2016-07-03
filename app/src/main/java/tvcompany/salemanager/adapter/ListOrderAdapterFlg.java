@@ -2,13 +2,19 @@ package tvcompany.salemanager.adapter;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -29,6 +35,11 @@ public class ListOrderAdapterFlg extends BaseAdapter {
     private int startCount;
     private Product product;
     private ViewHolder holder;
+    private TableRow tableRow;
+
+    private EditText editNumberOrder;
+    private TextView txtNumberOrder;
+    private Button btn;
     public ListOrderAdapterFlg(List<Product> list, Fragment context, int stepNumber, int startCount, LayoutInflater inflater) {
         this.list = list;
         this.context = context;
@@ -70,24 +81,50 @@ public class ListOrderAdapterFlg extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.item_list_order, parent, false);
+        convertView = inflater.inflate(R.layout.item_list_order, parent, false);
         product = list.get(position);
         holder = new ViewHolder();
-        holder.productName = (TextView) view.findViewById(R.id.productDetailName);
-        holder.productID = (TextView) view.findViewById(R.id.productDetailID);
-        holder.productPrice = (TextView) view.findViewById(R.id.productPrice);
-        holder.frameLayout = (FrameLayout) view.findViewById(R.id.order);
+
+        holder.productName = (TextView) convertView.findViewById(R.id.productDetailName);
+        holder.productID = (TextView) convertView.findViewById(R.id.productDetailID);
+        holder.productPrice = (TextView) convertView.findViewById(R.id.productPrice);
+        holder.frameLayout = (FrameLayout) convertView.findViewById(R.id.order);
+        final View finalConvertView = convertView;
+        final boolean[] flag = {true};
         holder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                product = list.get(position);
-                Intent i= new Intent(context.getActivity(), ProductActivity.class);
-                i.putExtra("Product",  product);
-                context.startActivity(i);
+                tableRow = (TableRow) finalConvertView.findViewById(R.id.orderDetails);
+                if (flag[0]) {
+                    tableRow.setVisibility(View.VISIBLE);
+                    flag[0] = false;
+                } else {
+                    tableRow.setVisibility(View.GONE);
+                    flag[0] = true;
+                }
+            }
+        });
+        btn= (Button) convertView.findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editNumberOrder=(EditText) finalConvertView.findViewById(R.id.editNumberOrders);
+
+                txtNumberOrder=(TextView) finalConvertView.findViewById(R.id.counter_value);
+                if(!editNumberOrder.getText().toString().equals("")){
+                    tableRow.setVisibility(View.GONE);
+                    flag[0] = true;
+                    txtNumberOrder.setText(editNumberOrder.getText().toString());
+                }
+                else{
+                    Toast.makeText(context.getActivity(),"Bạn cần nhập số lượng đặt hàng",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
-        holder.imgView = (ImageView) view.findViewById(R.id.iconshop);
+
+        holder.imgView = (ImageView) finalConvertView.findViewById(R.id.iconshop);
         try {
             Picasso.with(context.getActivity()).load(GlobalValue.CONFIG + product.getImage().replace("::","/")).into(holder.imgView);
         }
@@ -95,7 +132,7 @@ public class ListOrderAdapterFlg extends BaseAdapter {
         holder.productName.setText(product.getProductName());
         holder.productID.setText("ID: "+product.getID());
         holder.productPrice.setText("100,000 VNĐ");
-        return view;
+        return finalConvertView;
     }
     public class ViewHolder{
         ImageView imgView;

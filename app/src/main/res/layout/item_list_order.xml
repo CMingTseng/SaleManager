@@ -89,4 +89,36 @@
 
     </FrameLayout>
 
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/orderDetails"
+        android:visibility="gone"
+        android:weightSum="1"
+        android:layout_below="@+id/thumbnail">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số lượng: "
+            android:layout_marginLeft="10dp"
+            android:id="@+id/textView2" />
+
+        <EditText
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/editNumberOrders"
+            android:layout_weight="0.81" />
+
+        <Button
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:text="Order"
+            android:id="@+id/button" />
+    </TableRow>
+
 </RelativeLayout>

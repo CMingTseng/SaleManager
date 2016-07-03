@@ -22,7 +22,7 @@ import tvcompany.salemanager.model.Contact;
 public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
-    boolean flag = false;
+    boolean flag = true;
     private List<Contact> contactItems;
     private ImageView imgView;
     private FrameLayout frameLayout;
@@ -39,7 +39,6 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
             imgView = (ImageView) view.findViewById(R.id.iconProductList);
             btn= (Button) view.findViewById(R.id.button);
             frameLayout = (FrameLayout) view.findViewById(R.id.cart);
-
             frameLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

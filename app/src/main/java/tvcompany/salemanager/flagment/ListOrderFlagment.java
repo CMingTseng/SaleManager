@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class ListOrderFlagment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_order_layout, container, false);
+
         lv = (ListView) rootView.findViewById(R.id.listOrder);
         try {
             listProduct =new ProductController().getListProduct();

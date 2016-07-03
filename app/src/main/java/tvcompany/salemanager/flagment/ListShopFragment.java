@@ -1,11 +1,8 @@
-package tvcompany.salemanager.fragment;
+package tvcompany.salemanager.flagment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tvcompany.salemanager.R;
-import tvcompany.salemanager.adapter.ListProductAdapterFlg;
-import tvcompany.salemanager.adapter.ListShopAdapter;
 import tvcompany.salemanager.adapter.ListShopAdapterFlg;
-import tvcompany.salemanager.controller.login.ProductController;
 import tvcompany.salemanager.controller.login.ShopController;
-import tvcompany.salemanager.model.Product;
 import tvcompany.salemanager.model.Shop;
 
 

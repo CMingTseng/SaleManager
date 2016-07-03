@@ -1,4 +1,4 @@
-package tvcompany.salemanager.fragment;
+package tvcompany.salemanager.flagment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,32 +11,31 @@ import android.widget.ListView;
 import java.util.List;
 
 import tvcompany.salemanager.R;
-import tvcompany.salemanager.adapter.ListOrderAdapterFlg;
+import tvcompany.salemanager.adapter.ListProductAdapterFlg;
 import tvcompany.salemanager.controller.login.ProductController;
 import tvcompany.salemanager.model.Product;
 
-
-public class ListOrderFlagment extends Fragment {
-    private List<Product> listProduct;
+public class ListProductFlagment extends Fragment {
+    private List<Product> listShop;
     private ListView lv;
 
-    private ListOrderAdapterFlg adapter;
+    private ListProductAdapterFlg adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.list_order_layout, container, false);
-        lv = (ListView) rootView.findViewById(R.id.listOrder);
+        View rootView = inflater.inflate(R.layout.list_product_layout, container, false);
+        lv = (ListView) rootView.findViewById(R.id.listProduct);
         try {
-            listProduct =new ProductController().getListProduct();
+            listShop =new ProductController().getListProduct();
             for(int i = 0;i<1000;i++)
             {
-                listProduct.add(listProduct.get(1));
+                listShop.add(listShop.get(1));
             }
         }catch (Exception e)
         {
 
         }
-        adapter = new ListOrderAdapterFlg(listProduct,this,20,10,inflater);
+        adapter = new ListProductAdapterFlg(listShop,this,20,10,inflater);
         lv.setAdapter(adapter);
 
         return rootView;

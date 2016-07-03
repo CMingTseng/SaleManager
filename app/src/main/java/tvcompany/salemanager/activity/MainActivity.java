@@ -14,10 +14,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import tvcompany.salemanager.fragment.ListOrderFlagment;
-import tvcompany.salemanager.fragment.ListProductFlagment;
+import tvcompany.salemanager.flagment.ListOrderFlagment;
+import tvcompany.salemanager.flagment.ListProductFlagment;
 import tvcompany.salemanager.R;
-import tvcompany.salemanager.fragment.ListShopFragment;
+import tvcompany.salemanager.flagment.ListShopFragment;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {

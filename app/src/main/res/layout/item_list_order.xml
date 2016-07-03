@@ -78,13 +78,14 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/shop">
 
+
         <ImageView
             android:id="@+id/counter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="left|center_vertical"
             android:gravity="center"
-            android:src="@mipmap/ordernow" />
+            android:src="@mipmap/cart" />
 
     </FrameLayout>
 

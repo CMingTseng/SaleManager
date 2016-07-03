@@ -1,5 +1,6 @@
 package tvcompany.salemanager.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,15 +93,16 @@ public class ListOrderAdapterFlg extends BaseAdapter {
         holder.frameLayout = (FrameLayout) convertView.findViewById(R.id.order);
         final View finalConvertView = convertView;
         final boolean[] flag = {true};
+        final TableRow tableRows = (TableRow) finalConvertView.findViewById(R.id.orderDetails);
         holder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tableRow = (TableRow) finalConvertView.findViewById(R.id.orderDetails);
+
                 if (flag[0]) {
-                    tableRow.setVisibility(View.VISIBLE);
+                    tableRows.setVisibility(View.VISIBLE);
                     flag[0] = false;
                 } else {
-                    tableRow.setVisibility(View.GONE);
+                    tableRows.setVisibility(View.GONE);
                     flag[0] = true;
                 }
             }
@@ -109,12 +112,11 @@ public class ListOrderAdapterFlg extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 editNumberOrder=(EditText) finalConvertView.findViewById(R.id.editNumberOrders);
-
-                txtNumberOrder=(TextView) finalConvertView.findViewById(R.id.counter_value);
+                //txtNumberOrder=(TextView) finalConvertView.findViewById(R.id.counter_values);
                 if(!editNumberOrder.getText().toString().equals("")){
-                    tableRow.setVisibility(View.GONE);
+                    tableRows.setVisibility(View.GONE);
                     flag[0] = true;
-                    txtNumberOrder.setText(editNumberOrder.getText().toString());
+                   // txtNumberOrder.setText(editNumberOrder.getText().toString());
                 }
                 else{
                     Toast.makeText(context.getActivity(),"Bạn cần nhập số lượng đặt hàng",Toast.LENGTH_SHORT).show();
@@ -122,7 +124,6 @@ public class ListOrderAdapterFlg extends BaseAdapter {
 
             }
         });
-
 
         holder.imgView = (ImageView) finalConvertView.findViewById(R.id.iconshop);
         try {

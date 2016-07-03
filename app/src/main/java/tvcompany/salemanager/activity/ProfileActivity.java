@@ -34,7 +34,7 @@ public class ProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
         db= new DatabaseManager(ProfileActivity.this);
-        imageView = (ImageView) findViewById(R.id.iconProfile);
+        imageView = (ImageView) findViewById(R.id.iconProfiles);
         imageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -53,7 +53,6 @@ public class ProfileActivity extends Activity {
         EditText f_Address=(EditText) findViewById(R.id.editAddress);
         //Contact ct= db.GetContact();
         Contact ct= new Contact();
-
         if(ct!=null){
             imageView.setImageBitmap(ct.getI_image());
             f_Name.setText(ct.getS_fullName());

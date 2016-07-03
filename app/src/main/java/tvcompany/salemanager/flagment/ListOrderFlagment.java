@@ -1,5 +1,6 @@
 package tvcompany.salemanager.flagment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 
 import java.util.List;
@@ -38,6 +40,7 @@ public class ListOrderFlagment extends Fragment {
         {
 
         }
+
         adapter = new ListOrderAdapterFlg(listProduct,this,20,10,inflater);
         lv.setAdapter(adapter);
 

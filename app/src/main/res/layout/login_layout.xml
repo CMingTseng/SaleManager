@@ -38,7 +38,7 @@
             android:layout_width="@dimen/icon_register"
             android:layout_height="@dimen/icon_register"
             android:src="@drawable/ic_profile2"
-            android:id="@+id/iconRegister"
+            android:id="@+id/iconLogin"
             app:siBorderWidth="1dp"
             app:siBorderColor="@color/white"
             />

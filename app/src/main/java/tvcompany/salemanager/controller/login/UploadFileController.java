@@ -55,6 +55,7 @@ public class UploadFileController {
     }
 
     public Bitmap getImage(String fileName) {
+
         retrofit2.Call<okhttp3.ResponseBody> call = service.getImage(fileName);
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {

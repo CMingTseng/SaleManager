@@ -52,10 +52,10 @@ public class ContactActivity extends Fragment {
         // Get list danh bạ gán vào Adapter
         // 2 nguồn lấy: trong SQLite hoặc lấy từ SERVER
         listContact = new ArrayList<Contact>();
-        Contact contact= new Contact("Gandalf","Phạm Mạnh Tùng","0163.567.2888", BitmapFactory.decodeResource(getResources(), R.mipmap.icon));
-        Contact contact2= new Contact("MtViet","Mai Thanh Việt","0164.632.2112", BitmapFactory.decodeResource(getResources(), R.mipmap.vietfuck));
-        listContact.add(contact);
-        listContact.add(contact2);
+        //Contact contact= new Contact("Gandalf","Phạm Mạnh Tùng","0163.567.2888", BitmapFactory.decodeResource(getResources(), R.mipmap.icon));
+        //Contact contact2= new Contact("MtViet","Mai Thanh Việt","0164.632.2112", BitmapFactory.decodeResource(getResources(), R.mipmap.vietfuck));
+        //listContact.add(contact);
+        //listContact.add(contact2);
         ///Adapter
         listViewContact = (ListView) rootView.findViewById(R.id.listContact);
         adapter = new ContactAdapter(getActivity(), listContact);

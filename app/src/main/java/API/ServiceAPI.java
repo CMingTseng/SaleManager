@@ -46,7 +46,7 @@ public class ServiceAPI {
 
     public String getUser() {
         //binding.username.getText().toString()
-        Call<User> call = git.getFuck("mtviet17");
+        Call<User> call = git.getUser("mtviet17");
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy =

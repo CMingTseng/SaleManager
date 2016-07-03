@@ -51,7 +51,8 @@ public class ProfileActivity extends Activity {
         final EditText f_Name=(EditText) findViewById(R.id.editName);
         final EditText f_Phone=(EditText) findViewById(R.id.editPhone);
         EditText f_Address=(EditText) findViewById(R.id.editAddress);
-        Contact ct= db.GetContact();
+        //Contact ct= db.GetContact();
+        Contact ct= new Contact();
 
         if(ct!=null){
             imageView.setImageBitmap(ct.getI_image());
@@ -69,8 +70,7 @@ public class ProfileActivity extends Activity {
                 contact.setS_fullName(f_Name.getText().toString());
                 contact.setS_Phone(f_Phone.getText().toString());
                 contact.setI_image(bitmapIcon);
-
-                db.InserProfile(contact);
+                //db.InserProfile(contact);
             }
         });
     }

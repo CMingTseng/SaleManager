@@ -35,7 +35,7 @@ public interface ServiceInterface {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @GET("/GetAccount")
-    Call<User> getFuck(@Query("account") String account);
+    Call<User> getUser(@Query("account") String account);
 
     @GET("/GetUserId")
     Call<Status> getUserID(@Query("account") String account);

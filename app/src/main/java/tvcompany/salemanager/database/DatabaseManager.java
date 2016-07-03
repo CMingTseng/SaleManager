@@ -24,9 +24,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import tvcompany.salemanager.model.Contact;
 import tvcompany.salemanager.model.Message;
+import tvcompany.salemanager.model.User;
 
 
 public class DatabaseManager {
@@ -44,6 +46,7 @@ public class DatabaseManager {
 		pathDB = Environment.getDataDirectory() + "/data/"
 				+ mContext.getPackageName() + "/databases/";
 		copyDB();
+		getTablename();
 	}
 
 	private void copyDB() {
@@ -69,7 +72,20 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 	}
+	public void getTablename(){
+		openDB();
+		Cursor c = sqlDB.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
 
+		if (c.moveToFirst()) {
+			while ( !c.isAfterLast() ) {
+				Log.i(TAG, "Table Name=> "+c.getString(0));
+
+				c.moveToNext();
+			}
+		}
+		c.close();
+		closeDB();
+	}
 	public void openDB() {
 		if (sqlDB == null || !sqlDB.isOpen())
 			sqlDB = SQLiteDatabase.openDatabase(pathDB + DB_NAME, null,
@@ -82,46 +98,75 @@ public class DatabaseManager {
 	}
 
 
-	public void InserProfile(Contact contact) {
+	public void InserProfile(User user) {
 		openDB();
-		sqlDB.beginTransaction();
-		String sql = "Insert or Replace into Profile(s_ID,s_Name,s_Address,s_Phone,i_Image) values(?,?,?,?,?)";
-		SQLiteStatement insert = sqlDB.compileStatement(sql);
-		byte[] data = getBitmapAsByteArray(contact.getI_image()); // this is a function
-		insert.bindString(1, "gandalf");
-		insert.bindString(2, contact.getS_fullName());
-		insert.bindString(3, "TVCompany");
-		insert.bindString(3, contact.getS_Phone());
-		insert.bindBlob(4, data);
+		try {
+			sqlDB.beginTransaction();
+			String sql = "Insert into User(userName,password,createDate,email,phoneNumber,fullName,note,parent,image) values(?,?,?,?,?,?,?,?,?)";
+			SQLiteStatement insert = sqlDB.compileStatement(sql);
+			insert.bindString(1, user.getUserName());
+			insert.bindString(2, user.getPassWord());
+			insert.bindString(3, user.getCreateDate());
+			insert.bindString(4, user.getEmail());
+			insert.bindString(5, user.getPhoneNumber());
+			insert.bindString(6, user.getFullName());
+			insert.bindString(7, user.getNote());
+			insert.bindString(8, user.getParent());
+			String path= user.getImage();
+			insert.bindString(9, path);
 
-		insert.execute();
-		sqlDB.setTransactionSuccessful();
-		sqlDB.endTransaction();
-		closeDB();
+			insert.execute();
+			sqlDB.setTransactionSuccessful();
+			sqlDB.endTransaction();
+			closeDB();
+		}catch (Exception ex){
+			String error= ex.toString();
+		}
 	}
 
 
-	public Contact GetContact() {
+	public User GetContact() {
 		openDB();
-		Cursor c = sqlDB.rawQuery("Select * from Profile", null);
-		Contact item = new Contact();
+		Cursor c = sqlDB.rawQuery("Select * from User", null);
+		User item = new User();
 		if (c == null)
 			return null;
 		c.moveToFirst();
 		while (c.isAfterLast() == false) {
 
-			item.setS_name(c.getString(c.getColumnIndex("s_ID")));
-			item.setS_fullName(c.getString(c.getColumnIndex("s_Name")));
-			item.setS_Phone(c.getString(c.getColumnIndex("s_Phone")));
-			byte[] imgByte = c.getBlob(c.getColumnIndex("i_Image"));
-			item.setI_image(BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length));
+			item.setUserName(c.getString(c.getColumnIndex("userName")));
+			item.setPassWord(c.getString(c.getColumnIndex("password")));
+			item.setCreateDate(c.getString(c.getColumnIndex("createDate")));
+			item.setEmail(c.getString(c.getColumnIndex("email")));
+			item.setPhoneNumber(c.getString(c.getColumnIndex("phoneNumber")));
+			item.setFullName(c.getString(c.getColumnIndex("fullName")));
+			item.setNote(c.getString(c.getColumnIndex("note")));
+			item.setParent(c.getString(c.getColumnIndex("parent")));
+			item.setImage(c.getString(c.getColumnIndex("image")));
+			item.setValid(true);
+			item.setActive(true);
+
 			c.moveToNext();
 		}
 		c.close();
 		closeDB();
 		return item;
 	}
-
+	public  String imageLink(String name){
+		openDB();
+		Cursor c = sqlDB.rawQuery("Select * from User where userName='"+name+"'", null);
+		String result="";
+		if (c == null)
+			return null;
+		c.moveToFirst();
+		while (c.isAfterLast() == false) {
+			result=c.getString(c.getColumnIndex("image"));
+			c.moveToNext();
+		}
+		c.close();
+		closeDB();
+		return result;
+	}
 	//Read and write message
 	public void InserMessage(Message message) {
 		openDB();

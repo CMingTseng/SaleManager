@@ -30,7 +30,20 @@ public class UserController {
             return "";
         }
     }
-
+    public User GetUser(String account) {
+        Call<User> user = service.getUser(account);
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy =
+                        new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            User result = user.execute().body();
+            return result;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
     public boolean AddUser(User user) {
         try {
             Call<Status> call = service.addUser(user);

@@ -132,12 +132,12 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         editor.commit();
                         try {
-                            //if(!txtName.getText().toString().equals(username)){
+                            if(!txtName.getText().toString().equals(username)){
                                 User user= userController.GetUser(userName);
                                 user.setImage(user.getImage().replace("::","/"));
                                 user.setImage(new SaveFile(LoginActivity.this).SaveImage(user.getImage()));
                                 db.InserProfile(user);
-                           // }
+                            }
                             //Intent k = new Intent(LoginActivity.this, ShopActivity.class);
                             Intent k = new Intent(LoginActivity.this, ListShopActivity.class);
                             startActivity(k);

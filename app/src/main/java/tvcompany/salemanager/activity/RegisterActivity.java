@@ -39,7 +39,7 @@ public class RegisterActivity extends Activity {
     private Button btn_Save;
     private User user = null;
     private Bitmap bm = null;
-    private EditText account, pass, passAccess, fullName, email, phone;
+    private EditText account,oldPass, pass, passAccess, fullName, email, phone;
     private ValidString valid;
     private UserController userController;
     @Override
@@ -49,6 +49,8 @@ public class RegisterActivity extends Activity {
 
         imageView = (ImageView) findViewById(R.id.iconRegister);
         account = (EditText) findViewById(R.id.editAccount);
+        oldPass=(EditText) findViewById(R.id.edit_OldPass);
+        oldPass.setVisibility(View.GONE);
         pass = (EditText) findViewById(R.id.editPass);
         passAccess = (EditText) findViewById(R.id.editPassAccess);
         fullName = (EditText) findViewById(R.id.editFullName);
@@ -160,7 +162,7 @@ public class RegisterActivity extends Activity {
             bfOptions.inDither = false;
             bfOptions.inPurgeable = true;
             bfOptions.inInputShareable = true;
-            bfOptions.inTempStorage = new byte[32 * 1024];
+            bfOptions.inTempStorage = new byte[1024];
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             FileInputStream fs = null;
             try {

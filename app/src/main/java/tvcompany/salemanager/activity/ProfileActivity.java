@@ -132,50 +132,50 @@ public class ProfileActivity extends Activity {
             Toast.makeText(ProfileActivity.this, "Mật khẩu cũ không đúng!", Toast.LENGTH_LONG).show();
         }
         else{
-            user.setUserName(valid.ReplaceToValidString(account.getText().toString().trim()));
-            if(!flag){
-                user.setPassWord(pass.getText().toString().trim());
-            }
-            user.setFullName(fullName.getText().toString().trim());
-            user.setNote("");
-            user.setEmail(email.getText().toString().trim());
-            user.setPhoneNumber(phone.getText().toString().trim());
-            user.setActive(false);
-            MD5 md5 = new MD5();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date();
-            String datestr = dateFormat.format(date);
-            try {
-                if(bm == null)
-                {
-                    user.setImage("");
-                }
-                else
-                {
-                    String image = account.getText().toString() + "::" + md5.getMD5(account.getText().toString() + datestr) + ".jpg";
-                    user.setImage(image);
-                }
-
-            } catch (Exception ex) {
-
-            }
-            user.setParent(account.getText().toString());
-            user.setValid(true);
-
-            if (userController.AddUser(user)) {
-                // new ShopController().AddShop(//new Shop("",user.getUserName(),user.getUserName(),
-                //         new Date().toString(),200,200,"",userController.GetUserID(user.getUserName()),"","",true));
-                new ShopController().AddShop(new Shop());
-                if (bm != null) {
-                    new UploadFileController().uploadFile(bm, user.getImage());
-                }
-                Toast.makeText(ProfileActivity.this, "Đăng ký thành công!", Toast.LENGTH_LONG).show();
-            }
-            else
-            {
-                Toast.makeText(ProfileActivity.this, "Tài khoản đã tồn tại. Vui lòng chọn tài khoản khác!", Toast.LENGTH_LONG).show();
-                account.setSelection(account.getText().length() -1 );
-            }
+//            user.setUserName(valid.ReplaceToValidString(account.getText().toString().trim()));
+//            if(!flag){
+//                user.setPassWord(pass.getText().toString().trim());
+//            }
+//            user.setFullName(fullName.getText().toString().trim());
+//            user.setNote("");
+//            user.setEmail(email.getText().toString().trim());
+//            user.setPhoneNumber(phone.getText().toString().trim());
+//            user.setActive(false);
+//            MD5 md5 = new MD5();
+//            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            Date date = new Date();
+//            String datestr = dateFormat.format(date);
+//            try {
+//                if(bm == null)
+//                {
+//                    user.setImage("");
+//                }
+//                else
+//                {
+//                    String image = account.getText().toString() + "::" + md5.getMD5(account.getText().toString() + datestr) + ".jpg";
+//                    user.setImage(image);
+//                }
+//
+//            } catch (Exception ex) {
+//
+//            }
+//            user.setParent(account.getText().toString());
+//            user.setValid(true);
+//
+//            if (userController.AddUser(user)) {
+//                // new ShopController().AddShop(//new Shop("",user.getUserName(),user.getUserName(),
+//                //         new Date().toString(),200,200,"",userController.GetUserID(user.getUserName()),"","",true));
+//                new ShopController().AddShop(new Shop());
+//                if (bm != null) {
+//                    new UploadFileController().uploadFile(bm, user.getImage());
+//                }
+//                Toast.makeText(ProfileActivity.this, "Đăng ký thành công!", Toast.LENGTH_LONG).show();
+//            }
+//            else
+//            {
+//                Toast.makeText(ProfileActivity.this, "Tài khoản đã tồn tại. Vui lòng chọn tài khoản khác!", Toast.LENGTH_LONG).show();
+//                account.setSelection(account.getText().length() -1 );
+//            }
         }
 
 //        btnSave.setOnClickListener(new View.OnClickListener() {

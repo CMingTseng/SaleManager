@@ -17,10 +17,13 @@ import tvcompany.salemanager.R;
  */
 public class CustomPagerAdapter extends PagerAdapter {
     private String[] imageIDs = {
-            "http://lh5.ggpht.com/_mrb7w4gF8Ds/TCpetKSqM1I/AAAAAAAAD2c/Qef6Gsqf12Y/s144-c/_DSC4374%20copy.jpg",
-            "http://lh5.ggpht.com/_Z6tbBnE-swM/TB0CryLkiLI/AAAAAAAAVSo/n6B78hsDUz4/s144-c/_DSC3454.jpg",
-            "http://lh3.ggpht.com/_GEnSvSHk4iE/TDSfmyCfn0I/AAAAAAAAF8Y/cqmhEoxbwys/s144-c/_MG_3675.jpg",
-            "http://lh6.ggpht.com/_Nsxc889y6hY/TBp7jfx-cgI/AAAAAAAAHAg/Rr7jX44r2Gc/s144-c/IMGP9775a.jpg" };
+            "http://192.168.0.56:3000/uploads/Mtviet1/Screenshot_2016-05-28-07-39-50.png",
+            "http://192.168.0.56:3000/uploads/viet/393d41c5b7310a1ad4a1e9f47a8a09ef.jpg",
+            "http://192.168.0.56:3000/uploads/Mtviet1/Screenshot_2016-05-28-07-39-50.png",
+            "http://192.168.0.56:3000/uploads/viet/393d41c5b7310a1ad4a1e9f47a8a09ef.jpg",
+            "http://192.168.0.56:3000/uploads/Mtviet1/Screenshot_2016-05-28-07-39-50.png",
+            "http://192.168.0.56:3000/uploads/viet/393d41c5b7310a1ad4a1e9f47a8a09ef.jpg"
+    };
     Context mContext;
     LayoutInflater mLayoutInflater;
 

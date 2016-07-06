@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
         <activity
-            android:name=".activity.GalleryImageActivity"
+            android:name=".activity.ProductSearch"
             android:windowSoftInputMode="adjustPan"
             android:label="@string/app_name">
             <intent-filter>
@@ -37,7 +37,7 @@
         <activity android:name=".activity.ReloadImage" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ShopActivity" />
-        <activity android:name=".activity.ProductSearch"/>
+        <activity android:name=".activity.GalleryImageActivity"/>
         <activity android:name=".activity.ListOder" />
         <activity android:name=".activity.ListShopActivity" />
         <activity android:name=".activity.ProductActivity" />

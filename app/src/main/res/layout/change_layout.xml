@@ -1,0 +1,34 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ProductSearch">
+
+    <LinearLayout
+        android:id="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+    </LinearLayout>
+
+    <ViewStub android:id="@+id/list_view"
+        android:inflatedId="@+id/showlayout"
+        android:layout="@layout/list_view_product"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="50dp"/>
+
+    <ViewStub android:id="@+id/grid_view"
+        android:inflatedId="@+id/showlayout"
+        android:layout="@layout/grid_view_product"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"/>
+
+
+</merge>

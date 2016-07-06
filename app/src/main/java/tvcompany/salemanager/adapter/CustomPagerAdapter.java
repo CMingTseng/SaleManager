@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.picasso.Picasso;
 
 import tvcompany.salemanager.R;
@@ -47,9 +49,13 @@ public class CustomPagerAdapter extends PagerAdapter {
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
         try {
-
-            Picasso.with(mContext)
+//            Picasso.with(mContext)
+//                    .load(imageIDs[position])
+//                    .fit()
+//                    .into(imageView);
+            Glide.with(mContext)
                     .load(imageIDs[position])
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imageView);
         } catch (Exception e) {
             e.printStackTrace();

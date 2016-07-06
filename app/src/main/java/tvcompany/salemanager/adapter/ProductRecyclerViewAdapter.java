@@ -58,11 +58,11 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
                 public void onClick(View v) {
                     tableRow = (TableRow) view.findViewById(R.id.orderDetail);
                     editNumberOrder=(EditText) view.findViewById(R.id.editNumberOrder);
-                    txtNumberOrder=(TextView) view.findViewById(R.id.counter_value);
+                    //txtNumberOrder=(TextView) view.findViewById(R.id.counter_value);
                     if(!editNumberOrder.getText().toString().equals("")){
                         tableRow.setVisibility(View.GONE);
                         flag= true;
-                        txtNumberOrder.setText(editNumberOrder.getText().toString());
+                       // txtNumberOrder.setText(editNumberOrder.getText().toString());
                     }
                     else{
                         Toast.makeText(context,"Bạn cần nhập số lượng đặt hàng",Toast.LENGTH_SHORT).show();

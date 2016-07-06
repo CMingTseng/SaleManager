@@ -21,10 +21,10 @@ public class CustomPagerAdapter extends PagerAdapter {
     private String[] imageIDs = {
             "http://192.168.0.56:3000/uploads/Mtviet1/Screenshot_2016-05-28-07-39-50.png",
             "http://192.168.0.56:3000/uploads/viet/393d41c5b7310a1ad4a1e9f47a8a09ef.jpg",
+            "http://192.168.0.56:3000/uploads/viet/650445fe70b6be68952b0f192bbc2ce4.jpg",
             "http://192.168.0.56:3000/uploads/Mtviet1/Screenshot_2016-05-28-07-39-50.png",
             "http://192.168.0.56:3000/uploads/viet/393d41c5b7310a1ad4a1e9f47a8a09ef.jpg",
-            "http://192.168.0.56:3000/uploads/Mtviet1/Screenshot_2016-05-28-07-39-50.png",
-            "http://192.168.0.56:3000/uploads/viet/393d41c5b7310a1ad4a1e9f47a8a09ef.jpg"
+            "http://192.168.0.56:3000/uploads/viet/650445fe70b6be68952b0f192bbc2ce4.jpg"
     };
     Context mContext;
     LayoutInflater mLayoutInflater;
@@ -51,7 +51,7 @@ public class CustomPagerAdapter extends PagerAdapter {
         try {
 //            Picasso.with(mContext)
 //                    .load(imageIDs[position])
-//                    .fit()
+//                    .noFade()
 //                    .into(imageView);
             Glide.with(mContext)
                     .load(imageIDs[position])

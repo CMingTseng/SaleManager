@@ -21,7 +21,7 @@ public class SearchActivity extends AppCompatActivity {
 
 	ArrayAdapter<String> myAdapter;
     ListView listView;
-    String[] dataArray = new String[] {"India","Androidhub4you", "Pakistan", "Srilanka", "Nepal", "Japan"};
+    String[] dataArray = new String[] {"Việt Nam","Nga", "Pakistan", "Bồ Đào Nha", "Đức", "Pháp","Mỹ","Bỉ","Anh"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +62,13 @@ public class SearchActivity extends AppCompatActivity {
 				searchManager.getSearchableInfo(getComponentName()));
 		searchView.setQueryHint("Type something...");
 		View searchPlate = (View)searchView.findViewById(android.support.v7.appcompat.R.id.search_plate);
-//		searchPlate.setBackgroundColor(Color.WHITE);
 		if (searchPlate!=null) {
 			searchPlate.setBackgroundColor(Color.WHITE);
 			TextView searchText = (TextView) searchPlate.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-//			if (searchText!=null) {
+			if (searchText!=null) {
 				searchText.setTextColor(Color.BLACK);
 				searchText.setHintTextColor(Color.BLACK);
-//			}
+			}
 		}
 	        SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener() 
 	        {

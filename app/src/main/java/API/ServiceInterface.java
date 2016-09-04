@@ -16,12 +16,17 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import tvcompany.salemanager.model.Book;
 import tvcompany.salemanager.model.GroupProduct;
 import tvcompany.salemanager.model.Order;
 import tvcompany.salemanager.model.Product;
 import tvcompany.salemanager.model.Shop;
 import tvcompany.salemanager.model.Status;
+import tvcompany.salemanager.model.Status1;
+import tvcompany.salemanager.model.Status2;
+import tvcompany.salemanager.model.Status3;
 import tvcompany.salemanager.model.User;
+import tvcompany.salemanager.model.User1;
 
 public interface ServiceInterface {
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +90,7 @@ public interface ServiceInterface {
     Call<ArrayList<Product>> getListProduct();
 
     @POST("/AddProduct")
-    Call<Status> addProduct(@Body Product product);
+    Call<Status> addProduct(@Body Product product,@Query("session_id") String manager);
 
     @PUT("/UpdateProduct")
     Call<Status> updatepProduct(@Body Product product);
@@ -100,5 +105,39 @@ public interface ServiceInterface {
 
     @PUT("/UpdateProduct")
     Call<Status> updateProduct(@Body Product product);
+
+    ////////////////////////////////////
+
+    @POST("/booxtown/rest/user/signup")
+    Call<Status1> addUser1(@Body User1 user, @Query("hihi") String test);
+
+    @POST("/booxtown/rest/user/login")
+    Call<Status1> login(@Query("username") String username, @Query("password") String password,
+                        @Query("device_type") String device_type);
+
+    @POST("/booxtown/rest/user/getprofile")
+    Call<Status2> getprofile(@Query("session_id") String session_id);
+
+    @POST("/booxtown/rest/user/updateprofile")
+    Call<Status1> updateprofile(@Body User1 user,@Query("session_id") String session_id);
+
+    @POST("/booxtown/rest/user/changepassword")
+    Call<Status1> changepassword(@Query("session_id") String session_id, @Query("pwd_old") String pwd_old,
+                        @Query("pwd_new") String pwd_new);
+
+    @POST("/booxtown/rest/user/logout")
+    Call<Status1> logout(@Query("session_id") String session_id);
+
+    @POST("/booxtown/rest/user/forgotpassword")
+    Call<Status1> forgotpassword(@Query("email") String email);
+
+    @POST("/booxtown/rest/book/addbook")
+    Call<Status1> addbook(@Body Book book, @Query("session_id") String session_id);
+
+    @POST("/booxtown/rest/book/getinfo")
+    Call<Status3> getinfo(@Query("session_id") String session_id,@Query("book_id") String book_id);
+
+    @POST("/booxtown/rest/book/getallbook")
+    Call<Status3> getAllBook(@Query("session_id") String session_id);
 
 }

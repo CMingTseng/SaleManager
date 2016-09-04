@@ -20,7 +20,7 @@ public class ProductController {
 
     public boolean addProduct(Product product)
     {
-        Call<Status> status = service.addProduct(product);
+        Call<Status> status = service.addProduct(product,"anhviet17");
         try{
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy =

@@ -77,9 +77,7 @@ public class ProductActivity extends AppCompatActivity {
         final ArrayList<Shop> listShop = new ShopController().getListShop("57713f3a3893b0f02813f08b");
         // Spinner
         ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < listGroup.size(); i++) {
-            list.add(listGroup.get(i).getGroupName_VN());
-        }
+
         productShop = (Spinner) findViewById(R.id.product_shop);
         ArrayAdapter adapter = new ArrayAdapter<String>(ProductActivity.this, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -96,7 +94,7 @@ public class ProductActivity extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        product = (Product) intent.getExtras().get("Product");
+        product = new Product();
         if (product == null) {
             product = new Product();
         } else {
@@ -159,7 +157,7 @@ public class ProductActivity extends AppCompatActivity {
                         choose[i] = listShop.get(listChoosed.get(i)).get_id();
                     }
                     product.setShopId(choose);//ObjectId("")
-                    product.setGroupProduct(new String[]{listGroup.get(productShop.getSelectedItemPosition()).get_id()});
+                    product.setGroupProduct(new String[]{""});
                     product.setNote(productNote.getText().toString().trim());
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date();

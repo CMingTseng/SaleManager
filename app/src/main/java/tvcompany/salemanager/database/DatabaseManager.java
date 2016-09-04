@@ -3,30 +3,20 @@ package tvcompany.salemanager.database;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
-import tvcompany.salemanager.model.Contact;
 import tvcompany.salemanager.model.Message;
 import tvcompany.salemanager.model.User;
 
@@ -35,7 +25,7 @@ public class DatabaseManager {
 	private SQLiteDatabase sqlDB;
 	private String pathDB;
 	private Context mContext;
-	private static final String DB_NAME = "SaleManager.sqlite";
+	private static final String DB_NAME = "DomDom.sqlite";
 	private static final String TAG = "DatabaseManager";
 	private ContentValues contentVL = new ContentValues();
 
@@ -171,7 +161,7 @@ public class DatabaseManager {
 	public void InserMessage(Message message) {
 		openDB();
 		sqlDB.beginTransaction();
-		String sql = "Insert into Message(id_UserSend,id_UserRecevice,data,dataType,idSort,date,typeAction) values(?,?,?,?,?,?,?)";
+		String sql = "Insert into Message_Dom(id_UserSend,id_UserRecevice,data,dataType,idSort,date,typeAction) values(?,?,?,?,?,?,?)";
 		SQLiteStatement insert = sqlDB.compileStatement(sql);
 		insert.bindString(1, message.getUserSend());
 		insert.bindString(2, message.getUserRecieve());
@@ -190,7 +180,7 @@ public class DatabaseManager {
 		List<Message> list = new ArrayList<>();
 		openDB();
 		//Cursor c = sqlDB.rawQuery("Select * from Message ", null);
-		Cursor c = sqlDB.rawQuery("Select * from Message WHERE (id_UserSend = '" + userSend + "' AND id_UserRecevice = '" + userRecevice +  "')" +
+		Cursor c = sqlDB.rawQuery("Select * from Message_Dom WHERE (id_UserSend = '" + userSend + "' AND id_UserRecevice = '" + userRecevice +  "')" +
 				"OR (id_UserSend = '" + userRecevice + "' AND id_UserRecevice = '" + userSend +  "')  ORDER BY idSort desc LIMIT 50", null);
 		//Cursor c = sqlDB.rawQuery("Select * from Message  ORDER BY idSort LIMIT 50", null);
 		Message item ;

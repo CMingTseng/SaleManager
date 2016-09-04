@@ -38,7 +38,7 @@ public class ChatActivity extends AppCompatActivity {
     private ListView listViewMessages;
     private Socket mSocket;
     private Button btnSend;
-    private String userSend, userRecieve;
+    private String userSend="", userRecieve="";
     private Message message;
     private EditText txtMessage;
     private Gson gson;
@@ -53,10 +53,11 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        Intent intent = getIntent();
-        userSend = intent.getExtras().getString("FROM");
-        userRecieve = intent.getExtras().getString("TO");
 
+        Bundle extras = getIntent().getExtras();
+        userSend = extras.getString("FROM");
+        userRecieve = extras.getString("TO");
+        System.out.print(userSend+"___________"+ userRecieve);
         // init data and get data from client
         //Text Message
         txtMessage = (EditText) findViewById(R.id.inputMsg);
